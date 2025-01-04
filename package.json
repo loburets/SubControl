@@ -1,0 +1,22 @@
+{
+  "name": "subcontrol",
+  "version": "1.0.0",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/loburets/SubControl.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/loburets/SubControl/issues"
+  },
+  "homepage": "https://github.com/loburets/SubControl#readme",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
+}
