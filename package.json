@@ -6,7 +6,7 @@
     "type": "git",
     "url": "git+https://github.com/loburets/SubControl.git"
   },
-  "author": "",
+  "author": "Dmitry Loburets <dmitry.loburets@gmail.com> (https://github.com/loburets)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/loburets/SubControl/issues"
