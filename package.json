@@ -18,5 +18,9 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "devDependencies": {
+    "prettier": "3.4.2",
+    "eslint-config-prettier": "^9.1.0"
+  }
 }
