@@ -3,6 +3,7 @@ node_modules/
 
 # Build output
 public/
+dist/
 
 # IDE and Editor Configs
 .vscode/

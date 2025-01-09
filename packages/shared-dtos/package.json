@@ -1,0 +1,15 @@
+{
+  "name": "@subcontrol/shared-dtos",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    "./subscriptions": "./dist/subscriptions/index.js"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "class-transformer": "^0.5.1"
+  }
+}
