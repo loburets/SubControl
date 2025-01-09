@@ -6,9 +6,9 @@ Backend for the project
 
 ```bash
 npm install
+npm run build:dtos
 docker-compose up -d
 npx prisma migrate dev
-
 ```
 
 ## Compile and run the project
@@ -40,8 +40,8 @@ $ npm run test:cov
 ## Migrations
 
 ```bash
-# create migration
-npx prisma migrate dev --name
+# prepare migration by editing of apps/backend/prisma/schema.prisma
+npx prisma migrate dev --name your_migration
 ```
 
 ## Deployment (TO BE DONE)

@@ -15,4 +15,5 @@ This repository includes frontend, backend and landing for the project
 - DB Migrations
 - DTOs for requests to prevent injections
 - DTOs for responses to not expose sensitive fields 
-- The same DTOs [are shared](packages/shared-dtos) with frontend and backend to have proper types
+- Same DTOs [are shared](packages/shared-dtos) between frontend and backend to have proper types
+- Swagger documentation generated per code

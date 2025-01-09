@@ -13,7 +13,7 @@
   },
   "homepage": "https://github.com/loburets/SubControl#readme",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:dtos": "npm --workspace=packages/shared-dtos run build"
   },
   "workspaces": [
     "apps/*",
