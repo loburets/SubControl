@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { SubscriptionsService } from './subscriptions.service';
 import { CreateSubscriptionDto } from './dto/create-subscription.dto';
@@ -13,6 +14,7 @@ import { UpdateSubscriptionDto } from './dto/update-subscription.dto';
 import { SubscriptionListResponseDto } from '@subcontrol/shared-dtos/subscriptions';
 import { transformToResponseDto } from '../../utils/transformer';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiTags('subscriptions')
 @Controller('subscriptions')
@@ -25,6 +27,7 @@ export class SubscriptionsController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get a list of subscriptions' })
   @ApiResponse({
     status: 200,
