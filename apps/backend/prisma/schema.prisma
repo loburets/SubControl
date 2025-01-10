@@ -14,16 +14,49 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            Int      @id @default(autoincrement())
+
+  email         String   @unique
+  password      String
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  subscriptions Subscription[]
 }
 
 model Subscription {
-  id        Int      @id @default(autoincrement())
-  name  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            Int      @id @default(autoincrement())
+  name          String
+
+  user          User    @relation(fields: [userId], references: [id])
+  userId        Int
+
+  period        SubscriptionPeriod
+  centsPerPeriod Int
+  currency      Currency
+
+  startedAt     DateTime
+  cancelledAt   DateTime?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  deletedAt     DateTime?
+}
+
+enum SubscriptionPeriod {
+  YEARLY
+  MONTHLY
+  WEEKLY
+}
+
+enum Currency {
+  USD
+  EUR
+  GBP
+  JPY
+  AUD
+  CAD
+  RUB
+  TRY
+  OTHER
 }
