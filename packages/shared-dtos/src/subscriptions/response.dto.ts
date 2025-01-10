@@ -14,3 +14,9 @@ export class SubscriptionResponseDto {
   @Expose()
   createdAt!: Date;
 }
+
+export class SubscriptionListResponseDto {
+  @ApiProperty({ description: 'The list of subscriptions' })
+  @Expose()
+  subscriptions!: SubscriptionResponseDto[];
+}

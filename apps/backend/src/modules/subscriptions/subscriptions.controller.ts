@@ -10,7 +10,7 @@ import {
 import { SubscriptionsService } from './subscriptions.service';
 import { CreateSubscriptionDto } from './dto/create-subscription.dto';
 import { UpdateSubscriptionDto } from './dto/update-subscription.dto';
-import { SubscriptionResponseDto } from '@subcontrol/shared-dtos/subscriptions';
+import { SubscriptionListResponseDto } from '@subcontrol/shared-dtos/subscriptions';
 import { transformToResponseDto } from '../../utils/transformer';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
@@ -29,11 +29,15 @@ export class SubscriptionsController {
   @ApiResponse({
     status: 200,
     description: 'The list of subscriptions has been successfully retrieved.',
-    type: [SubscriptionResponseDto],
+    type: [SubscriptionListResponseDto],
   })
   async findAll() {
     const subscriptions = await this.subscriptionsService.findAll();
-    return transformToResponseDto(subscriptions, SubscriptionResponseDto);
+
+    return transformToResponseDto(
+      { subscriptions },
+      SubscriptionListResponseDto
+    );
   }
 
   @Get(':id')

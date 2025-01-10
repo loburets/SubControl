@@ -19,10 +19,13 @@ describe('AppController (e2e)', () => {
     await app.close();
   });
 
-  it('/ (GET)', () => {
+  it('/subscriptions (GET)', () => {
     return request(app.getHttpServer())
-      .get('/')
+      .get('/subscriptions')
       .expect(200)
-      .expect('Hello World!');
+      .expect('Content-Type', /json/)
+      .expect((res) => {
+        expect(res.body.subscriptions).toBeInstanceOf(Array);
+      });
   });
 });
