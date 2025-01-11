@@ -1,34 +1,17 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
+import { setupSwagger } from './utils/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.setGlobalPrefix('/api/v1');
 
-  // Set up Swagger documentation
-  const config = new DocumentBuilder()
-    .setTitle('Subscription Manager API')
-    .setDescription(
-      'API documentation for the Subscription Manager application'
-    )
-    .setVersion('1.0')
-    .addBearerAuth(
-      {
-        type: 'http',
-        scheme: 'bearer',
-        bearerFormat: 'JWT',
-      },
-      'jwt'
-    )
-    .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document); // Swagger UI will be available at /api
+  app.setGlobalPrefix('/api/v1');
+  await setupSwagger(app);
 
   app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: true, // Removes extra fields
+      whitelist: true, // Removes extra fields in requests
       forbidNonWhitelisted: true, // Throws an error for extra fields
       transform: true, // Automatically transforms request payloads into DTO instances
     })
