@@ -7,6 +7,7 @@ import {
   AuthResponseDto,
 } from '@subcontrol/shared-dtos/auth';
 import { transformToResponseDto } from '../../utils/transformer';
+import { ApiResponse } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
@@ -15,6 +16,11 @@ export class AuthController {
     private readonly usersService: UsersService
   ) {}
 
+  @ApiResponse({
+    status: 200,
+    description: 'User has been registered.',
+    type: AuthResponseDto,
+  })
   @Post('register')
   async register(@Body() body: CreateUserRequestDto) {
     return transformToResponseDto(
@@ -23,6 +29,11 @@ export class AuthController {
     );
   }
 
+  @ApiResponse({
+    status: 200,
+    description: 'User has been logged it.',
+    type: AuthResponseDto,
+  })
   @Post('login')
   async login(@Body() body: LoginUserRequestDto) {
     const user = await this.authService.validateUser(body.email, body.password);

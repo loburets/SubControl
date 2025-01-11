@@ -16,7 +16,10 @@ export class SubscriptionResponseDto {
 }
 
 export class SubscriptionListResponseDto {
-  @ApiProperty({ description: 'The list of subscriptions' })
+  @ApiProperty({
+    description: 'The list of subscriptions',
+    type: [SubscriptionResponseDto],
+  })
   @Expose()
   subscriptions!: SubscriptionResponseDto[];
 }

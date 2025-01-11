@@ -16,7 +16,12 @@ import { CreateSubscriptionDto } from './dto/create-subscription.dto';
 import { UpdateSubscriptionDto } from './dto/update-subscription.dto';
 import { SubscriptionListResponseDto } from '@subcontrol/shared-dtos/subscriptions';
 import { transformToResponseDto } from '../../utils/transformer';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiTags('subscriptions')
@@ -35,8 +40,9 @@ export class SubscriptionsController {
   @ApiResponse({
     status: 200,
     description: 'The list of subscriptions has been successfully retrieved.',
-    type: [SubscriptionListResponseDto],
+    type: SubscriptionListResponseDto,
   })
+  @ApiBearerAuth('jwt')
   async findAll(@Req() req: Request & { user: { id: number } }) {
     const subscriptions = await this.subscriptionsService.findAll({
       userId: req.user.id,
