@@ -5,6 +5,8 @@ Backend for the project
 ## Project setup
 
 ```bash
+cp apps/backend/.env.example apps/backend/.env
+# note: fill the created .env
 npm install
 npm run build:dtos
 docker-compose up -d

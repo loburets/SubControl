@@ -14,8 +14,11 @@ export class SubscriptionsService {
     return 'This action adds a new subscription';
   }
 
-  findAll() {
-    return this.prisma.subscription.findMany({ take: takeMaxElements });
+  findAll({ userId }: { userId: number }) {
+    return this.prisma.subscription.findMany({
+      take: takeMaxElements,
+      where: { userId },
+    });
   }
 
   findOne(id: number) {

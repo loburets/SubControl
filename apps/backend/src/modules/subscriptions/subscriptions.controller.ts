@@ -5,9 +5,12 @@ import {
   Body,
   Patch,
   Param,
+  Req,
   Delete,
   UseGuards,
 } from '@nestjs/common';
+import { Request } from 'express';
+
 import { SubscriptionsService } from './subscriptions.service';
 import { CreateSubscriptionDto } from './dto/create-subscription.dto';
 import { UpdateSubscriptionDto } from './dto/update-subscription.dto';
@@ -34,8 +37,10 @@ export class SubscriptionsController {
     description: 'The list of subscriptions has been successfully retrieved.',
     type: [SubscriptionListResponseDto],
   })
-  async findAll() {
-    const subscriptions = await this.subscriptionsService.findAll();
+  async findAll(@Req() req: Request & { user: { id: number } }) {
+    const subscriptions = await this.subscriptionsService.findAll({
+      userId: req.user.id,
+    });
 
     return transformToResponseDto(
       { subscriptions },

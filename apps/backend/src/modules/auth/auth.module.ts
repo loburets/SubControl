@@ -10,8 +10,8 @@ import { UsersModule } from '../users/users.module';
   imports: [
     UsersModule,
     JwtModule.register({
-      secret: process.env.JWT_SECRET || 'your_secret_key', // Provide the secret key here
-      signOptions: { expiresIn: '1h' }, // Optional: Set expiration time
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '1y' },
     }),
   ],
   controllers: [AuthController],
