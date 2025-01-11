@@ -2,7 +2,7 @@ import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AuthService } from '../modules/auth/auth.service';
 
-export async function setupSwagger(app: INestApplication<any>) {
+export async function setupSwagger(app: INestApplication<{}>) {
   const config = new DocumentBuilder()
     .setTitle('Subscription Manager API')
     .setDescription(
