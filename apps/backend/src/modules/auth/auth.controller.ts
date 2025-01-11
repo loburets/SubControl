@@ -1,6 +1,12 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UsersService } from '../users/users.service';
+import {
+  CreateUserRequestDto,
+  LoginUserRequestDto,
+  AuthResponseDto,
+} from '@subcontrol/shared-dtos/auth';
+import { transformToResponseDto } from '../../utils/transformer';
 
 @Controller('auth')
 export class AuthController {
@@ -10,13 +16,19 @@ export class AuthController {
   ) {}
 
   @Post('register')
-  async register(@Body() body: { email: string; password: string }) {
-    return this.authService.register(body);
+  async register(@Body() body: CreateUserRequestDto) {
+    return transformToResponseDto(
+      this.authService.register(body),
+      AuthResponseDto
+    );
   }
 
   @Post('login')
-  async login(@Body() body: { email: string; password: string }) {
+  async login(@Body() body: LoginUserRequestDto) {
     const user = await this.authService.validateUser(body.email, body.password);
-    return this.authService.login(user);
+    return transformToResponseDto(
+      this.authService.login(user),
+      AuthResponseDto
+    );
   }
 }
