@@ -1,10 +1,14 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from '../../prisma/prisma.service';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly authService: AuthService
+  ) {}
 
   async create(email: string, password: string) {
     const existingUser = await this.prisma.user.findUnique({
@@ -15,7 +19,7 @@ export class UsersService {
       throw new ConflictException('Email is already taken');
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await this.authService.hashPassword(password);
     return this.prisma.user.create({
       data: {
         email,
