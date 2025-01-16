@@ -14,7 +14,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @ApiResponse({
-    status: 200,
+    status: 201,
     description: 'User has been registered.',
     type: AuthResponseDto,
   })

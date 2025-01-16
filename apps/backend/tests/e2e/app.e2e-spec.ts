@@ -2,6 +2,7 @@ import * as request from 'supertest';
 import { Test } from '@nestjs/testing';
 import { AppModule } from '../../src/app.module';
 import { INestApplication } from '@nestjs/common';
+import { faker } from '@faker-js/faker';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -20,12 +21,17 @@ describe('AppController (e2e)', () => {
   });
 
   it('/subscriptions (GET)', () => {
+    const credentials = {
+      email: faker.internet.email(),
+      password: faker.internet.password(),
+    };
     return request(app.getHttpServer())
-      .get('/subscriptions')
-      .expect(200)
+      .post('/auth/register')
+      .send(credentials)
+      .expect(201)
       .expect('Content-Type', /json/)
       .expect((res) => {
-        expect(res.body.subscriptions).toBeInstanceOf(Array);
+        expect(res.body.accessToken).toBeDefined();
       });
   });
 });
