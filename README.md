@@ -13,7 +13,7 @@ This repository includes frontend, backend and landing for the project
 
 ### Some used best practices:
 
-- The Testing Trophy instead of the testing pyramid
+- The Testing Trophy instead of the testing pyramid [(the tests are here)](apps/backend/tests)
 - Integration tests made for controllers and they are ready to be run in parallel on the same DB
 - DB Migrations
 - DTOs for requests to prevent injections
