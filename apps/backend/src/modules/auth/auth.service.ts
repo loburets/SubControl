@@ -18,7 +18,7 @@ export class AuthService {
       return user;
     }
     this.logger.log('Failed to login user, wrong credentials', {
-      userId: user.id,
+      userId: user?.id,
     });
     throw new UnauthorizedException('Invalid credentials');
   }
