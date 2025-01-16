@@ -7,10 +7,10 @@ export class UsersService {
 
   async create({
     email,
-    hashedPassword,
+    hashPassword,
   }: {
     email: string;
-    hashedPassword: string;
+    hashPassword: () => Promise<string>;
   }) {
     const existingUser = await this.findByEmail(email);
 
@@ -21,7 +21,7 @@ export class UsersService {
     return this.prisma.user.create({
       data: {
         email,
-        password: hashedPassword,
+        password: await hashPassword(),
       },
     });
   }

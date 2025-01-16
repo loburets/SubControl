@@ -1,6 +1,5 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Logger } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { UsersService } from '../users/users.service';
 import {
   CreateUserRequestDto,
   LoginUserRequestDto,
@@ -11,6 +10,8 @@ import { ApiResponse } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
+  private readonly logger = new Logger(AuthController.name);
+
   constructor(private readonly authService: AuthService) {}
 
   @ApiResponse({
@@ -33,6 +34,8 @@ export class AuthController {
   })
   @Post('login')
   async login(@Body() body: LoginUserRequestDto) {
+    this.logger.log('Requested to login user');
+
     const user = await this.authService.validateUser(body.email, body.password);
     return transformToResponseDto(
       this.authService.login(user),
