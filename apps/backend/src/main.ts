@@ -1,11 +1,18 @@
-import { NestFactory } from '@nestjs/core';
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { setupSwagger } from './utils/swagger';
 import { WinstonModule } from 'nest-winston';
 import { winstonLoggerConfig } from './config/winston-logger.config';
+import Bugsnag from '@bugsnag/js';
+import { AllExceptionsFilter } from './utils/exceptionsFilter';
 
 async function bootstrap() {
+  Bugsnag.start({
+    apiKey: process.env.BUGSNAG_API_KEY || '',
+    appVersion: '1.0.0',
+  });
+
   const app = await NestFactory.create(AppModule, {
     logger: WinstonModule.createLogger(winstonLoggerConfig),
   });
@@ -20,6 +27,9 @@ async function bootstrap() {
       transform: true, // Automatically transforms request payloads into DTO instances
     })
   );
+
+  const { httpAdapter } = app.get(HttpAdapterHost);
+  app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
 
   await app.listen(3000);
 }
