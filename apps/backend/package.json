@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "nest build",
+    "clean": "rimraf dist",
     "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
@@ -16,7 +17,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/jest/bin/jest --runInBand",
-    "test:e2e": "jest --config ./tests/e2e/jest-e2e.json"
+    "test:e2e": "jest --config ./tests/e2e/jest-e2e.json",
+    "test:e2e:watch": "jest --config ./tests/e2e/jest-e2e.json --watch"
   },
   "engines": {
     "npm": ">=8.0.0",

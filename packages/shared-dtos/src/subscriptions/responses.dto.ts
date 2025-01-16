@@ -10,7 +10,7 @@ export class SubscriptionResponseDto {
   @Expose()
   name!: string;
 
-  @ApiProperty({ description: 'The creation date   of the subscription' })
+  @ApiProperty({ description: 'The creation date of the subscription' })
   @Expose()
   createdAt!: Date;
 }

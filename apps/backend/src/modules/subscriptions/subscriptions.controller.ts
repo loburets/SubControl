@@ -14,7 +14,10 @@ import { Request } from 'express';
 import { SubscriptionsService } from './subscriptions.service';
 import { CreateSubscriptionDto } from './dto/create-subscription.dto';
 import { UpdateSubscriptionDto } from './dto/update-subscription.dto';
-import { SubscriptionListResponseDto } from '@subcontrol/shared-dtos/subscriptions';
+import {
+  SubscriptionListResponseDto,
+  SubscriptionResponseDto,
+} from '@subcontrol/shared-dtos/subscriptions';
 import { transformToResponseDto } from '../../utils/transformer';
 import {
   ApiOperation,
@@ -48,10 +51,11 @@ export class SubscriptionsController {
       userId: req.user.id,
     });
 
-    return transformToResponseDto(
-      { subscriptions },
-      SubscriptionListResponseDto
-    );
+    return {
+      subscriptions: subscriptions.map((s) =>
+        transformToResponseDto(s, SubscriptionResponseDto)
+      ),
+    };
   }
 
   @Get(':id')

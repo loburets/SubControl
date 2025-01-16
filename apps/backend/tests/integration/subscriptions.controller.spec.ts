@@ -3,21 +3,19 @@ import { SubscriptionsController } from '../../src/modules/subscriptions/subscri
 import { SubscriptionsService } from '../../src/modules/subscriptions/subscriptions.service';
 import { PrismaModule } from '../../src/prisma/prisma.module';
 import { seedUser } from '../seeds/user.seed';
-import { AuthService } from '../../src/modules/auth/auth.service';
+import { seedSubscription } from '../seeds/subscription.seed';
 
 describe('SubscriptionsController', () => {
   let controller: SubscriptionsController;
-  let authService: AuthService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [SubscriptionsController],
-      providers: [SubscriptionsService, AuthService],
+      providers: [SubscriptionsService],
       imports: [PrismaModule],
     }).compile();
 
     controller = module.get<SubscriptionsController>(SubscriptionsController);
-    authService = module.get<AuthService>(AuthService);
   });
 
   it('should be defined', () => {
@@ -26,15 +24,29 @@ describe('SubscriptionsController', () => {
 
   describe('findAll', () => {
     it('should return list of subscriptions', async () => {
-      const user = await seedUser(authService);
+      const user = await seedUser();
+      await seedSubscription({ user: { connect: { id: user.id } } });
+      await seedSubscription({ user: { connect: { id: user.id } } });
+
+      // other user is not related:
+      const user2 = await seedUser();
+      await seedSubscription({ user: { connect: { id: user2.id } } });
+
       const subscriptionsResponse = await controller.findAll({
         user: { id: user.id },
       } as Parameters<typeof controller.findAll>[0]);
 
-      // TODO extend the test to check that only subscriptions of current user are returned
       expect(subscriptionsResponse).toHaveProperty(
         'subscriptions',
         expect.any(Array)
+      );
+
+      expect(subscriptionsResponse.subscriptions).toHaveLength(2);
+      expect(subscriptionsResponse.subscriptions[0]).toHaveProperty('id');
+      expect(subscriptionsResponse.subscriptions[0]).toHaveProperty('name');
+      // not exposing deletedAt field to check filtering per DTO object
+      expect(subscriptionsResponse.subscriptions[0]).not.toHaveProperty(
+        'deletedAt'
       );
     });
   });

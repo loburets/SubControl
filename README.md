@@ -13,11 +13,11 @@ This repository includes frontend, backend and landing for the project
 
 ### Some used best practices:
 
-- Testing trophy instead of testing pyramid
+- The Testing Trophy instead of the testing pyramid [(the tests are here)](apps/backend/tests)
 - Integration tests made for controllers and they are ready to be run in parallel on the same DB
 - DB Migrations
 - DTOs for requests to prevent injections
 - DTOs for responses to not expose sensitive fields 
 - Same DTOs [are shared](packages/shared-dtos) between frontend and backend to have proper types
-- Swagger documentation generated per code and can [run requests a for test user](apps/backend/src/utils/swagger.ts)
+- Swagger documentation generated per code and can [run requests on behalf of a test user](apps/backend/src/utils/swagger.ts)
 - Money are stored as cents (integer value)
