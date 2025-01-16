@@ -4,6 +4,7 @@ import { AuthController } from '../../src/modules/auth/auth.controller';
 import { faker } from '@faker-js/faker';
 import { PrismaClient } from '@prisma/client';
 import { AuthModule } from '../../src/modules/auth/auth.module';
+import { seedUser } from '../seeds/user.seed';
 
 const prisma = new PrismaClient();
 
@@ -43,6 +44,18 @@ describe('AuthController', () => {
         where: { email },
       });
       expect(user).toBeDefined();
+    });
+
+    it('should trigger error if email is already taken', async () => {
+      const email = faker.internet.email();
+      await seedUser({ email });
+
+      await expect(
+        controller.register({
+          email,
+          password: faker.internet.password(),
+        })
+      ).rejects.toThrow('Email is already taken');
     });
   });
 
