@@ -6,6 +6,10 @@ export class SubscriptionResponseDto extends SubscriptionRequestDto {
   @ApiProperty({ description: 'The ID of the subscription' })
   @Expose()
   id!: number;
+
+  @ApiProperty({ description: 'The creation date of the subscription' })
+  @Expose()
+  createdAt!: Date;
 }
 
 export class SubscriptionListResponseDto {
