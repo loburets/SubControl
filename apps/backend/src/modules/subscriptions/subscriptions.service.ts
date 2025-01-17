@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateSubscriptionDto } from './dto/create-subscription.dto';
-import { UpdateSubscriptionDto } from './dto/update-subscription.dto';
 import { PrismaService } from '../../prisma/prisma.service';
+import { SubscriptionRequestDto } from '@subcontrol/shared-dtos/subscriptions';
 
 // some reasonable real-life limitation to avoid elements pagination for sake of simplicity
 const takeMaxElements = 500;
@@ -10,14 +9,14 @@ const takeMaxElements = 500;
 export class SubscriptionsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(createSubscriptionDto: CreateSubscriptionDto) {
+  create(createSubscriptionDto: SubscriptionRequestDto) {
     return 'This action adds a new subscription';
   }
 
   findAll({ userId }: { userId: number }) {
     return this.prisma.subscription.findMany({
       take: takeMaxElements,
-      where: { userId },
+      where: { userId, deletedAt: null },
     });
   }
 
@@ -25,7 +24,7 @@ export class SubscriptionsService {
     return `This action returns a #${id} subscription`;
   }
 
-  update(id: number, updateSubscriptionDto: UpdateSubscriptionDto) {
+  update(id: number, updateSubscriptionDto: SubscriptionRequestDto) {
     return `This action updates a #${id} subscription`;
   }
 
