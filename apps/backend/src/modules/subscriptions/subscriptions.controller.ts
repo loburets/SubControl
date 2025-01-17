@@ -86,11 +86,16 @@ export class SubscriptionsController {
     description: 'Subscription not found.',
   })
   @ApiBearerAuth('jwt')
-  async findOne(@Param('id') id: string) {
-    const subscription = await this.subscriptionsService.findOne(+id);
-    if (!subscription) {
-      throw new NotFoundException('Subscription not found');
-    }
+  async findOne(
+    @Req() req: Request & { user: { id: number } },
+    @Param('id') id: string
+  ) {
+    const subscription =
+      await this.subscriptionsService.checkSubscriptionCanBeRetrievedForUser(
+        +id,
+        req.user.id
+      );
+
     return transformToResponseDto(subscription, SubscriptionResponseDto);
   }
 
@@ -108,16 +113,20 @@ export class SubscriptionsController {
   })
   @ApiBearerAuth('jwt')
   async update(
+    @Req() req: Request & { user: { id: number } },
     @Param('id') id: string,
     @Body() updateSubscriptionDto: SubscriptionRequestDto
   ) {
+    await this.subscriptionsService.checkSubscriptionCanBeRetrievedForUser(
+      +id,
+      req.user.id
+    );
+
     const subscription = await this.subscriptionsService.update(
       +id,
       updateSubscriptionDto
     );
-    if (!subscription) {
-      throw new NotFoundException('Subscription not found');
-    }
+
     return transformToResponseDto(subscription, SubscriptionResponseDto);
   }
 
@@ -133,11 +142,17 @@ export class SubscriptionsController {
     description: 'Subscription not found.',
   })
   @ApiBearerAuth('jwt')
-  async remove(@Param('id') id: string) {
-    const subscription = await this.subscriptionsService.remove(+id);
-    if (!subscription) {
-      throw new NotFoundException('Subscription not found');
-    }
+  async remove(
+    @Req() req: Request & { user: { id: number } },
+    @Param('id') id: string
+  ) {
+    await this.subscriptionsService.checkSubscriptionCanBeRetrievedForUser(
+      +id,
+      req.user.id
+    );
+
+    await this.subscriptionsService.remove(+id);
+
     return { message: 'Subscription successfully deleted' };
   }
 }
