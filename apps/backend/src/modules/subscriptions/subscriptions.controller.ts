@@ -8,15 +8,15 @@ import {
   Req,
   Delete,
   UseGuards,
+  NotFoundException,
 } from '@nestjs/common';
 import { Request } from 'express';
 
 import { SubscriptionsService } from './subscriptions.service';
-import { CreateSubscriptionDto } from './dto/create-subscription.dto';
-import { UpdateSubscriptionDto } from './dto/update-subscription.dto';
 import {
   SubscriptionListResponseDto,
   SubscriptionResponseDto,
+  SubscriptionRequestDto,
 } from '@subcontrol/shared-dtos/subscriptions';
 import { transformToResponseDto } from '../../utils/transformer';
 import {
@@ -33,8 +33,23 @@ export class SubscriptionsController {
   constructor(private readonly subscriptionsService: SubscriptionsService) {}
 
   @Post()
-  create(@Body() createSubscriptionDto: CreateSubscriptionDto) {
-    return this.subscriptionsService.create(createSubscriptionDto);
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Create a new subscription' })
+  @ApiResponse({
+    status: 200,
+    description: 'The subscription has been successfully created.',
+    type: SubscriptionResponseDto,
+  })
+  @ApiBearerAuth('jwt')
+  async create(
+    @Req() req: Request & { user: { id: number } },
+    @Body() createSubscriptionDto: SubscriptionRequestDto
+  ) {
+    const subscription = await this.subscriptionsService.create(
+      req.user.id,
+      createSubscriptionDto
+    );
+    return transformToResponseDto(subscription, SubscriptionResponseDto);
   }
 
   @Get()
@@ -59,20 +74,85 @@ export class SubscriptionsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.subscriptionsService.findOne(+id);
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Get a subscription by ID' })
+  @ApiResponse({
+    status: 200,
+    description: 'The subscription has been successfully retrieved.',
+    type: SubscriptionResponseDto,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Subscription not found.',
+  })
+  @ApiBearerAuth('jwt')
+  async findOne(
+    @Req() req: Request & { user: { id: number } },
+    @Param('id') id: string
+  ) {
+    const subscription =
+      await this.subscriptionsService.checkSubscriptionCanBeRetrievedForUser(
+        +id,
+        req.user.id
+      );
+
+    return transformToResponseDto(subscription, SubscriptionResponseDto);
   }
 
   @Patch(':id')
-  update(
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Update a subscription by ID' })
+  @ApiResponse({
+    status: 200,
+    description: 'The subscription has been successfully updated.',
+    type: SubscriptionResponseDto,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Subscription not found.',
+  })
+  @ApiBearerAuth('jwt')
+  async update(
+    @Req() req: Request & { user: { id: number } },
     @Param('id') id: string,
-    @Body() updateSubscriptionDto: UpdateSubscriptionDto
+    @Body() updateSubscriptionDto: SubscriptionRequestDto
   ) {
-    return this.subscriptionsService.update(+id, updateSubscriptionDto);
+    await this.subscriptionsService.checkSubscriptionCanBeRetrievedForUser(
+      +id,
+      req.user.id
+    );
+
+    const subscription = await this.subscriptionsService.update(
+      +id,
+      updateSubscriptionDto
+    );
+
+    return transformToResponseDto(subscription, SubscriptionResponseDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.subscriptionsService.remove(+id);
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Delete a subscription by ID' })
+  @ApiResponse({
+    status: 200,
+    description: 'The subscription has been successfully deleted.',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Subscription not found.',
+  })
+  @ApiBearerAuth('jwt')
+  async remove(
+    @Req() req: Request & { user: { id: number } },
+    @Param('id') id: string
+  ) {
+    await this.subscriptionsService.checkSubscriptionCanBeRetrievedForUser(
+      +id,
+      req.user.id
+    );
+
+    await this.subscriptionsService.remove(+id);
+
+    return { message: 'Subscription successfully deleted' };
   }
 }

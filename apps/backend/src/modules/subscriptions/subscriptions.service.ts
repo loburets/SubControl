@@ -1,7 +1,6 @@
-import { Injectable } from '@nestjs/common';
-import { CreateSubscriptionDto } from './dto/create-subscription.dto';
-import { UpdateSubscriptionDto } from './dto/update-subscription.dto';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
+import { SubscriptionRequestDto } from '@subcontrol/shared-dtos/subscriptions';
 
 // some reasonable real-life limitation to avoid elements pagination for sake of simplicity
 const takeMaxElements = 500;
@@ -10,26 +9,66 @@ const takeMaxElements = 500;
 export class SubscriptionsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(createSubscriptionDto: CreateSubscriptionDto) {
-    return 'This action adds a new subscription';
-  }
-
-  findAll({ userId }: { userId: number }) {
-    return this.prisma.subscription.findMany({
-      take: takeMaxElements,
-      where: { userId },
+  async create(userId: number, createSubscriptionDto: SubscriptionRequestDto) {
+    return this.prisma.subscription.create({
+      data: { userId, ...createSubscriptionDto },
     });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} subscription`;
+  async findAll({ userId }: { userId: number }) {
+    return this.prisma.subscription.findMany({
+      take: takeMaxElements,
+      where: { userId, deletedAt: null },
+    });
   }
 
-  update(id: number, updateSubscriptionDto: UpdateSubscriptionDto) {
-    return `This action updates a #${id} subscription`;
+  async findOne(id: number) {
+    const subscription = await this.prisma.subscription.findUnique({
+      where: { id, deletedAt: null },
+    });
+
+    if (!subscription) {
+      throw new NotFoundException('Subscription not found');
+    }
+
+    return subscription;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} subscription`;
+  async update(id: number, updateSubscriptionDto: SubscriptionRequestDto) {
+    const subscription = await this.prisma.subscription.findUnique({
+      where: { id, deletedAt: null },
+    });
+
+    if (!subscription) {
+      throw new NotFoundException('Subscription not found');
+    }
+
+    return this.prisma.subscription.update({
+      where: { id },
+      data: updateSubscriptionDto,
+    });
+  }
+
+  async remove(id: number) {
+    const subscription = await this.prisma.subscription.findUnique({
+      where: { id, deletedAt: null },
+    });
+
+    if (!subscription) {
+      throw new NotFoundException('Subscription not found');
+    }
+
+    return this.prisma.subscription.update({
+      where: { id },
+      data: { deletedAt: new Date() },
+    });
+  }
+
+  async checkSubscriptionCanBeRetrievedForUser(id: number, userId: number) {
+    const subscription = await this.findOne(id);
+    if (!subscription || subscription.userId !== userId) {
+      throw new NotFoundException('Subscription not found');
+    }
+    return subscription;
   }
 }
