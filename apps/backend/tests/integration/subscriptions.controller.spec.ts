@@ -6,6 +6,9 @@ import { seedUser } from '../seeds/user.seed';
 import { seedSubscription } from '../seeds/subscription.seed';
 import { SubscriptionRequestDto } from '@subcontrol/shared-dtos/subscriptions';
 import { Period, Currency } from '@subcontrol/shared-dtos/subscriptions';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 describe('SubscriptionsController', () => {
   let controller: SubscriptionsController;
@@ -68,6 +71,23 @@ describe('SubscriptionsController', () => {
       expect(result).toHaveProperty('id', subscription.id);
       expect(result).toHaveProperty('name', subscription.name);
     });
+
+    it('should not return subscription to another user', async () => {
+      const user = await seedUser();
+      const otherUser = await seedUser();
+      const subscription = await seedSubscription({
+        user: { connect: { id: user.id } },
+      });
+
+      await expect(
+        controller.findOne(
+          {
+            user: { id: otherUser.id },
+          } as Parameters<typeof controller.findOne>[0],
+          subscription.id.toString()
+        )
+      ).rejects.toThrowError('Subscription not found');
+    });
   });
 
   describe('create', () => {
@@ -90,6 +110,11 @@ describe('SubscriptionsController', () => {
       );
       expect(result).toHaveProperty('id');
       expect(result).toHaveProperty('name', createDto.name);
+
+      const subscription = await prisma.subscription.findUnique({
+        where: { id: result.id },
+      });
+      expect(subscription?.userId).toBe(user.id);
     });
   });
 
@@ -120,6 +145,33 @@ describe('SubscriptionsController', () => {
       expect(result).toHaveProperty('id', subscription.id);
       expect(result).toHaveProperty('name', updateDto.name);
     });
+
+    it('should not update subscription of another user', async () => {
+      const user = await seedUser();
+      const anotherUser = await seedUser();
+      const subscription = await seedSubscription({
+        user: { connect: { id: user.id } },
+      });
+
+      const updateDto: SubscriptionRequestDto = {
+        name: 'Updated Subscription',
+        period: Period.MONTHLY,
+        centsPerPeriod: 1000,
+        currency: Currency.AUD,
+        startedAt: new Date(),
+        cancelledAt: null,
+      };
+
+      await expect(
+        controller.update(
+          {
+            user: { id: anotherUser.id },
+          } as Parameters<typeof controller.update>[0],
+          subscription.id.toString(),
+          updateDto
+        )
+      ).rejects.toThrowError('Subscription not found');
+    });
   });
 
   describe('remove', () => {
@@ -142,6 +194,23 @@ describe('SubscriptionsController', () => {
           {
             user: { id: user.id },
           } as Parameters<typeof controller.findOne>[0],
+          subscription.id.toString()
+        )
+      ).rejects.toThrowError('Subscription not found');
+    });
+
+    it('should not delete subscription of another user', async () => {
+      const user = await seedUser();
+      const anotherUser = await seedUser();
+      const subscription = await seedSubscription({
+        user: { connect: { id: user.id } },
+      });
+
+      await expect(
+        controller.remove(
+          {
+            user: { id: anotherUser.id },
+          } as Parameters<typeof controller.remove>[0],
           subscription.id.toString()
         )
       ).rejects.toThrowError('Subscription not found');
