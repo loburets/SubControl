@@ -40,7 +40,13 @@ describe('AppController (e2e)', () => {
     const createSubscriptionResponse = await request(app.getHttpServer())
       .post('/subscriptions')
       .set('Authorization', `Bearer ${registerAccessToken}`)
-      .send({ name: 'Test Subscription' }) // Add fields according to your Subscription DTO
+      .send({
+        name: 'Test Subscription',
+        period: 'MONTHLY',
+        centsPerPeriod: 1,
+        currency: 'GBP',
+        startedAt: '2025-01-17T14:03:45.520Z',
+      })
       .expect(201)
       .expect('Content-Type', /json/);
 
@@ -48,6 +54,10 @@ describe('AppController (e2e)', () => {
       id: expect.any(Number),
       name: 'Test Subscription',
       createdAt: expect.any(String),
+      startedAt: expect.any(String),
+      period: 'MONTHLY',
+      centsPerPeriod: 1,
+      currency: 'GBP',
     });
 
     // Login the user
@@ -68,13 +78,7 @@ describe('AppController (e2e)', () => {
       .expect('Content-Type', /json/);
 
     expect(subscriptionsResponse.body).toMatchObject({
-      subscriptions: expect.arrayContaining([
-        {
-          id: expect.any(Number),
-          name: 'Test Subscription',
-          createdAt: expect.any(String),
-        },
-      ]),
+      subscriptions: expect.arrayContaining([createSubscriptionResponse.body]),
     });
   });
 });

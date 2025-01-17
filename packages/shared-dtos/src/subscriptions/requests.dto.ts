@@ -6,6 +6,7 @@ import {
   IsNumber,
   IsEnum,
   IsOptional,
+  Min,
 } from 'class-validator';
 
 enum Currency {
@@ -40,6 +41,7 @@ export class SubscriptionRequestDto {
   @ApiProperty({ description: 'Price per period in cents' })
   @Expose()
   @IsNumber()
+  @Min(1)
   centsPerPeriod!: number;
 
   @ApiProperty({ description: 'Currency' })
