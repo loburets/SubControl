@@ -28,7 +28,7 @@ export class SubscriptionsService {
     });
 
     if (!subscription) {
-      throw new NotFoundException(`Subscription with ID ${id} not found`);
+      throw new NotFoundException('Subscription not found');
     }
 
     return subscription;
@@ -40,7 +40,7 @@ export class SubscriptionsService {
     });
 
     if (!subscription) {
-      throw new NotFoundException(`Subscription with ID ${id} not found`);
+      throw new NotFoundException('Subscription not found');
     }
 
     return this.prisma.subscription.update({
@@ -55,7 +55,7 @@ export class SubscriptionsService {
     });
 
     if (!subscription) {
-      throw new NotFoundException(`Subscription with ID ${id} not found`);
+      throw new NotFoundException('Subscription not found');
     }
 
     return this.prisma.subscription.update({

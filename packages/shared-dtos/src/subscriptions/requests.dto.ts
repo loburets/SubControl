@@ -9,7 +9,7 @@ import {
   Min,
 } from 'class-validator';
 
-enum Currency {
+export enum Currency {
   USD = 'USD',
   EUR = 'EUR',
   GBP = 'GBP',
@@ -21,7 +21,7 @@ enum Currency {
   OTHER = 'OTHER',
 }
 
-enum Period {
+export enum Period {
   YEARLY = 'YEARLY',
   MONTHLY = 'MONTHLY',
   WEEKLY = 'WEEKLY',
