@@ -7,6 +7,7 @@ import { seedSubscription } from '../seeds/subscription.seed';
 import { SubscriptionRequestDto } from '@subcontrol/shared-dtos/subscriptions';
 import { Period, Currency } from '@subcontrol/shared-dtos/subscriptions';
 import { PrismaClient } from '@prisma/client';
+import { addMonths, subMonths } from 'date-fns';
 
 const prisma = new PrismaClient();
 
@@ -60,6 +61,11 @@ describe('SubscriptionsController', () => {
       const user = await seedUser();
       const subscription = await seedSubscription({
         user: { connect: { id: user.id } },
+        period: Period.MONTHLY,
+        startedAt: subMonths(new Date(), 3),
+        centsPerPeriod: 200,
+        currency: Currency.USD,
+        cancelledAt: null,
       });
 
       const result = await controller.findOne(
@@ -70,6 +76,13 @@ describe('SubscriptionsController', () => {
       );
       expect(result).toHaveProperty('id', subscription.id);
       expect(result).toHaveProperty('name', subscription.name);
+      expect(result).toHaveProperty('costPerMonth', 200);
+      expect(result).toHaveProperty('costPerYear', 200 * 12);
+      expect(result).toHaveProperty('totalSpent', 200 * 3);
+      expect(result).toHaveProperty(
+        'nextPaymentDate',
+        addMonths(new Date(), 9)
+      );
     });
 
     it('should not return subscription to another user', async () => {

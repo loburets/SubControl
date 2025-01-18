@@ -20,11 +20,11 @@ export class SubscriptionResponseDto extends SubscriptionRequestDto {
   @Expose()
   costPerYear!: number;
 
-  @ApiProperty({ description: 'Spent amount in cents' })
+  @ApiProperty({ description: 'Amount that already was spent in cents' })
   @Expose()
   totalSpent!: number;
 
-  @ApiProperty({ description: 'Next payment' })
+  @ApiProperty({ description: 'Next payment date' })
   @Expose()
   @IsOptional()
   nextPaymentDate!: Date | null;
