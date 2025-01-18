@@ -7,7 +7,14 @@ import { seedSubscription } from '../seeds/subscription.seed';
 import { SubscriptionRequestDto } from '@subcontrol/shared-dtos/subscriptions';
 import { Period, Currency } from '@subcontrol/shared-dtos/subscriptions';
 import { PrismaClient } from '@prisma/client';
-import { addMonths, startOfDay, subDays, subMonths } from 'date-fns';
+import {
+  addMonths,
+  addWeeks,
+  startOfDay,
+  subDays,
+  subMonths,
+  subWeeks,
+} from 'date-fns';
 import { fromZonedTime } from 'date-fns-tz';
 
 const prisma = new PrismaClient();
@@ -58,7 +65,41 @@ describe('SubscriptionsController', () => {
   });
 
   describe('findOne', () => {
-    it('should return a subscription by ID and with stats fields', async () => {
+    it('should return a subscription by ID', async () => {
+      const user = await seedUser();
+      const subscription = await seedSubscription({
+        user: { connect: { id: user.id } },
+      });
+
+      const result = await controller.findOne(
+        {
+          user: { id: user.id },
+        } as Parameters<typeof controller.findOne>[0],
+        subscription.id.toString()
+      );
+
+      expect(result).toHaveProperty('id', subscription.id);
+      expect(result).toHaveProperty('name', subscription.name);
+    });
+
+    it('should not return subscription to another user', async () => {
+      const user = await seedUser();
+      const otherUser = await seedUser();
+      const subscription = await seedSubscription({
+        user: { connect: { id: user.id } },
+      });
+
+      await expect(
+        controller.findOne(
+          {
+            user: { id: otherUser.id },
+          } as Parameters<typeof controller.findOne>[0],
+          subscription.id.toString()
+        )
+      ).rejects.toThrowError('Subscription not found');
+    });
+
+    it('should return a monthly subscription with correct stats fields', async () => {
       const user = await seedUser();
       const subscription = await seedSubscription({
         user: { connect: { id: user.id } },
@@ -80,28 +121,119 @@ describe('SubscriptionsController', () => {
       expect(result).toHaveProperty('name', subscription.name);
       expect(result).toHaveProperty('costPerMonth', 200);
       expect(result).toHaveProperty('costPerYear', 200 * 12);
-      expect(result).toHaveProperty('totalSpent', 200 * 3);
+      expect(result).toHaveProperty('totalSpent', 200 * 3 + 200);
       expect(result).toHaveProperty(
         'nextPaymentDate',
         fromZonedTime(startOfDay(subDays(addMonths(new Date(), 1), 5)), 'UTC')
       );
     });
 
-    it('should not return subscription to another user', async () => {
+    it('should return a weekly subscription with correct stats fields', async () => {
       const user = await seedUser();
-      const otherUser = await seedUser();
       const subscription = await seedSubscription({
         user: { connect: { id: user.id } },
+        period: Period.WEEKLY,
+        startedAt: subDays(subWeeks(new Date(), 8), 5),
+        centsPerPeriod: 200,
+        currency: Currency.USD,
+        cancelledAt: null,
       });
 
-      await expect(
-        controller.findOne(
-          {
-            user: { id: otherUser.id },
-          } as Parameters<typeof controller.findOne>[0],
-          subscription.id.toString()
-        )
-      ).rejects.toThrowError('Subscription not found');
+      const result = await controller.findOne(
+        {
+          user: { id: user.id },
+        } as Parameters<typeof controller.findOne>[0],
+        subscription.id.toString()
+      );
+
+      expect(result).toHaveProperty('id', subscription.id);
+      expect(result).toHaveProperty('name', subscription.name);
+      expect(result).toHaveProperty('costPerMonth', 869);
+      expect(result).toHaveProperty('costPerYear', 10400);
+      expect(result).toHaveProperty('totalSpent', 8 * 200 + 200);
+      expect(result).toHaveProperty(
+        'nextPaymentDate',
+        fromZonedTime(startOfDay(subDays(addWeeks(new Date(), 1), 5)), 'UTC')
+      );
+    });
+
+    it('should return a yearly subscription with correct stats fields', async () => {
+      const user = await seedUser();
+      const subscription = await seedSubscription({
+        user: { connect: { id: user.id } },
+        period: Period.YEARLY,
+        startedAt: subDays(subMonths(new Date(), 3), 5),
+        centsPerPeriod: 200,
+        currency: Currency.USD,
+        cancelledAt: null,
+      });
+
+      const result = await controller.findOne(
+        {
+          user: { id: user.id },
+        } as Parameters<typeof controller.findOne>[0],
+        subscription.id.toString()
+      );
+
+      expect(result).toHaveProperty('id', subscription.id);
+      expect(result).toHaveProperty('name', subscription.name);
+      expect(result).toHaveProperty('costPerMonth', 17);
+      expect(result).toHaveProperty('costPerYear', 200);
+      expect(result).toHaveProperty('totalSpent', 200);
+      expect(result).toHaveProperty(
+        'nextPaymentDate',
+        fromZonedTime(startOfDay(subDays(addMonths(new Date(), 9), 5)), 'UTC')
+      );
+    });
+
+    it('should return subscription with correct stats fields for cancellation day before next payment', async () => {
+      const user = await seedUser();
+      const subscription = await seedSubscription({
+        user: { connect: { id: user.id } },
+        period: Period.MONTHLY,
+        startedAt: subDays(subMonths(new Date(), 3), 5),
+        centsPerPeriod: 200,
+        currency: Currency.USD,
+        cancelledAt: subDays(subMonths(new Date(), 1), 6),
+      });
+
+      const result = await controller.findOne(
+        {
+          user: { id: user.id },
+        } as Parameters<typeof controller.findOne>[0],
+        subscription.id.toString()
+      );
+      expect(result).toHaveProperty('id', subscription.id);
+      expect(result).toHaveProperty('name', subscription.name);
+      expect(result).toHaveProperty('costPerMonth', 200);
+      expect(result).toHaveProperty('costPerYear', 200 * 12);
+      expect(result).toHaveProperty('totalSpent', 200 * 2);
+      expect(result).toHaveProperty('nextPaymentDate', null);
+    });
+
+    it('should return subscription with correct stats fields for cancellation day after next payment', async () => {
+      const user = await seedUser();
+      const subscription = await seedSubscription({
+        user: { connect: { id: user.id } },
+        period: Period.MONTHLY,
+        startedAt: subDays(subMonths(new Date(), 3), 5),
+        centsPerPeriod: 200,
+        currency: Currency.USD,
+        cancelledAt: subDays(subMonths(new Date(), 1), 4),
+      });
+
+      const result = await controller.findOne(
+        {
+          user: { id: user.id },
+        } as Parameters<typeof controller.findOne>[0],
+        subscription.id.toString()
+      );
+      expect(result).toHaveProperty('id', subscription.id);
+      expect(result).toHaveProperty('name', subscription.name);
+      expect(result).toHaveProperty('costPerMonth', 200);
+      expect(result).toHaveProperty('costPerYear', 200 * 12);
+      expect(result).toHaveProperty('totalSpent', 200 * 3);
+      expect(result).toHaveProperty('nextPaymentDate', null);
     });
   });
 
