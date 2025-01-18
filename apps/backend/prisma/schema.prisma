@@ -35,8 +35,8 @@ model Subscription {
   centsPerPeriod Int
   currency      Currency
 
-  startedAt     DateTime
-  cancelledAt   DateTime?
+  startedAt     DateTime @db.Date
+  cancelledAt   DateTime? @db.Date
 
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt

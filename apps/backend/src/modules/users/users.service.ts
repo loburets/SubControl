@@ -13,7 +13,6 @@ export class UsersService {
     hashPassword: () => Promise<string>;
   }) {
     const existingUser = await this.findByEmail(email);
-
     if (existingUser) {
       throw new ConflictException('Email is already taken');
     }

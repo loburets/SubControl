@@ -1,6 +1,7 @@
 import { Expose } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 import { SubscriptionRequestDto } from './requests.dto';
+import { IsOptional } from 'class-validator';
 
 export class SubscriptionResponseDto extends SubscriptionRequestDto {
   @ApiProperty({ description: 'The ID of the subscription' })
@@ -10,6 +11,23 @@ export class SubscriptionResponseDto extends SubscriptionRequestDto {
   @ApiProperty({ description: 'The creation date of the subscription' })
   @Expose()
   createdAt!: Date;
+
+  @ApiProperty({ description: 'Cost per months in cents' })
+  @Expose()
+  costPerMonth!: number;
+
+  @ApiProperty({ description: 'Cost per year in cents' })
+  @Expose()
+  costPerYear!: number;
+
+  @ApiProperty({ description: 'Amount that already was spent in cents' })
+  @Expose()
+  totalSpent!: number;
+
+  @ApiProperty({ description: 'Next payment date' })
+  @Expose()
+  @IsOptional()
+  nextPaymentDate!: Date | null;
 }
 
 export class SubscriptionListResponseDto {

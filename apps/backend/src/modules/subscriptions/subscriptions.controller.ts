@@ -8,7 +8,6 @@ import {
   Req,
   Delete,
   UseGuards,
-  NotFoundException,
 } from '@nestjs/common';
 import { Request } from 'express';
 
@@ -18,7 +17,7 @@ import {
   SubscriptionResponseDto,
   SubscriptionRequestDto,
 } from '@subcontrol/shared-dtos/subscriptions';
-import { transformToResponseDto } from '../../utils/transformer';
+import { transformToSubscriptionResponseDto } from '../../utils/transformer';
 import {
   ApiOperation,
   ApiResponse,
@@ -49,7 +48,7 @@ export class SubscriptionsController {
       req.user.id,
       createSubscriptionDto
     );
-    return transformToResponseDto(subscription, SubscriptionResponseDto);
+    return transformToSubscriptionResponseDto(subscription);
   }
 
   @Get()
@@ -68,7 +67,7 @@ export class SubscriptionsController {
 
     return {
       subscriptions: subscriptions.map((s) =>
-        transformToResponseDto(s, SubscriptionResponseDto)
+        transformToSubscriptionResponseDto(s)
       ),
     };
   }
@@ -96,7 +95,7 @@ export class SubscriptionsController {
         req.user.id
       );
 
-    return transformToResponseDto(subscription, SubscriptionResponseDto);
+    return transformToSubscriptionResponseDto(subscription);
   }
 
   @Patch(':id')
@@ -127,7 +126,7 @@ export class SubscriptionsController {
       updateSubscriptionDto
     );
 
-    return transformToResponseDto(subscription, SubscriptionResponseDto);
+    return transformToSubscriptionResponseDto(subscription);
   }
 
   @Delete(':id')
