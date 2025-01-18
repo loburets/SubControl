@@ -7,7 +7,8 @@ import { seedSubscription } from '../seeds/subscription.seed';
 import { SubscriptionRequestDto } from '@subcontrol/shared-dtos/subscriptions';
 import { Period, Currency } from '@subcontrol/shared-dtos/subscriptions';
 import { PrismaClient } from '@prisma/client';
-import { addMonths, subMonths } from 'date-fns';
+import { addMonths, startOfDay, subDays, subMonths } from 'date-fns';
+import { fromZonedTime } from 'date-fns-tz';
 
 const prisma = new PrismaClient();
 
@@ -57,12 +58,12 @@ describe('SubscriptionsController', () => {
   });
 
   describe('findOne', () => {
-    it('should return a subscription by ID', async () => {
+    it('should return a subscription by ID and with stats fields', async () => {
       const user = await seedUser();
       const subscription = await seedSubscription({
         user: { connect: { id: user.id } },
         period: Period.MONTHLY,
-        startedAt: subMonths(new Date(), 3),
+        startedAt: subDays(subMonths(new Date(), 3), 5),
         centsPerPeriod: 200,
         currency: Currency.USD,
         cancelledAt: null,
@@ -74,6 +75,7 @@ describe('SubscriptionsController', () => {
         } as Parameters<typeof controller.findOne>[0],
         subscription.id.toString()
       );
+
       expect(result).toHaveProperty('id', subscription.id);
       expect(result).toHaveProperty('name', subscription.name);
       expect(result).toHaveProperty('costPerMonth', 200);
@@ -81,7 +83,7 @@ describe('SubscriptionsController', () => {
       expect(result).toHaveProperty('totalSpent', 200 * 3);
       expect(result).toHaveProperty(
         'nextPaymentDate',
-        addMonths(new Date(), 9)
+        fromZonedTime(startOfDay(subDays(addMonths(new Date(), 1), 5)), 'UTC')
       );
     });
 
