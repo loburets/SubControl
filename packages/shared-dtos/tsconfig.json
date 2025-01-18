@@ -7,6 +7,7 @@
     "module": "commonjs",
     "target": "es6",
     "experimentalDecorators": true,
+    "allowJs": true,
     "emitDecoratorMetadata": true
   },
   "include": ["src/**/*"]
