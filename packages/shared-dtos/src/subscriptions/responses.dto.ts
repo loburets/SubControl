@@ -85,13 +85,13 @@ export class SubscriptionStatsResponseDto {
   @Expose()
   @IsNumber()
   @Min(1)
-  next30daysAmount!: number;
+  next30DaysAmount!: number;
 
   @ApiProperty({ description: 'Amount in cents' })
   @Expose()
   @IsNumber()
   @Min(1)
-  next365daysAmount!: number;
+  next365DaysAmount!: number;
 
   @ApiProperty({
     description: 'List of the next payments',
@@ -122,11 +122,11 @@ export class SubscriptionStatsResponseDto {
   @Expose()
   @IsNumber()
   @Min(1)
-  spentPast30days!: number;
+  spentPast30Days!: number;
 
   @ApiProperty({ description: 'Amount in cents' })
   @Expose()
   @IsNumber()
   @Min(1)
-  spentPast365days!: number;
+  spentPast365Days!: number;
 }
