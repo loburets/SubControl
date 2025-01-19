@@ -115,4 +115,21 @@ describe('AuthController', () => {
       ).rejects.toThrow('Invalid credentials');
     });
   });
+
+  describe('createDemo', () => {
+    it('should create user with subscriptions and return access token', async () => {
+      const subscriptionsCount = await prisma.subscription.count();
+      const response = await controller.createDemo();
+
+      expect(response).toHaveProperty('accessToken', expect.any(String));
+      // no additional data exposed
+      expect(Object.keys(response)).toHaveLength(1);
+
+      // note: not a good test as it's not guaranteed that no other tests are running in parallel
+      // to improve it a unit test can be written for the authService.makeDemoAccount method
+      expect(prisma.subscription.count()).resolves.toBeGreaterThan(
+        subscriptionsCount
+      );
+    });
+  });
 });
