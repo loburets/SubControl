@@ -118,13 +118,16 @@ export function getSubscriptionsStat(
 
     let currentStartOfPeriod = startOfDay(startedAt);
     // no need to calculate payments for subscriptions after it is inactive or longer than 1 year in the future
-    const endDate = cancelledAt ? cancelledAt : next365Days;
+    const endDate =
+      cancelledAt && isBefore(cancelledAt, next365Days)
+        ? cancelledAt
+        : next365Days;
     let count = 0;
     // prevent infinite loop or overloading the server by too old subscriptions
     const maxLoopCount = 52 * 50; // 50 years for weekly subscriptions
 
     // Calculate payment dates
-    while (isBefore(currentStartOfPeriod, endDate) || count < maxLoopCount) {
+    while (isBefore(currentStartOfPeriod, endDate) && count < maxLoopCount) {
       count++;
       const payment: SubscriptionPaymentResponseDto = {
         subscriptionId: subscription.id,

@@ -34,6 +34,25 @@ import { getSubscriptionsStat } from './subscriptions.calculator';
 export class SubscriptionsController {
   constructor(private readonly subscriptionsService: SubscriptionsService) {}
 
+  @Get('stats')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Get statistic data of the subscriptions' })
+  @ApiResponse({
+    status: 200,
+    description: 'The statistic has been successfully retrieved.',
+    type: SubscriptionStatsResponseDto,
+  })
+  @ApiBearerAuth('jwt')
+  async stats(
+    @Req() req: Request & { user: { id: number } }
+  ): Promise<SubscriptionStatsResponseDto> {
+    const subscriptions = await this.subscriptionsService.findAll({
+      userId: req.user.id,
+    });
+
+    return getSubscriptionsStat(subscriptions);
+  }
+
   @Post()
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Create a new subscription' })
@@ -156,24 +175,5 @@ export class SubscriptionsController {
     await this.subscriptionsService.remove(+id);
 
     return { message: 'Subscription successfully deleted' };
-  }
-
-  @Get('stats')
-  @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: 'Get statistic data of the subscriptions' })
-  @ApiResponse({
-    status: 200,
-    description: 'The statistic has been successfully retrieved.',
-    type: SubscriptionStatsResponseDto,
-  })
-  @ApiBearerAuth('jwt')
-  async stats(
-    @Req() req: Request & { user: { id: number } }
-  ): Promise<SubscriptionStatsResponseDto> {
-    const subscriptions = await this.subscriptionsService.findAll({
-      userId: req.user.id,
-    });
-
-    return getSubscriptionsStat(subscriptions);
   }
 }
