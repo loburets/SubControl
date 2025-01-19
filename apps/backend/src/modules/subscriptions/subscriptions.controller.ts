@@ -8,6 +8,7 @@ import {
   Req,
   Delete,
   UseGuards,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { Request } from 'express';
 
@@ -16,6 +17,7 @@ import {
   SubscriptionListResponseDto,
   SubscriptionResponseDto,
   SubscriptionRequestDto,
+  SubscriptionStatsResponseDto,
 } from '@subcontrol/shared-dtos/subscriptions';
 import { transformToSubscriptionResponseDto } from '../../utils/transformer';
 import {
@@ -25,11 +27,31 @@ import {
   ApiBearerAuth,
 } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { getSubscriptionsStat } from './subscriptions.calculator';
 
 @ApiTags('subscriptions')
 @Controller('subscriptions')
 export class SubscriptionsController {
   constructor(private readonly subscriptionsService: SubscriptionsService) {}
+
+  @Get('stats')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Get statistic data of the subscriptions' })
+  @ApiResponse({
+    status: 200,
+    description: 'The statistic has been successfully retrieved.',
+    type: SubscriptionStatsResponseDto,
+  })
+  @ApiBearerAuth('jwt')
+  async stats(
+    @Req() req: Request & { user: { id: number } }
+  ): Promise<SubscriptionStatsResponseDto> {
+    const subscriptions = await this.subscriptionsService.findAll({
+      userId: req.user.id,
+    });
+
+    return getSubscriptionsStat(subscriptions);
+  }
 
   @Post()
   @UseGuards(JwtAuthGuard)
@@ -87,7 +109,7 @@ export class SubscriptionsController {
   @ApiBearerAuth('jwt')
   async findOne(
     @Req() req: Request & { user: { id: number } },
-    @Param('id') id: string
+    @Param('id', ParseIntPipe) id: string
   ) {
     const subscription =
       await this.subscriptionsService.checkSubscriptionCanBeRetrievedForUser(
@@ -113,7 +135,7 @@ export class SubscriptionsController {
   @ApiBearerAuth('jwt')
   async update(
     @Req() req: Request & { user: { id: number } },
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: string,
     @Body() updateSubscriptionDto: SubscriptionRequestDto
   ) {
     await this.subscriptionsService.checkSubscriptionCanBeRetrievedForUser(
@@ -143,7 +165,7 @@ export class SubscriptionsController {
   @ApiBearerAuth('jwt')
   async remove(
     @Req() req: Request & { user: { id: number } },
-    @Param('id') id: string
+    @Param('id', ParseIntPipe) id: string
   ) {
     await this.subscriptionsService.checkSubscriptionCanBeRetrievedForUser(
       +id,
