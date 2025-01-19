@@ -19,7 +19,10 @@ import {
   SubscriptionRequestDto,
   SubscriptionStatsResponseDto,
 } from '@subcontrol/shared-dtos/subscriptions';
-import { transformToSubscriptionResponseDto } from '../../utils/transformer';
+import {
+  transformToResponseDto,
+  transformToSubscriptionResponseDto,
+} from '../../utils/transformer';
 import {
   ApiOperation,
   ApiResponse,
@@ -50,7 +53,10 @@ export class SubscriptionsController {
       userId: req.user.id,
     });
 
-    return getSubscriptionsStat(subscriptions);
+    return transformToResponseDto(
+      getSubscriptionsStat(subscriptions),
+      SubscriptionStatsResponseDto
+    );
   }
 
   @Post()

@@ -23,4 +23,5 @@ This repository includes frontend, backend and landing for the project
 - Swagger documentation generated per [ts decorators](apps/backend/src/modules/subscriptions/subscriptions.controller.ts) and can [run requests on behalf of a test user](apps/backend/src/utils/swagger.ts)
 - Money are stored as cents (integer value)
 - Winston logger with [different transports](apps/backend/src/config/winston-logger.config.ts) for different environments
+- No sensitive data in logs, only ids
 - BugSnag integration (Sentry alternative)

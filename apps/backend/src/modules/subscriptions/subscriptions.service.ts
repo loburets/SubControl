@@ -1,6 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
-import { SubscriptionRequestDto } from '@subcontrol/shared-dtos/subscriptions';
+import {
+  Currency,
+  Period,
+  SubscriptionRequestDto,
+} from '@subcontrol/shared-dtos/subscriptions';
+import { addDays, subMonths, subYears } from 'date-fns';
 
 // some reasonable real-life limitation to avoid elements pagination for sake of simplicity
 const takeMaxElements = 500;
@@ -70,5 +75,41 @@ export class SubscriptionsService {
       throw new NotFoundException('Subscription not found');
     }
     return subscription;
+  }
+
+  async createDemoData(userId: number) {
+    // some simple monthly subscription
+    await this.create(userId, {
+      name: 'Netflix',
+      centsPerPeriod: 1099,
+      startedAt: new Date(),
+      period: Period.MONTHLY,
+      currency: Currency.USD,
+    });
+    // some yearly subscription with payment soon
+    await this.create(userId, {
+      name: 'Spotify',
+      centsPerPeriod: 6999,
+      startedAt: addDays(subYears(new Date(), 3), 3),
+      period: Period.YEARLY,
+      currency: Currency.USD,
+    });
+    // some weekly subscription that was cancelled in the past
+    await this.create(userId, {
+      name: 'Amazon Prime',
+      centsPerPeriod: 199,
+      startedAt: addDays(subMonths(new Date(), 13), 3),
+      period: Period.WEEKLY,
+      currency: Currency.USD,
+      cancelledAt: addDays(subMonths(new Date(), 3), 9),
+    });
+    // some subscription in the other currency
+    await this.create(userId, {
+      name: 'PlayStation Plus',
+      centsPerPeriod: 60000,
+      startedAt: addDays(subYears(new Date(), 3), 15),
+      period: Period.MONTHLY,
+      currency: Currency.TRY,
+    });
   }
 }
