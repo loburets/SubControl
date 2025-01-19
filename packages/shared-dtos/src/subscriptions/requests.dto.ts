@@ -53,7 +53,7 @@ export class SubscriptionRequestDto {
   @Expose()
   @IsDateString()
   @IsOptional()
-  cancelledAt!: Date | null | undefined;
+  cancelledAt?: Date | null | undefined;
 
   @ApiProperty({ description: 'The start date of the subscription' })
   @Expose()

@@ -42,4 +42,15 @@ export class AuthController {
       AuthResponseDto
     );
   }
+
+  @ApiResponse({
+    status: 201,
+    description: 'User has been registered and demo data was seeded.',
+    type: AuthResponseDto,
+  })
+  @Post('demo')
+  async createDemo() {
+    const response = await this.authService.makeDemoAccount();
+    return transformToResponseDto(response, AuthResponseDto);
+  }
 }

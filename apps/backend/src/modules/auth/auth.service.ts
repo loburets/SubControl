@@ -2,6 +2,7 @@ import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import * as bcrypt from 'bcrypt';
+import { SubscriptionsService } from '../subscriptions/subscriptions.service';
 
 @Injectable()
 export class AuthService {
@@ -9,7 +10,8 @@ export class AuthService {
 
   constructor(
     private usersService: UsersService,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private subscriptionsService: SubscriptionsService
   ) {}
 
   async validateUser(email: string, password: string) {
@@ -46,7 +48,21 @@ export class AuthService {
         sub: newUser.id,
         email: newUser.email,
       }),
+      user: newUser,
     };
+  }
+
+  async makeDemoAccount() {
+    this.logger.log('Requested to make a demo user');
+
+    const userData = await this.register({
+      email: `demo-${Date.now()}@example.com`,
+      password: `demo-${Date.now()}-${Math.random()}`,
+    });
+
+    await this.subscriptionsService.createDemoData(userData.user.id);
+
+    return userData;
   }
 
   async hashPassword(password: string): Promise<string> {
