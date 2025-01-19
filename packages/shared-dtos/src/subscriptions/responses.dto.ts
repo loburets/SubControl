@@ -1,6 +1,6 @@
 import { Expose } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
-import { Currency, SubscriptionRequestDto } from './requests.dto';
+import { Currency, Period, SubscriptionRequestDto } from './requests.dto';
 
 export class SubscriptionResponseDto extends SubscriptionRequestDto {
   @ApiProperty({ description: 'The ID of the subscription' })
@@ -57,6 +57,10 @@ export class SubscriptionPaymentResponseDto {
   @ApiProperty({ description: 'The date of the payment' })
   @Expose()
   date!: Date;
+
+  @ApiProperty({ description: 'The Period' })
+  @Expose()
+  period!: Period;
 }
 
 export class AmountResponseDto {

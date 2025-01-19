@@ -140,6 +140,7 @@ export function getSubscriptionsStat(
         subscriptionName: subscription.name,
         amount: centsPerPeriod,
         date: currentStartOfPeriod,
+        period: subscription.period as Period,
       };
 
       // process future payments
