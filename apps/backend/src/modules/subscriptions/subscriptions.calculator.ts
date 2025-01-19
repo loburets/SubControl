@@ -99,7 +99,8 @@ export function getSubscriptionsStat(
   const now = startOfDay(new Date());
   const next30Days = addDays(now, 30);
   const next365Days = addDays(now, 365);
-  const next2Years = addYears(now, 2);
+  // no need to calculate payments for subscriptions longer than X years in the future
+  const calculationsLimit = addYears(now, 5);
   const past30Days = subDays(now, 30);
   const past365Days = subDays(now, 365);
   const thisYearStart = startOfYear(now);
@@ -121,11 +122,11 @@ export function getSubscriptionsStat(
     const { period, centsPerPeriod, startedAt, cancelledAt } = subscription;
 
     let currentStartOfPeriod = startOfDay(startedAt);
-    // no need to calculate payments for subscriptions after it is inactive or longer than 2 years in the future
+    // no need to calculate payments for subscriptions after it is cancelled or longer some time limit in the future
     const endDate =
-      cancelledAt && isBefore(cancelledAt, next2Years)
+      cancelledAt && isBefore(cancelledAt, calculationsLimit)
         ? cancelledAt
-        : next2Years;
+        : calculationsLimit;
     let count = 0;
     // prevent infinite loop or overloading the server by too old subscriptions
     const maxLoopCount = 52 * 50; // 50 years for weekly subscriptions
