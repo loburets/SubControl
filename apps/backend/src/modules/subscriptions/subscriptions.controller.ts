@@ -8,6 +8,7 @@ import {
   Req,
   Delete,
   UseGuards,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { Request } from 'express';
 
@@ -89,7 +90,7 @@ export class SubscriptionsController {
   @ApiBearerAuth('jwt')
   async findOne(
     @Req() req: Request & { user: { id: number } },
-    @Param('id') id: string
+    @Param('id', ParseIntPipe) id: string
   ) {
     const subscription =
       await this.subscriptionsService.checkSubscriptionCanBeRetrievedForUser(
@@ -115,7 +116,7 @@ export class SubscriptionsController {
   @ApiBearerAuth('jwt')
   async update(
     @Req() req: Request & { user: { id: number } },
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: string,
     @Body() updateSubscriptionDto: SubscriptionRequestDto
   ) {
     await this.subscriptionsService.checkSubscriptionCanBeRetrievedForUser(
@@ -145,7 +146,7 @@ export class SubscriptionsController {
   @ApiBearerAuth('jwt')
   async remove(
     @Req() req: Request & { user: { id: number } },
-    @Param('id') id: string
+    @Param('id', ParseIntPipe) id: string
   ) {
     await this.subscriptionsService.checkSubscriptionCanBeRetrievedForUser(
       +id,
