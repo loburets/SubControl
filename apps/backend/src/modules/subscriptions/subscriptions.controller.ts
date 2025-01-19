@@ -16,6 +16,7 @@ import {
   SubscriptionListResponseDto,
   SubscriptionResponseDto,
   SubscriptionRequestDto,
+  SubscriptionStatsResponseDto,
 } from '@subcontrol/shared-dtos/subscriptions';
 import { transformToSubscriptionResponseDto } from '../../utils/transformer';
 import {
@@ -25,6 +26,7 @@ import {
   ApiBearerAuth,
 } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { getSubscriptionsStat } from './subscriptions.calculator';
 
 @ApiTags('subscriptions')
 @Controller('subscriptions')
@@ -153,5 +155,24 @@ export class SubscriptionsController {
     await this.subscriptionsService.remove(+id);
 
     return { message: 'Subscription successfully deleted' };
+  }
+
+  @Get('stats')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Get statistic data of the subscriptions' })
+  @ApiResponse({
+    status: 200,
+    description: 'The statistic has been successfully retrieved.',
+    type: SubscriptionStatsResponseDto,
+  })
+  @ApiBearerAuth('jwt')
+  async stats(
+    @Req() req: Request & { user: { id: number } }
+  ): Promise<SubscriptionStatsResponseDto> {
+    const subscriptions = await this.subscriptionsService.findAll({
+      userId: req.user.id,
+    });
+
+    return getSubscriptionsStat(subscriptions);
   }
 }

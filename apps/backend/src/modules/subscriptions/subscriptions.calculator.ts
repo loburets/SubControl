@@ -1,5 +1,8 @@
 import { Subscription } from '@prisma/client';
-import { Period } from '@subcontrol/shared-dtos/subscriptions';
+import {
+  Period,
+  SubscriptionStatsResponseDto,
+} from '@subcontrol/shared-dtos/subscriptions';
 import {
   addMonths,
   addWeeks,
@@ -75,3 +78,7 @@ export function getSubscriptionCalculatedData(subscription: Subscription): {
     nextPaymentDate,
   };
 }
+
+export function getSubscriptionsStat(
+  subscriptions: Subscription[]
+): SubscriptionStatsResponseDto {}
