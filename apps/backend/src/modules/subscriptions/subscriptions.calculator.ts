@@ -4,6 +4,7 @@ import {
   SubscriptionStatsResponseDto,
   SubscriptionPaymentResponseDto,
   Currency,
+  AmountResponseDto,
 } from '@subcontrol/shared-dtos/subscriptions';
 import {
   addDays,
@@ -21,6 +22,8 @@ import {
   subDays,
   subYears,
 } from 'date-fns';
+
+type AmountPerCurrency = Partial<Record<Currency, number>>;
 
 export function getSubscriptionCalculatedData(subscription: Subscription): {
   costPerMonth: number;
@@ -96,19 +99,20 @@ export function getSubscriptionsStat(
   const now = startOfDay(new Date());
   const next30Days = addDays(now, 30);
   const next365Days = addDays(now, 365);
+  const next2Years = addYears(now, 2);
   const past30Days = subDays(now, 30);
   const past365Days = subDays(now, 365);
   const thisYearStart = startOfYear(now);
   const thisYearEnd = endOfYear(now);
   const lastYearStart = startOfYear(subYears(now, 1));
 
-  let next30DaysAmount = 0;
-  let next365DaysAmount = 0;
-  let totalSpent = 0;
-  let expectedSpentThisYear = 0;
-  let spentLastYear = 0;
-  let spentPast30Days = 0;
-  let spentPast365Days = 0;
+  const next30DaysAmount: AmountPerCurrency = {};
+  const next365DaysAmount: AmountPerCurrency = {};
+  const totalSpent: AmountPerCurrency = {};
+  const expectedSpentThisYear: AmountPerCurrency = {};
+  const spentLastYear: AmountPerCurrency = {};
+  const spentPast30Days: AmountPerCurrency = {};
+  const spentPast365Days: AmountPerCurrency = {};
 
   const nextPayments: SubscriptionPaymentResponseDto[] = [];
   const pastPayments: SubscriptionPaymentResponseDto[] = [];
@@ -117,11 +121,11 @@ export function getSubscriptionsStat(
     const { period, centsPerPeriod, startedAt, cancelledAt } = subscription;
 
     let currentStartOfPeriod = startOfDay(startedAt);
-    // no need to calculate payments for subscriptions after it is inactive or longer than 1 year in the future
+    // no need to calculate payments for subscriptions after it is inactive or longer than 2 years in the future
     const endDate =
-      cancelledAt && isBefore(cancelledAt, next365Days)
+      cancelledAt && isBefore(cancelledAt, next2Years)
         ? cancelledAt
-        : next365Days;
+        : next2Years;
     let count = 0;
     // prevent infinite loop or overloading the server by too old subscriptions
     const maxLoopCount = 52 * 50; // 50 years for weekly subscriptions
@@ -141,25 +145,26 @@ export function getSubscriptionsStat(
       if (isAfter(currentStartOfPeriod, now)) {
         nextPayments.push(payment);
         if (isBefore(payment.date, next30Days) && isAfter(payment.date, now)) {
-          next30DaysAmount += payment.amount;
+          addAmountFromPaymentToSumObject(next30DaysAmount, payment);
         }
         if (isBefore(payment.date, next365Days) && isAfter(payment.date, now)) {
-          next365DaysAmount += payment.amount;
+          addAmountFromPaymentToSumObject(next365DaysAmount, payment);
         }
         // process past payments
       } else {
-        totalSpent += payment.amount;
+        addAmountFromPaymentToSumObject(totalSpent, payment);
+
         if (isAfter(payment.date, past30Days)) {
-          spentPast30Days += payment.amount;
+          addAmountFromPaymentToSumObject(spentPast30Days, payment);
         }
         if (isAfter(payment.date, past365Days)) {
-          spentPast365Days += payment.amount;
+          addAmountFromPaymentToSumObject(spentPast365Days, payment);
         }
         if (
           isAfter(payment.date, lastYearStart) &&
           isBefore(payment.date, thisYearStart)
         ) {
-          spentLastYear += payment.amount;
+          addAmountFromPaymentToSumObject(spentLastYear, payment);
         }
         pastPayments.push(payment);
       }
@@ -168,7 +173,7 @@ export function getSubscriptionsStat(
         isAfter(payment.date, thisYearStart) &&
         isBefore(payment.date, thisYearEnd)
       ) {
-        expectedSpentThisYear += payment.amount;
+        addAmountFromPaymentToSumObject(expectedSpentThisYear, payment);
       }
 
       switch (period) {
@@ -188,14 +193,36 @@ export function getSubscriptionsStat(
   });
 
   return {
-    nextPayments,
-    next30DaysAmount,
-    next365DaysAmount,
     pastPayments,
-    totalSpent,
-    expectedSpentThisYear,
-    spentLastYear,
-    spentPast30Days,
-    spentPast365Days,
+    nextPayments,
+    next30DaysAmount: amountPerCurrencyToArrayOfAmounts(next30DaysAmount),
+    next365DaysAmount: amountPerCurrencyToArrayOfAmounts(next365DaysAmount),
+    totalSpent: amountPerCurrencyToArrayOfAmounts(totalSpent),
+    expectedSpentThisYear: amountPerCurrencyToArrayOfAmounts(
+      expectedSpentThisYear
+    ),
+    spentLastYear: amountPerCurrencyToArrayOfAmounts(spentLastYear),
+    spentPast30Days: amountPerCurrencyToArrayOfAmounts(spentPast30Days),
+    spentPast365Days: amountPerCurrencyToArrayOfAmounts(spentPast365Days),
   };
+}
+
+function addAmountFromPaymentToSumObject(
+  object: AmountPerCurrency,
+  payment: SubscriptionPaymentResponseDto
+) {
+  if (!payment.amount) {
+    return;
+  }
+
+  object[payment.currency] = (object[payment.currency] ?? 0) + payment.amount;
+}
+
+function amountPerCurrencyToArrayOfAmounts(
+  object: AmountPerCurrency
+): AmountResponseDto[] {
+  return Object.entries(object).map(([currency, amount]) => ({
+    currency: currency as Currency,
+    amount,
+  }));
 }

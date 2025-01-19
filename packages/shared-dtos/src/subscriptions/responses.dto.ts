@@ -1,14 +1,6 @@
 import { Expose } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 import { Currency, SubscriptionRequestDto } from './requests.dto';
-import {
-  IsDateString,
-  IsEnum,
-  IsNumber,
-  IsOptional,
-  IsString,
-  Min,
-} from 'class-validator';
 
 export class SubscriptionResponseDto extends SubscriptionRequestDto {
   @ApiProperty({ description: 'The ID of the subscription' })
@@ -33,7 +25,6 @@ export class SubscriptionResponseDto extends SubscriptionRequestDto {
 
   @ApiProperty({ description: 'Next payment date' })
   @Expose()
-  @IsOptional()
   nextPaymentDate!: Date | null;
 }
 
@@ -53,24 +44,29 @@ export class SubscriptionPaymentResponseDto {
 
   @ApiProperty({ description: 'The Name of the subscription' })
   @Expose()
-  @IsString()
   subscriptionName!: string;
 
   @ApiProperty({ description: 'Amount in cents' })
   @Expose()
-  @IsNumber()
-  @Min(1)
   amount!: number;
 
   @ApiProperty({ description: 'Currency' })
-  @IsEnum(Currency)
   @Expose()
   currency!: Currency;
 
   @ApiProperty({ description: 'The date of the payment' })
   @Expose()
-  @IsDateString()
   date!: Date;
+}
+
+export class AmountResponseDto {
+  @ApiProperty({ description: 'Amount in cents' })
+  @Expose()
+  amount!: number;
+
+  @ApiProperty({ description: 'Currency' })
+  @Expose()
+  currency!: Currency;
 }
 
 export class SubscriptionStatsResponseDto {
@@ -81,17 +77,16 @@ export class SubscriptionStatsResponseDto {
   @Expose()
   nextPayments!: SubscriptionPaymentResponseDto[];
 
-  @ApiProperty({ description: 'Amount in cents' })
+  @ApiProperty({ description: 'Amount in cents', type: AmountResponseDto })
   @Expose()
-  @IsNumber()
-  @Min(1)
-  next30DaysAmount!: number;
+  next30DaysAmount!: AmountResponseDto[];
 
-  @ApiProperty({ description: 'Amount in cents' })
+  @ApiProperty({
+    description: 'Amounts in cents split by currency',
+    type: [AmountResponseDto],
+  })
   @Expose()
-  @IsNumber()
-  @Min(1)
-  next365DaysAmount!: number;
+  next365DaysAmount!: AmountResponseDto[];
 
   @ApiProperty({
     description: 'List of the next payments',
@@ -100,33 +95,38 @@ export class SubscriptionStatsResponseDto {
   @Expose()
   pastPayments!: SubscriptionPaymentResponseDto[];
 
-  @ApiProperty({ description: 'Amount in cents' })
+  @ApiProperty({
+    description: 'Amounts in cents split by currency',
+    type: [AmountResponseDto],
+  })
   @Expose()
-  @IsNumber()
-  @Min(1)
-  totalSpent!: number;
+  totalSpent!: AmountResponseDto[];
 
-  @ApiProperty({ description: 'Amount in cents' })
+  @ApiProperty({
+    description: 'Amounts in cents split by currency',
+    type: [AmountResponseDto],
+  })
   @Expose()
-  @IsNumber()
-  @Min(1)
-  expectedSpentThisYear!: number;
+  expectedSpentThisYear!: AmountResponseDto[];
 
-  @ApiProperty({ description: 'Amount in cents' })
+  @ApiProperty({
+    description: 'Amounts in cents split by currency',
+    type: [AmountResponseDto],
+  })
   @Expose()
-  @IsNumber()
-  @Min(1)
-  spentLastYear!: number;
+  spentLastYear!: AmountResponseDto[];
 
-  @ApiProperty({ description: 'Amount in cents' })
+  @ApiProperty({
+    description: 'Amounts in cents split by currency',
+    type: [AmountResponseDto],
+  })
   @Expose()
-  @IsNumber()
-  @Min(1)
-  spentPast30Days!: number;
+  spentPast30Days!: AmountResponseDto[];
 
-  @ApiProperty({ description: 'Amount in cents' })
+  @ApiProperty({
+    description: 'Amounts in cents split by currency',
+    type: [AmountResponseDto],
+  })
   @Expose()
-  @IsNumber()
-  @Min(1)
-  spentPast365Days!: number;
+  spentPast365Days!: AmountResponseDto[];
 }
