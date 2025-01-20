@@ -7,15 +7,14 @@ import { Theme } from '../../hooks/useTheme';
 // Styled Components
 const SwitchContainer = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: end;
   align-items: center;
-  margin: 16px 0;
+  margin: 16px 24px;
 `;
 
-const ThemeLabel = styled.span`
+const SwitchLabel = styled.span`
   margin-right: 8px;
   font-size: 16px;
-  color: ${({ theme }) => theme.color};
 `;
 
 const StyledSwitch = styled(Switch)`
@@ -40,9 +39,9 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
 
   return (
     <SwitchContainer>
-      <ThemeLabel>
-        {currentTheme === Theme.Light ? 'Light Mode' : 'Dark Mode'}
-      </ThemeLabel>
+      <SwitchLabel>
+        {/*{currentTheme === Theme.Light ? 'Light Mode' : 'Dark Mode'}*/}
+      </SwitchLabel>
       <StyledSwitch
         checked={currentTheme === Theme.Dark}
         onChange={toggleTheme}

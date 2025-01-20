@@ -4,9 +4,11 @@ import { PlusOutlined } from '@ant-design/icons';
 import ThemeSwitcher from './ThemeSwitcher';
 import {
   CreateButton,
+  StyledMenuButton,
   StyledContent,
   StyledFooter,
   StyledHeader,
+  StyledLayout,
 } from './Layout.styled';
 import { useThemeContext } from './AntConfigProvider';
 const { useToken } = theme;
@@ -16,12 +18,12 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
   const { token } = useToken();
 
   return (
-    <Layout>
-      <StyledHeader $token={token}>
-        <Button type="link">Subs</Button>
-        <Button type="link">Past</Button>
-        <Button type="link">Next</Button>
-        <Button type="link">Stats</Button>
+    <StyledLayout $token={token}>
+      <StyledHeader $token={token} $theme={currentTheme}>
+        <StyledMenuButton>Subscriptions</StyledMenuButton>
+        <StyledMenuButton type="primary">Past Payments</StyledMenuButton>
+        <StyledMenuButton>Next Payments</StyledMenuButton>
+        <StyledMenuButton>Statistic</StyledMenuButton>
       </StyledHeader>
       <ThemeSwitcher currentTheme={currentTheme} onThemeToggle={toggleTheme} />
 
@@ -29,7 +31,7 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
       <StyledContent>{children}</StyledContent>
 
       {/* Footer for Mobile Navigation */}
-      <StyledFooter>
+      <StyledFooter $token={token}>
         <Button type="link">Subs</Button>
         <Button type="link">Past</Button>
         <CreateButton
@@ -41,7 +43,7 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
         <Button type="link">Next</Button>
         <Button type="link">Stats</Button>
       </StyledFooter>
-    </Layout>
+    </StyledLayout>
   );
 };
 

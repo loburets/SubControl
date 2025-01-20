@@ -26,7 +26,7 @@ const Login: React.FC = () => {
       align="middle"
       style={{
         height: '100vh',
-        backgroundColor: '#f0f2f5',
+        // backgroundColor: '#f0f2f5',
       }}
     >
       <Col xs={22} sm={16} md={12} lg={8} xl={6}>

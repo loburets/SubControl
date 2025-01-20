@@ -48,4 +48,5 @@ Frontend, backend and landing for the project
 
 ### Some good practices:
 
-- Light/Dark theme [with dynamic changing](apps/frontend/src/components/Layout/AntConfigProvider.tsx)
+- Light/Dark theme [with dynamic changing](apps/frontend/src/components/Layout/AntConfigProvider.tsx) and [default value from device](apps/frontend/src/hooks/useTheme.ts)
+- [Tokens in styles](apps/frontend/src/components/Layout/Layout.styled.tsx)
