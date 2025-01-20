@@ -7,7 +7,6 @@ import {
   StyledContent,
   StyledFooter,
   StyledHeader,
-  StyledLayout,
 } from './Layout.styled';
 import { useThemeContext } from './AntConfigProvider';
 const { useToken } = theme;
@@ -17,23 +16,14 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
   const { token } = useToken();
 
   return (
-    <StyledLayout>
-      {/* Header for Desktop Navigation */}
-      <StyledHeader
-        style={{
-          backgroundColor: token.colorBgBase,
-          // backgroundColor: 'black',
-        }}
-      >
+    <Layout>
+      <StyledHeader $token={token}>
         <Button type="link">Subs</Button>
         <Button type="link">Past</Button>
         <Button type="link">Next</Button>
         <Button type="link">Stats</Button>
-        <ThemeSwitcher
-          currentTheme={currentTheme}
-          onThemeToggle={toggleTheme}
-        />
       </StyledHeader>
+      <ThemeSwitcher currentTheme={currentTheme} onThemeToggle={toggleTheme} />
 
       {/* Main Content */}
       <StyledContent>{children}</StyledContent>
@@ -51,7 +41,7 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
         <Button type="link">Next</Button>
         <Button type="link">Stats</Button>
       </StyledFooter>
-    </StyledLayout>
+    </Layout>
   );
 };
 
