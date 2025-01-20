@@ -3,8 +3,8 @@ import { useTheme, Theme } from '../../hooks/useTheme';
 import { ConfigProvider, theme } from 'antd';
 
 interface ThemeContextType {
+  currentTheme: Theme;
   toggleTheme: () => void;
-  currentTheme: string;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);

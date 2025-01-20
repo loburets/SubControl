@@ -2,7 +2,6 @@ import React, { PropsWithChildren } from 'react';
 import { Button, theme } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import ThemeSwitcher from './ThemeSwitcher';
-import { useTheme } from '../../hooks/useTheme';
 import {
   CreateButton,
   StyledContent,
@@ -10,10 +9,11 @@ import {
   StyledHeader,
   StyledLayout,
 } from './Layout.styled';
+import { useThemeContext } from './AntConfigProvider';
 const { useToken } = theme;
 
 const Layout: React.FC<PropsWithChildren> = ({ children }) => {
-  const { toggleTheme, currentTheme } = useTheme();
+  const { toggleTheme, currentTheme } = useThemeContext();
   const { token } = useToken();
 
   return (

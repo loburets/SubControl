@@ -48,4 +48,4 @@ Frontend, backend and landing for the project
 
 ### Some good practices:
 
-- 
+- Light/Dark theme [with dynamic changing](apps/frontend/src/components/Layout/AntConfigProvider.tsx)
