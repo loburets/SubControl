@@ -25,3 +25,4 @@ This repository includes frontend, backend and landing for the project
 - Winston logger with [different transports](apps/backend/src/config/winston-logger.config.ts) for different environments
 - No sensitive data in logs, only ids
 - BugSnag integration (Sentry alternative)
+- No circular dependencies due to [Nest Modules](apps/backend/src/modules/subscriptions/subscriptions.module.ts)

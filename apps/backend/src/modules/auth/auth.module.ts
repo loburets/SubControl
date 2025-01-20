@@ -5,6 +5,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
 import { UsersModule } from '../users/users.module';
 import { SubscriptionsModule } from '../subscriptions/subscriptions.module';
+import { TransformersModule } from '../transformers/transformers.module';
 
 @Module({
   providers: [AuthService, JwtStrategy],
@@ -15,6 +16,7 @@ import { SubscriptionsModule } from '../subscriptions/subscriptions.module';
       signOptions: { expiresIn: '1y' },
     }),
     SubscriptionsModule,
+    TransformersModule,
   ],
   controllers: [AuthController],
   exports: [AuthService],

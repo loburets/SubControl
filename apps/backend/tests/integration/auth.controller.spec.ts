@@ -5,6 +5,7 @@ import { faker } from '@faker-js/faker';
 import { PrismaClient } from '@prisma/client';
 import { AuthModule } from '../../src/modules/auth/auth.module';
 import { seedUser } from '../seeds/user.seed';
+import { TransformersModule } from '../../src/modules/transformers/transformers.module';
 
 const prisma = new PrismaClient();
 
@@ -14,7 +15,7 @@ describe('AuthController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AuthController],
-      imports: [PrismaModule, AuthModule],
+      imports: [PrismaModule, AuthModule, TransformersModule],
     }).compile();
 
     controller = module.get<AuthController>(AuthController);

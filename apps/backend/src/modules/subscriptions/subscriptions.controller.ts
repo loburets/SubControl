@@ -20,22 +20,23 @@ import {
   SubscriptionStatsResponseDto,
 } from '@subcontrol/shared-dtos/subscriptions';
 import {
-  transformToResponseDto,
-  transformToSubscriptionResponseDto,
-} from '../../utils/transformer';
-import {
   ApiOperation,
   ApiResponse,
   ApiTags,
   ApiBearerAuth,
 } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { getSubscriptionsStat } from './subscriptions.calculator';
+import { TransformersService } from '../transformers/transformers.service';
+import { SubscriptionsCalculatorService } from './subscriptionsCalculator.service';
 
 @ApiTags('subscriptions')
 @Controller('subscriptions')
 export class SubscriptionsController {
-  constructor(private readonly subscriptionsService: SubscriptionsService) {}
+  constructor(
+    private readonly subscriptionsService: SubscriptionsService,
+    private readonly subscriptionsCalculatorService: SubscriptionsCalculatorService,
+    private readonly transformersService: TransformersService
+  ) {}
 
   @Get('stats')
   @UseGuards(JwtAuthGuard)
@@ -53,8 +54,8 @@ export class SubscriptionsController {
       userId: req.user.id,
     });
 
-    return transformToResponseDto(
-      getSubscriptionsStat(subscriptions),
+    return this.transformersService.transformToResponseDto(
+      this.subscriptionsCalculatorService.getSubscriptionsStat(subscriptions),
       SubscriptionStatsResponseDto
     );
   }
@@ -76,7 +77,9 @@ export class SubscriptionsController {
       req.user.id,
       createSubscriptionDto
     );
-    return transformToSubscriptionResponseDto(subscription);
+    return this.subscriptionsService.transformToSubscriptionResponseDto(
+      subscription
+    );
   }
 
   @Get()
@@ -95,7 +98,7 @@ export class SubscriptionsController {
 
     return {
       subscriptions: subscriptions.map((s) =>
-        transformToSubscriptionResponseDto(s)
+        this.subscriptionsService.transformToSubscriptionResponseDto(s)
       ),
     };
   }
@@ -123,7 +126,9 @@ export class SubscriptionsController {
         req.user.id
       );
 
-    return transformToSubscriptionResponseDto(subscription);
+    return this.subscriptionsService.transformToSubscriptionResponseDto(
+      subscription
+    );
   }
 
   @Patch(':id')
@@ -154,7 +159,9 @@ export class SubscriptionsController {
       updateSubscriptionDto
     );
 
-    return transformToSubscriptionResponseDto(subscription);
+    return this.subscriptionsService.transformToSubscriptionResponseDto(
+      subscription
+    );
   }
 
   @Delete(':id')

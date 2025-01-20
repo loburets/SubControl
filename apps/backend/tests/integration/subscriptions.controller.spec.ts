@@ -16,6 +16,8 @@ import {
   subWeeks,
 } from 'date-fns';
 import { fromZonedTime } from 'date-fns-tz';
+import { SubscriptionsCalculatorService } from '../../src/modules/subscriptions/subscriptionsCalculator.service';
+import { TransformersService } from '../../src/modules/transformers/transformers.service';
 
 const prisma = new PrismaClient();
 
@@ -25,7 +27,11 @@ describe('SubscriptionsController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [SubscriptionsController],
-      providers: [SubscriptionsService],
+      providers: [
+        SubscriptionsService,
+        SubscriptionsCalculatorService,
+        TransformersService,
+      ],
       imports: [PrismaModule],
     }).compile();
 

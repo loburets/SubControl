@@ -4,15 +4,23 @@ import {
   Currency,
   Period,
   SubscriptionRequestDto,
+  SubscriptionResponseDto,
 } from '@subcontrol/shared-dtos/subscriptions';
 import { addDays, subMonths, subYears } from 'date-fns';
+import { Subscription } from '@prisma/client';
+import { SubscriptionsCalculatorService } from './subscriptionsCalculator.service';
+import { TransformersService } from '../transformers/transformers.service';
 
 // some reasonable real-life limitation to avoid elements pagination for sake of simplicity
 const takeMaxElements = 500;
 
 @Injectable()
 export class SubscriptionsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly subscriptionsCalculatorService: SubscriptionsCalculatorService,
+    private readonly transformersService: TransformersService
+  ) {}
 
   async create(userId: number, createSubscriptionDto: SubscriptionRequestDto) {
     return this.prisma.subscription.create({
@@ -111,5 +119,18 @@ export class SubscriptionsService {
       period: Period.MONTHLY,
       currency: Currency.TRY,
     });
+  }
+
+  transformToSubscriptionResponseDto(subscription: Subscription) {
+    const calculatedData =
+      this.subscriptionsCalculatorService.getSubscriptionCalculatedData(
+        subscription
+      );
+
+    const result = { ...subscription, ...calculatedData };
+    return this.transformersService.transformToResponseDto(
+      result,
+      SubscriptionResponseDto
+    );
   }
 }

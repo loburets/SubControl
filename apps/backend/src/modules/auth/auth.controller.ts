@@ -5,14 +5,17 @@ import {
   LoginUserRequestDto,
   AuthResponseDto,
 } from '@subcontrol/shared-dtos/auth';
-import { transformToResponseDto } from '../../utils/transformer';
 import { ApiResponse } from '@nestjs/swagger';
+import { TransformersService } from '../transformers/transformers.service';
 
 @Controller('auth')
 export class AuthController {
   private readonly logger = new Logger(AuthController.name);
 
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly transformersService: TransformersService
+  ) {}
 
   @ApiResponse({
     status: 201,
@@ -21,7 +24,7 @@ export class AuthController {
   })
   @Post('register')
   async register(@Body() body: CreateUserRequestDto) {
-    return transformToResponseDto(
+    return this.transformersService.transformToResponseDto(
       this.authService.register(body),
       AuthResponseDto
     );
@@ -37,7 +40,7 @@ export class AuthController {
     this.logger.log('Requested to login user');
 
     const user = await this.authService.validateUser(body.email, body.password);
-    return transformToResponseDto(
+    return this.transformersService.transformToResponseDto(
       this.authService.login(user),
       AuthResponseDto
     );
@@ -51,6 +54,9 @@ export class AuthController {
   @Post('demo')
   async createDemo() {
     const response = await this.authService.makeDemoAccount();
-    return transformToResponseDto(response, AuthResponseDto);
+    return this.transformersService.transformToResponseDto(
+      response,
+      AuthResponseDto
+    );
   }
 }
