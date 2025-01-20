@@ -43,6 +43,8 @@ Frontend, backend and landing for the project
 - React
 - Ant Design
 - React Hook Form
+- Styled Components
+- React Query + Zustand
 
 ### Some good practices:
 
