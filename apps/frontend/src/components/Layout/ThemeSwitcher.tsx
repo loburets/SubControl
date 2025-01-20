@@ -31,16 +31,15 @@ export enum Theme {
 
 type ThemeSwitcherProps = {
   currentTheme: Theme;
-  onThemeChange: (value: Theme) => void;
+  onThemeToggle: () => void;
 };
 
 const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
   currentTheme,
-  onThemeChange,
+  onThemeToggle,
 }) => {
   const toggleTheme = () => {
-    const nextTheme = currentTheme === Theme.Dark ? Theme.Light : Theme.Dark;
-    onThemeChange(nextTheme);
+    onThemeToggle();
   };
 
   return (
@@ -49,7 +48,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
         {currentTheme === Theme.Light ? 'Light Mode' : 'Dark Mode'}
       </ThemeLabel>
       <StyledSwitch
-        checked={currentTheme === 'dark'}
+        checked={Theme.Dark === 'dark'}
         onChange={toggleTheme}
         checkedChildren="🌙"
         unCheckedChildren="☀️"

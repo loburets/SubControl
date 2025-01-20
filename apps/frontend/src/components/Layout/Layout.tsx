@@ -1,8 +1,9 @@
 import React, { PropsWithChildren } from 'react';
-import { Layout, Button, ConfigProvider, Input, Space, theme } from 'antd';
+import { Layout, Button, ConfigProvider, theme } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import ThemeSwitcher, { Theme } from './ThemeSwitcher';
+import { useTheme } from '../../hooks/useTheme';
 
 const { Header, Footer, Content } = Layout;
 
@@ -53,12 +54,7 @@ const CreateButton = styled(Button)`
 `;
 
 const AppLayout: React.FC<PropsWithChildren> = ({ children }) => {
-  // todo: add zustand to save theme in local storage
-  const [currentTheme, setCurrentTheme] = React.useState<Theme>(() => {
-    return window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? Theme.Dark
-      : Theme.Light;
-  });
+  const { toggleTheme, currentTheme } = useTheme();
 
   return (
     <ConfigProvider
@@ -78,7 +74,7 @@ const AppLayout: React.FC<PropsWithChildren> = ({ children }) => {
           <Button type="link">Stats</Button>
           <ThemeSwitcher
             currentTheme={currentTheme}
-            onThemeChange={setCurrentTheme}
+            onThemeToggle={toggleTheme}
           />
         </StyledHeader>
 
