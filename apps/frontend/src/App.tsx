@@ -1,14 +1,17 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router';
 import { AppRouter } from './router/AppRouter';
-import AppLayout from './components/Layout/Layout';
+import Layout from './components/Layout/Layout';
+import { AntConfigProvider } from './components/Layout/AntConfigProvider';
 
 function App() {
   return (
     <BrowserRouter>
-      <AppLayout>
-        <AppRouter />
-      </AppLayout>
+      <AntConfigProvider>
+        <Layout>
+          <AppRouter />
+        </Layout>
+      </AntConfigProvider>
     </BrowserRouter>
   );
 }

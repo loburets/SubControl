@@ -1,6 +1,10 @@
 import React from 'react';
-import { Theme } from '../components/Layout/ThemeSwitcher';
 import Cookies from 'js-cookie';
+
+export enum Theme {
+  Light = 'light',
+  Dark = 'dark',
+}
 
 export function useTheme() {
   const THEME_COOKIE_KEY = 'SubControl_lighting_theme';

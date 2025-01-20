@@ -2,6 +2,7 @@
 import React from 'react';
 import { Switch } from 'antd';
 import styled from 'styled-components';
+import { Theme } from '../../hooks/useTheme';
 
 // Styled Components
 const SwitchContainer = styled.div`
@@ -24,11 +25,6 @@ const StyledSwitch = styled(Switch)`
   }
 `;
 
-export enum Theme {
-  Light = 'light',
-  Dark = 'dark',
-}
-
 type ThemeSwitcherProps = {
   currentTheme: Theme;
   onThemeToggle: () => void;
@@ -48,7 +44,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
         {currentTheme === Theme.Light ? 'Light Mode' : 'Dark Mode'}
       </ThemeLabel>
       <StyledSwitch
-        checked={Theme.Dark === 'dark'}
+        checked={currentTheme === Theme.Dark}
         onChange={toggleTheme}
         checkedChildren="🌙"
         unCheckedChildren="☀️"
