@@ -17,11 +17,13 @@ const SwitchLabel = styled.span`
   font-size: 16px;
 `;
 
+// TODO use ant design tokens
 const StyledSwitch = styled(Switch)`
   &.ant-switch-checked {
     background-color: ${({ theme }) =>
       theme.background === '#000000' ? '#1890ff' : '#000000'};
   }
+  transform: scale(1.2);
 `;
 
 type ThemeSwitcherProps = {

@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { Button, theme } from 'antd';
+import { Button, Row, theme } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import ThemeSwitcher from './ThemeSwitcher';
 import {
@@ -25,10 +25,15 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
         <StyledMenuButton>Next Payments</StyledMenuButton>
         <StyledMenuButton>Statistic</StyledMenuButton>
       </StyledHeader>
-      <ThemeSwitcher currentTheme={currentTheme} onThemeToggle={toggleTheme} />
 
       {/* Main Content */}
-      <StyledContent>{children}</StyledContent>
+      <StyledContent>
+        <ThemeSwitcher
+          currentTheme={currentTheme}
+          onThemeToggle={toggleTheme}
+        />
+        {children}
+      </StyledContent>
 
       {/* Footer for Mobile Navigation */}
       <StyledFooter $token={token}>

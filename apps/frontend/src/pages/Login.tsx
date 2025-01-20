@@ -25,10 +25,11 @@ const Login: React.FC = () => {
       justify="center"
       align="middle"
       style={{
-        height: '100vh',
+        minHeight: '80vh',
         // backgroundColor: '#f0f2f5',
       }}
     >
+      {/*TODO check different screens, 4k*/}
       <Col xs={22} sm={16} md={12} lg={8} xl={6}>
         <Card
           bordered={false}

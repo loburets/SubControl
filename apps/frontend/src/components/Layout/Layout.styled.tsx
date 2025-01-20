@@ -6,6 +6,7 @@ const { Header, Footer, Content } = Layout;
 
 export const StyledLayout = styled(Layout)<{ $token: GlobalToken }>`
   //background-color: ${({ $token }) => $token.colorBgLayout};
+  min-height: 100vh;
 `;
 
 export const StyledHeader = styled(Header)<{
@@ -39,14 +40,9 @@ export const StyledFooter = styled(Footer)<{ $token: GlobalToken }>`
   }
 `;
 
-export const StyledContent = styled(Content)`
-  //padding: 16px;
-`;
+export const StyledContent = styled(Content)``;
 
-export const CreateButton = styled(Button)`
-  //transform: translateY(-25%);
-  //box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-`;
+export const CreateButton = styled(Button)``;
 
 export const StyledMenuButton = styled(Button)`
   margin-right: 16px;
