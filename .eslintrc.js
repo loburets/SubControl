@@ -9,5 +9,6 @@ module.exports = {
   rules: {
     'no-console': 'warn',
     eqeqeq: ['error', 'always'],
+    '@typescript-eslint/no-unused-vars': 'warn',
   },
 };

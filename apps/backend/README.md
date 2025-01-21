@@ -26,6 +26,8 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+Open [http://localhost:3001/api](http://localhost:3001/api) to view the Swagger documentation.
+
 ## Run tests
 
 ```bash

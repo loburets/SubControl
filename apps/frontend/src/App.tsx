@@ -1,12 +1,18 @@
 import React from 'react';
-import './App.css';
-import { Button } from 'antd';
+import { BrowserRouter } from 'react-router';
+import { AppRouter } from './router/AppRouter';
+import Layout from './components/Layout/Layout';
+import { AntConfigProvider } from './components/Layout/AntConfigProvider';
 
 function App() {
   return (
-    <div className="App">
-      <Button type="primary">Button</Button>
-    </div>
+    <BrowserRouter>
+      <AntConfigProvider>
+        <Layout>
+          <AppRouter />
+        </Layout>
+      </AntConfigProvider>
+    </BrowserRouter>
   );
 }
 
