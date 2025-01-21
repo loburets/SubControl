@@ -6,6 +6,7 @@ import {
   DollarOutlined,
   UnorderedListOutlined,
   PieChartOutlined,
+  GithubOutlined,
 } from '@ant-design/icons';
 import ThemeSwitcher from './ThemeSwitcher';
 import {
@@ -15,9 +16,14 @@ import {
   StyledHeader,
   StyledLayout,
   StyledMenu,
+  StyledLogo,
+  StyledGithubLink,
+  StyledHeatMapOutlined,
 } from './Layout.styled';
 import { useThemeContext } from './AntConfigProvider';
 import { Theme } from '../../hooks/useTheme';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '../../router/routes';
 
 const { useToken } = theme;
 const { Content } = AntLayout;
@@ -25,13 +31,17 @@ const { Content } = AntLayout;
 const Layout: React.FC<PropsWithChildren> = ({ children }) => {
   const { toggleTheme, currentTheme } = useThemeContext();
   const { token } = useToken();
+  const navigate = useNavigate();
 
   return (
     <StyledLayout>
       <StyledHeader $token={token} $theme={currentTheme}>
+        <StyledLogo onClick={() => navigate(ROUTES.HOME)}>
+          <StyledHeatMapOutlined />
+          SubControl
+        </StyledLogo>
+
         <StyledMenu
-          $token={token}
-          $theme={currentTheme}
           items={[
             {
               key: 'subs',
@@ -49,6 +59,15 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
           theme={currentTheme === Theme.Dark ? 'dark' : 'light'}
           mode="horizontal"
         />
+
+        <StyledGithubLink
+          href="https://github.com/loburets/SubControl"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <GithubOutlined style={{ fontSize: '20px', marginRight: '8px' }} />
+          loburets
+        </StyledGithubLink>
       </StyledHeader>
 
       {/* Main Content */}

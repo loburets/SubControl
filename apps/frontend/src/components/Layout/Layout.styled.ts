@@ -1,19 +1,16 @@
 import styled from 'styled-components';
 import { Button, GlobalToken, Layout, Menu } from 'antd';
 import { Theme } from '../../hooks/useTheme';
+import { HeatMapOutlined } from '@ant-design/icons';
 
 const { Header, Footer } = Layout;
+const miniHeaderMaxWidth = 930;
 
 export const StyledLayout = styled(Layout)`
   min-height: 100vh;
 `;
 
-export const StyledMenu = styled(Menu)<{
-  $token: GlobalToken;
-  $theme: Theme;
-}>`
-  /*  background-color: ${({ $token, $theme }) =>
-    $theme === Theme.Light ? $token.colorBgBase : $token.colorBgBase};*/
+export const StyledMenu = styled(Menu)`
   width: 100%;
   justify-content: center;
 `;
@@ -31,6 +28,13 @@ export const StyledHeader = styled(Header)<{
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  @media (max-width: ${miniHeaderMaxWidth}px) {
+    & li {
+      font-size: 14px;
+      padding: 0px 8px !important;
+    }
   }
 `;
 
@@ -71,4 +75,44 @@ export const StyledBottomButton = styled(Button)<{ $token: GlobalToken }>`
   justify-content: center;
   align-items: center;
   gap: 4px;
+`;
+
+export const StyledLogo = styled.div`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 20px;
+  position: absolute;
+  left: 10px;
+  padding: 14px;
+
+  @media (max-width: ${miniHeaderMaxWidth}px) {
+    font-size: 16px;
+    left: 4px;
+    padding: 10px;
+  }
+`;
+
+export const StyledHeatMapOutlined = styled(HeatMapOutlined)`
+  margin-right: 8px;
+  font-size: 24px;
+
+  @media (max-width: ${miniHeaderMaxWidth}px) {
+    font-size: 20px;
+    margin-right: 6px;
+  }
+`;
+
+export const StyledGithubLink = styled.a`
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 24px;
+
+  @media (max-width: ${miniHeaderMaxWidth}px) {
+    font-size: 14px;
+    right: 16px;
+  }
 `;
