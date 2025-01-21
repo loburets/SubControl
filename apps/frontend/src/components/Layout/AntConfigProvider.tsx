@@ -32,9 +32,9 @@ export const AntConfigProvider: React.FC<PropsWithChildren> = ({
               : theme.defaultAlgorithm,
           token: {
             fontSize: 16,
-            // todo https://ant.design/theme-editor
-            colorPrimary: '#bd00e7',
-            colorInfo: '#bd00e7',
+            colorPrimary: '#007fff',
+            colorInfo: '#007fff',
+            colorTextBase: currentTheme === Theme.Dark ? '#E8EAEC' : '#425466',
           },
         }}
       >

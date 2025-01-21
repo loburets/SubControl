@@ -1,16 +1,24 @@
 import React, { PropsWithChildren } from 'react';
 import { Layout as AntLayout, theme } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import {
+  PlusOutlined,
+  CalendarOutlined,
+  DollarOutlined,
+  UnorderedListOutlined,
+  PieChartOutlined,
+} from '@ant-design/icons';
 import ThemeSwitcher from './ThemeSwitcher';
 import {
   CreateButton,
-  StyledMenuButton,
+  StyledBottomButton,
   StyledFooter,
   StyledHeader,
   StyledLayout,
-  StyledBottomButton,
+  StyledMenu,
 } from './Layout.styled';
 import { useThemeContext } from './AntConfigProvider';
+import { Theme } from '../../hooks/useTheme';
+
 const { useToken } = theme;
 const { Content } = AntLayout;
 
@@ -21,10 +29,26 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <StyledLayout>
       <StyledHeader $token={token} $theme={currentTheme}>
-        <StyledMenuButton>Subscriptions</StyledMenuButton>
-        <StyledMenuButton type="primary">Past Payments</StyledMenuButton>
-        <StyledMenuButton>Next Payments</StyledMenuButton>
-        <StyledMenuButton>Statistic</StyledMenuButton>
+        <StyledMenu
+          $token={token}
+          $theme={currentTheme}
+          items={[
+            {
+              key: 'subs',
+              label: 'Subscriptions',
+              icon: <UnorderedListOutlined />,
+            },
+            {
+              key: 'past',
+              label: 'Past Payments',
+              icon: <DollarOutlined />,
+            },
+            { key: 'next', label: 'Next Payments', icon: <CalendarOutlined /> },
+            { key: 'stats', label: 'Statistic', icon: <PieChartOutlined /> },
+          ]}
+          theme={currentTheme === Theme.Dark ? 'dark' : 'light'}
+          mode="horizontal"
+        />
       </StyledHeader>
 
       {/* Main Content */}
@@ -38,10 +62,18 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
 
       {/* Footer for Mobile Navigation */}
       <StyledFooter $token={token} $theme={currentTheme}>
-        <StyledBottomButton $token={token} type="text">
+        <StyledBottomButton
+          $token={token}
+          type="text"
+          icon={<UnorderedListOutlined />}
+        >
           Subs
         </StyledBottomButton>
-        <StyledBottomButton $token={token} type="link">
+        <StyledBottomButton
+          $token={token}
+          type="link"
+          icon={<DollarOutlined />}
+        >
           Past
         </StyledBottomButton>
         <CreateButton
@@ -50,10 +82,18 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
           icon={<PlusOutlined />}
           size="large"
         />
-        <StyledBottomButton $token={token} type="text">
+        <StyledBottomButton
+          $token={token}
+          type="text"
+          icon={<CalendarOutlined />}
+        >
           Next
         </StyledBottomButton>
-        <StyledBottomButton $token={token} type="text">
+        <StyledBottomButton
+          $token={token}
+          type="text"
+          icon={<PieChartOutlined />}
+        >
           Stats
         </StyledBottomButton>
       </StyledFooter>
