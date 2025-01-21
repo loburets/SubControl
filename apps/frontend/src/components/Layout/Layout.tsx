@@ -1,24 +1,25 @@
 import React, { PropsWithChildren } from 'react';
-import { Button, Row, theme } from 'antd';
+import { Layout as AntLayout, theme } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import ThemeSwitcher from './ThemeSwitcher';
 import {
   CreateButton,
   StyledMenuButton,
-  StyledContent,
   StyledFooter,
   StyledHeader,
   StyledLayout,
+  StyledBottomButton,
 } from './Layout.styled';
 import { useThemeContext } from './AntConfigProvider';
 const { useToken } = theme;
+const { Content } = AntLayout;
 
 const Layout: React.FC<PropsWithChildren> = ({ children }) => {
   const { toggleTheme, currentTheme } = useThemeContext();
   const { token } = useToken();
 
   return (
-    <StyledLayout $token={token}>
+    <StyledLayout>
       <StyledHeader $token={token} $theme={currentTheme}>
         <StyledMenuButton>Subscriptions</StyledMenuButton>
         <StyledMenuButton type="primary">Past Payments</StyledMenuButton>
@@ -27,26 +28,34 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
       </StyledHeader>
 
       {/* Main Content */}
-      <StyledContent>
+      <Content>
         <ThemeSwitcher
           currentTheme={currentTheme}
           onThemeToggle={toggleTheme}
         />
         {children}
-      </StyledContent>
+      </Content>
 
       {/* Footer for Mobile Navigation */}
-      <StyledFooter $token={token}>
-        <Button type="link">Subs</Button>
-        <Button type="link">Past</Button>
+      <StyledFooter $token={token} $theme={currentTheme}>
+        <StyledBottomButton $token={token} type="text">
+          Subs
+        </StyledBottomButton>
+        <StyledBottomButton $token={token} type="link">
+          Past
+        </StyledBottomButton>
         <CreateButton
           type="primary"
           shape="circle"
           icon={<PlusOutlined />}
           size="large"
         />
-        <Button type="link">Next</Button>
-        <Button type="link">Stats</Button>
+        <StyledBottomButton $token={token} type="text">
+          Next
+        </StyledBottomButton>
+        <StyledBottomButton $token={token} type="text">
+          Stats
+        </StyledBottomButton>
       </StyledFooter>
     </StyledLayout>
   );

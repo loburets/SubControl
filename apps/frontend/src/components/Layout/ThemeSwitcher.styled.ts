@@ -15,9 +15,7 @@ export const StyledSwitch = styled(Switch)<{
 }>`
   &.ant-switch-checked {
     background-color: ${({ $token, $currentTheme }) =>
-      $currentTheme === Theme.Dark
-        ? $token.colorBgSpotlight
-        : $token.colorInfoBg};
+      $currentTheme === Theme.Dark ? $token.colorBgSpotlight : 'none'};
   }
   transform: scale(1.2);
 `;
