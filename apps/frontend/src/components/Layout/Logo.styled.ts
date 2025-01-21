@@ -16,7 +16,7 @@ export const StyledLogo = styled.div<{
   top: 6px;
   left: 10px;
   padding: 14px;
-  color: ${({ $token }) => $token.colorTextBase};
+  color: ${({ $token }) => $token.colorText};
 
   // mini version for small desktops
   @media (min-width: ${({ $token }) =>
