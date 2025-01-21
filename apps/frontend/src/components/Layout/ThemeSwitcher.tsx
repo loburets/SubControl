@@ -1,35 +1,14 @@
-// src/components/ThemeSwitcher.tsx
 import React from 'react';
-import { Switch } from 'antd';
-import styled from 'styled-components';
+import { theme } from 'antd';
 import { Theme } from '../../hooks/useTheme';
-
-// Styled Components
-const SwitchContainer = styled.div`
-  display: flex;
-  justify-content: end;
-  align-items: center;
-  margin: 16px 24px;
-`;
-
-const SwitchLabel = styled.span`
-  margin-right: 8px;
-  font-size: 16px;
-`;
-
-// TODO use ant design tokens
-const StyledSwitch = styled(Switch)`
-  &.ant-switch-checked {
-    background-color: ${({ theme }) =>
-      theme.background === '#000000' ? '#1890ff' : '#000000'};
-  }
-  transform: scale(1.2);
-`;
+import { StyledSwitch, SwitchContainer } from './ThemeSwitcher.styled';
 
 type ThemeSwitcherProps = {
   currentTheme: Theme;
   onThemeToggle: () => void;
 };
+
+const { useToken } = theme;
 
 const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
   currentTheme,
@@ -39,12 +18,13 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
     onThemeToggle();
   };
 
+  const { token } = useToken();
+
   return (
     <SwitchContainer>
-      <SwitchLabel>
-        {/*{currentTheme === Theme.Light ? 'Light Mode' : 'Dark Mode'}*/}
-      </SwitchLabel>
       <StyledSwitch
+        $token={token}
+        $currentTheme={currentTheme}
         checked={currentTheme === Theme.Dark}
         onChange={toggleTheme}
         checkedChildren="🌙"
