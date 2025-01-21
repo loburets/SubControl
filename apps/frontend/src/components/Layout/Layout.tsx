@@ -11,8 +11,8 @@ import {
 import ThemeSwitcher from './ThemeSwitcher';
 import {
   CreateButton,
-  StyledBottomButton,
-  StyledFooter,
+  StyledMobileFooterButton,
+  StyledMobileFooter,
   StyledHeader,
   StyledLayout,
   StyledMenu,
@@ -72,42 +72,42 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
       </Content>
 
       {/* Footer for Mobile Navigation */}
-      <StyledFooter $token={token} $theme={currentTheme}>
-        <StyledBottomButton
+      <StyledMobileFooter $token={token} $theme={currentTheme}>
+        <StyledMobileFooterButton
           $token={token}
           type="text"
           icon={<UnorderedListOutlined />}
         >
           Subs
-        </StyledBottomButton>
-        <StyledBottomButton
+        </StyledMobileFooterButton>
+        <StyledMobileFooterButton
           $token={token}
           type="link"
           icon={<DollarOutlined />}
         >
           Past
-        </StyledBottomButton>
+        </StyledMobileFooterButton>
         <CreateButton
           type="primary"
           shape="circle"
           icon={<PlusOutlined />}
           size="large"
         />
-        <StyledBottomButton
+        <StyledMobileFooterButton
           $token={token}
           type="text"
           icon={<CalendarOutlined />}
         >
           Next
-        </StyledBottomButton>
-        <StyledBottomButton
+        </StyledMobileFooterButton>
+        <StyledMobileFooterButton
           $token={token}
           type="text"
           icon={<PieChartOutlined />}
         >
           Stats
-        </StyledBottomButton>
-      </StyledFooter>
+        </StyledMobileFooterButton>
+      </StyledMobileFooter>
     </StyledLayout>
   );
 };

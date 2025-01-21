@@ -37,7 +37,7 @@ export const StyledHeader = styled(Header)<{
   }
 `;
 
-export const StyledFooter = styled(Footer)<{
+export const StyledMobileFooter = styled(Footer)<{
   $token: GlobalToken;
   $theme: Theme;
 }>`
@@ -51,7 +51,7 @@ export const StyledFooter = styled(Footer)<{
   position: fixed;
   bottom: 0;
   width: 100%;
-  padding: 24px 12px;
+  padding: 8px 12px;
 
   @media (max-width: ${({ $token }) => $token.screenSMMax}px) {
     display: flex;
@@ -65,10 +65,10 @@ export const CreateButton = styled(Button)`
   margin: 0 8px;
 `;
 
-export const StyledBottomButton = styled(Button)<{ $token: GlobalToken }>`
+export const StyledMobileFooterButton = styled(Button)<{ $token: GlobalToken }>`
   font-size: ${({ $token }) => $token.fontSize + 2}px;
   font-size: 18px;
-  padding: 20px 16px;
+  padding: 32px 16px;
   display: flex;
   flex-direction: column;
   justify-content: center;
