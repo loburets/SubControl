@@ -28,15 +28,13 @@ const Login: React.FC = () => {
   return (
     <CenteredRow>
       <SmallCenterCard>
-        <Title level={3} style={{ textAlign: 'center' }}>
+        <Title
+          level={3}
+          style={{ textAlign: 'center', marginBottom: 24, marginTop: 4 }}
+        >
           Login
         </Title>
-        <Form
-          layout="vertical"
-          onFinish={handleSubmit(onSubmit)}
-          style={{ marginTop: 24 }}
-        >
-          {/* Email Field */}
+        <Form layout="vertical" onFinish={handleSubmit(onSubmit)}>
           <Form.Item
             label="Email"
             validateStatus={errors.email ? 'error' : ''}
@@ -59,7 +57,6 @@ const Login: React.FC = () => {
             />
           </Form.Item>
 
-          {/* Password Field */}
           <Form.Item
             label="Password"
             validateStatus={errors.password ? 'error' : ''}
@@ -82,7 +79,6 @@ const Login: React.FC = () => {
             />
           </Form.Item>
 
-          {/* Submit Button */}
           <Form.Item>
             <Button
               type="primary"

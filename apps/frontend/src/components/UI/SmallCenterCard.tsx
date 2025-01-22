@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Card, Col, GlobalToken, theme } from 'antd';
+import { Card, GlobalToken, theme } from 'antd';
 import React, { PropsWithChildren } from 'react';
 import { CenterColStyled } from './CenterColStyled';
 const { useToken } = theme;
@@ -12,6 +12,7 @@ const SmallCenterCardStyled = styled(Card)<{
   // mobile version
   @media (max-width: ${({ $token }) => $token.screenSMMax}px) {
     width: 100%;
+    max-width: 400px;
   }
 `;
 
