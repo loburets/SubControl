@@ -1,7 +1,10 @@
 import styled from 'styled-components';
 import { GlobalToken } from 'antd';
 import { HeatMapOutlined } from '@ant-design/icons';
-import { miniDesktopHeaderMaxWidth } from './Layout.styled';
+import {
+  extraSmallMobileFooterMaxWidth,
+  smallDesktopHeaderMaxWidth,
+} from './Layout.styled';
 
 export const StyledLogo = styled.div<{
   $token: GlobalToken;
@@ -20,7 +23,7 @@ export const StyledLogo = styled.div<{
 
   // mini version for small desktops
   @media (min-width: ${({ $token }) =>
-      $token.screenMDMin}px) and (max-width: ${miniDesktopHeaderMaxWidth}px) {
+      $token.screenMDMin}px) and (max-width: ${smallDesktopHeaderMaxWidth}px) {
     font-size: 16px;
     left: 4px;
     top: 12px;
@@ -33,6 +36,11 @@ export const StyledLogo = styled.div<{
     left: 4px;
     top: 0;
   }
+
+  @media (max-width: ${extraSmallMobileFooterMaxWidth}px) {
+    font-size: 16px;
+    padding: 8px;
+  }
 `;
 
 export const StyledLogoIcon = styled(HeatMapOutlined)<{
@@ -43,7 +51,7 @@ export const StyledLogoIcon = styled(HeatMapOutlined)<{
 
   // mini version for small desktops
   @media (min-width: ${({ $token }) =>
-      $token.screenMDMin}px) and (max-width: ${miniDesktopHeaderMaxWidth}px) {
+      $token.screenMDMin}px) and (max-width: ${smallDesktopHeaderMaxWidth}px) {
     font-size: 20px;
     margin-right: 6px;
   }
@@ -51,5 +59,9 @@ export const StyledLogoIcon = styled(HeatMapOutlined)<{
   // mobile version
   @media (max-width: ${({ $token }) => $token.screenSMMax}px) {
     font-size: 28px;
+  }
+
+  @media (max-width: ${extraSmallMobileFooterMaxWidth}px) {
+    font-size: 20px;
   }
 `;

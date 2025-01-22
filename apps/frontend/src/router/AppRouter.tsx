@@ -7,7 +7,6 @@ export function AppRouter() {
   return (
     <Routes>
       <Route path={ROUTES.HOME}></Route>
-      <Route path={ROUTES.SIGN_UP}></Route>
       <Route path={ROUTES.LOGIN} Component={Login}></Route>
     </Routes>
   );

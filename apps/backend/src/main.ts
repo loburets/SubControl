@@ -17,6 +17,11 @@ async function bootstrap() {
     logger: WinstonModule.createLogger(winstonLoggerConfig),
   });
 
+  app.enableCors({
+    origin: 'http://localhost:3000', // React local development
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  });
+
   app.setGlobalPrefix('/api/v1');
   await setupSwagger(app);
 

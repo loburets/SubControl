@@ -3,7 +3,8 @@ import { Button, GlobalToken, Layout, Menu } from 'antd';
 import { Theme } from '../../hooks/useTheme';
 
 const { Header, Footer } = Layout;
-export const miniDesktopHeaderMaxWidth = 930;
+export const smallDesktopHeaderMaxWidth = 930;
+export const extraSmallMobileFooterMaxWidth = 370;
 
 export const StyledLayout = styled(Layout)`
   min-height: 100vh;
@@ -29,7 +30,7 @@ export const StyledHeader = styled(Header)<{
     align-items: center;
   }
 
-  @media (max-width: ${miniDesktopHeaderMaxWidth}px) {
+  @media (max-width: ${smallDesktopHeaderMaxWidth}px) {
     & li {
       font-size: 14px;
       padding: 0px 8px !important;
@@ -74,6 +75,12 @@ export const StyledMobileFooterButton = styled(Button)<{ $token: GlobalToken }>`
   justify-content: center;
   align-items: center;
   gap: 4px;
+
+  @media (max-width: ${extraSmallMobileFooterMaxWidth}px) {
+    padding: 16px 8px;
+    font-size: 16px;
+    gap: 2px;
+  }
 `;
 
 export const StyledGithubLink = styled.a`
@@ -82,7 +89,7 @@ export const StyledGithubLink = styled.a`
   position: absolute;
   right: 24px;
 
-  @media (max-width: ${miniDesktopHeaderMaxWidth}px) {
+  @media (max-width: ${smallDesktopHeaderMaxWidth}px) {
     font-size: 14px;
     right: 16px;
   }
