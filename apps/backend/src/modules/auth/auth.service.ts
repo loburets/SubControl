@@ -22,7 +22,7 @@ export class AuthService {
     this.logger.log('Failed to login user, wrong credentials', {
       userId: user?.id,
     });
-    throw new UnauthorizedException('Invalid credentials');
+    throw new UnauthorizedException('Wrong email or password');
   }
 
   async login(user: { email: string; id: number }) {

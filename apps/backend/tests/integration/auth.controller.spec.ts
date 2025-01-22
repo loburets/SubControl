@@ -94,7 +94,7 @@ describe('AuthController', () => {
           email: credentials.email,
           password: faker.internet.password(),
         })
-      ).rejects.toThrow('Invalid credentials');
+      ).rejects.toThrow('Wrong email or password');
     });
 
     it('should not login user by wrong email', async () => {
@@ -113,7 +113,7 @@ describe('AuthController', () => {
           email: faker.internet.email(),
           password: credentials.password,
         })
-      ).rejects.toThrow('Invalid credentials');
+      ).rejects.toThrow('Wrong email or password');
     });
   });
 

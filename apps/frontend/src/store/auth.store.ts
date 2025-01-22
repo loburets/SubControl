@@ -6,8 +6,16 @@ interface AuthState {
   clearToken: () => void;
 }
 
+const localStorageTokenKey = 'access_token';
+
 export const useAuthStore = create<AuthState>((set) => ({
-  token: null,
-  setToken: (token) => set({ token }),
-  clearToken: () => set({ token: null }),
+  token: localStorage.getItem(localStorageTokenKey),
+  setToken: (token) => {
+    localStorage.setItem(localStorageTokenKey, token);
+    set({ token });
+  },
+  clearToken: () => {
+    localStorage.removeItem(localStorageTokenKey);
+    set({ token: null });
+  },
 }));
