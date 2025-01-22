@@ -21,7 +21,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
   const { token } = useToken();
 
   return (
-    <SwitchContainer>
+    <SwitchContainer $token={token}>
       <StyledSwitch
         $token={token}
         $currentTheme={currentTheme}

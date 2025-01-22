@@ -1,8 +1,11 @@
 import React from 'react';
-import { Form, Input, Button, Typography, Card, Row, Col } from 'antd';
+import { Form, Input, Button, Typography, theme } from 'antd';
 import { useForm, Controller } from 'react-hook-form';
+import { CenteredRow } from '../components/Layout/CenteredRow';
+import { SmallCenterCard } from '../components/UI/SmallCenterCard';
 
 const { Title } = Typography;
+const { useToken } = theme;
 
 interface LoginFormValues {
   email: string;
@@ -10,6 +13,8 @@ interface LoginFormValues {
 }
 
 const Login: React.FC = () => {
+  const { token } = useToken();
+
   const {
     control,
     handleSubmit,
@@ -21,23 +26,8 @@ const Login: React.FC = () => {
   };
 
   return (
-    <Row
-      justify="center"
-      align="middle"
-      style={{
-        minHeight: '80vh',
-        // backgroundColor: '#f0f2f5',
-      }}
-    >
-      {/*TODO check different screens, 4k*/}
-      {/*<Col xs={22} sm={16} md={12} lg={8} xl={6} >*/}
-      <Card
-        bordered={false}
-        style={{
-          borderRadius: 8,
-          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-        }}
-      >
+    <CenteredRow>
+      <SmallCenterCard>
         <Title level={3} style={{ textAlign: 'center' }}>
           Login
         </Title>
@@ -104,9 +94,8 @@ const Login: React.FC = () => {
             </Button>
           </Form.Item>
         </Form>
-      </Card>
-      {/*</Col>*/}
-    </Row>
+      </SmallCenterCard>
+    </CenteredRow>
   );
 };
 
