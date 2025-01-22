@@ -11,3 +11,7 @@ dist/
 
 # macOS
 *.DS_Store
+
+# configs
+.env
+.env.production

@@ -1,11 +1,15 @@
 import React from 'react';
-import { Form, Input, Button, Typography, theme } from 'antd';
+import { Form, Input, Button, Typography, Alert } from 'antd';
 import { useForm, Controller } from 'react-hook-form';
 import { CenteredRow } from '../components/Layout/CenteredRow';
 import { SmallCenterCard } from '../components/UI/SmallCenterCard';
+import { useLoginMutation } from '../queries/auth.query';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '../router/routes';
+import { AxiosError } from 'axios';
+import { getErrorMessages } from '../utils/errorConvertor';
 
 const { Title } = Typography;
-const { useToken } = theme;
 
 interface LoginFormValues {
   email: string;
@@ -13,16 +17,21 @@ interface LoginFormValues {
 }
 
 const Login: React.FC = () => {
-  const { token } = useToken();
-
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormValues>();
 
+  const loginMutation = useLoginMutation();
+  const navigate = useNavigate();
+
   const onSubmit = (data: LoginFormValues) => {
-    console.log('Form Data:', data);
+    loginMutation.mutate(data, {
+      onSuccess: () => {
+        navigate(ROUTES.HOME);
+      },
+    });
   };
 
   return (
@@ -34,6 +43,16 @@ const Login: React.FC = () => {
         >
           Login
         </Title>
+        {loginMutation.isError && (
+          <Alert
+            message={getErrorMessages(loginMutation.error)}
+            type="error"
+            style={{ textAlign: 'center', marginBottom: 24, marginTop: 4 }}
+            showIcon
+            closable
+          />
+        )}
+
         <Form layout="vertical" onFinish={handleSubmit(onSubmit)}>
           <Form.Item
             label="Email"
@@ -69,8 +88,8 @@ const Login: React.FC = () => {
               rules={{
                 required: 'Password is required',
                 minLength: {
-                  value: 6,
-                  message: 'Password must be at least 6 characters long',
+                  value: 3,
+                  message: 'Password must be at least 3 characters long',
                 },
               }}
               render={({ field }) => (
@@ -84,7 +103,8 @@ const Login: React.FC = () => {
               type="primary"
               htmlType="submit"
               block
-              style={{ marginTop: 16 }}
+              style={{ marginTop: 32 }}
+              loading={loginMutation.isPending}
             >
               Login
             </Button>
