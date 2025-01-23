@@ -1,7 +1,7 @@
 import React from 'react';
-import { Card, Spin, Alert, Row, Col, Typography } from 'antd';
+import { Card, Spin, Alert, Row, Col } from 'antd';
 import { MainContentWrapper } from '../components/Layout/MainContentWrapper';
-const { Title } = Typography;
+import { Title } from '../components/UI/Title';
 
 interface Subscription {
   id: number;
