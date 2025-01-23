@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Spin, Alert, Row, Col } from 'antd';
+import { Card, Spin, Alert, Row, Col, Badge, Tag } from 'antd';
 import { MainContentWrapper } from '../components/Layout/MainContentWrapper';
 import { Title } from '../components/UI/Title';
 
@@ -37,7 +37,7 @@ const SubscriptionList: React.FC = () => {
     },
     {
       id: 2,
-      name: 'Spotify',
+      name: 'Spotify Spotify Spotify',
       period: 'MONTHLY',
       centsPerPeriod: 999,
       currency: 'USD',
@@ -99,10 +99,21 @@ const SubscriptionList: React.FC = () => {
   return (
     <MainContentWrapper>
       <Title level={1}>Your subscriptions</Title>
+      {/*TODO: hide when no data*/}
+      <Title level={5}>Click to open</Title>
       <Row gutter={[20, 20]}>
         {data?.map((subscription) => (
           <Col key={subscription.id} xs={24} sm={24} md={12} lg={12}>
-            <Card title={subscription.name} type="inner">
+            <Card
+              title={
+                <Title level={4} embedMargins noAdoption>
+                  {subscription.name}
+                </Title>
+              }
+              type="inner"
+              hoverable
+              extra={<Tag color="green">Monthly</Tag>}
+            >
               <p>Period: {subscription.period}</p>
               <p>Price (cents): {subscription.centsPerPeriod}</p>
               <p>Currency: {subscription.currency}</p>
@@ -116,6 +127,12 @@ const SubscriptionList: React.FC = () => {
             </Card>
           </Col>
         ))}
+        <Col xs={24} sm={24} md={12} lg={12}>
+          <Card loading type="inner"></Card>
+          <Card loading type="inner"></Card>
+          <Card loading type="inner"></Card>
+          <Card loading type="inner"></Card>
+        </Col>
       </Row>
     </MainContentWrapper>
   );

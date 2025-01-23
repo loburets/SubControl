@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import { GlobalToken, theme, Typography } from 'antd';
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { TitleProps } from 'antd/es/typography/Title';
 import { extraSmallMobileFooterMaxWidth } from '../Layout/Layout.styled';
+
 const { useToken } = theme;
 
 const { Title: AntTitle } = Typography;
@@ -26,36 +27,54 @@ const getFontSize = (
     case 5:
       return token.fontSizeHeading5;
     default:
-      return token.fontSizeHeading1;
+      return token.fontSizeHeading5 - 4;
   }
 };
 
 const TitleStyled = styled(AntTitle)<{
   $token: GlobalToken;
   level?: number | undefined;
+  $embedMargins?: boolean;
+  $noAdoption?: boolean;
 }>`
   margin-top: 0 !important;
   margin-bottom: 24px !important;
+  ${({ $embedMargins }) => $embedMargins && 'margin-top: 12px !important;'}
+  ${({ $embedMargins }) => $embedMargins && 'margin-bottom: 12px !important;'}
 
   //mobile
   @media (max-width: ${({ $token }) => $token.screenSMMax}px) {
-    font-size: ${({ $token, level }) =>
-      getFontSize(level, $token, 1)}px !important;
+    font-size: ${({ $token, level, $noAdoption }) =>
+      getFontSize(level, $token, $noAdoption ? 0 : 1)}px !important;
     margin-bottom: 20px !important;
+    ${({ $embedMargins }) => $embedMargins && 'margin-top: 12px !important;'}
+    ${({ $embedMargins }) => $embedMargins && 'margin-bottom: 12px !important;'}
   }
 
   @media (max-width: ${extraSmallMobileFooterMaxWidth}px) {
-    font-size: ${({ $token, level }) =>
-      getFontSize(level, $token, 3)}px !important;
+    font-size: ${({ $token, level, $noAdoption }) =>
+      getFontSize(level, $token, $noAdoption ? 0 : 3)}px !important;
     margin-bottom: 12px !important;
+    ${({ $embedMargins }) => $embedMargins && 'margin-top: 12px !important;'}
+    ${({ $embedMargins }) => $embedMargins && 'margin-bottom: 12px !important;'}
   }
 `;
 
-export const Title: React.FC<TitleProps> = ({ children, ...rest }) => {
+export const Title: React.FC<
+  TitleProps & {
+    embedMargins?: boolean;
+    noAdoption?: boolean;
+  }
+> = ({ children, embedMargins, noAdoption, ...rest }) => {
   const { token } = useToken();
 
   return (
-    <TitleStyled $token={token} {...rest}>
+    <TitleStyled
+      $token={token}
+      {...rest}
+      $embedMargins={embedMargins}
+      $noAdoption={noAdoption}
+    >
       {children}
     </TitleStyled>
   );
