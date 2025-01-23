@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { setupAxiosInterceptors } from './utils/axiosInterceptors';
+import '@ant-design/v5-patch-for-react-19';
 
 setupAxiosInterceptors();
 

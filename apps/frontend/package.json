@@ -47,6 +47,7 @@
     ]
   },
   "devDependencies": {
+    "@ant-design/v5-patch-for-react-19": "^1.0.3",
     "@types/js-cookie": "^3.0.6",
     "util": "^0.12.5"
   }
