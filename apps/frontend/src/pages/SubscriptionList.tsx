@@ -1,7 +1,8 @@
 import React from 'react';
-import { Card, Spin, Alert, Row, Col, Badge, Tag } from 'antd';
+import { Card, Spin, Alert, Row, Col, Tag } from 'antd';
 import { MainContentWrapper } from '../components/Layout/MainContentWrapper';
 import { Title } from '../components/UI/Title';
+import { CalendarOutlined } from '@ant-design/icons';
 
 interface Subscription {
   id: number;
@@ -100,7 +101,12 @@ const SubscriptionList: React.FC = () => {
     <MainContentWrapper>
       <Title level={1}>Your subscriptions</Title>
       {/*TODO: hide when no data*/}
-      <Title level={5}>Click to open</Title>
+      <Title level={4} mobileOnly>
+        Press to open
+      </Title>
+      <Title level={5} desktopOnly>
+        Click to open
+      </Title>
       <Row gutter={[20, 20]}>
         {data?.map((subscription) => (
           <Col key={subscription.id} xs={24} sm={24} md={12} lg={12}>
@@ -112,7 +118,11 @@ const SubscriptionList: React.FC = () => {
               }
               type="inner"
               hoverable
-              extra={<Tag color="green">Monthly</Tag>}
+              extra={
+                <Tag color="green" icon={<CalendarOutlined />}>
+                  Monthly
+                </Tag>
+              }
             >
               <p>Price (cents): {subscription.centsPerPeriod}</p>
               <p>Currency: {subscription.currency}</p>

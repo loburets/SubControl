@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { GlobalToken, theme, Typography } from 'antd';
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 import { TitleProps } from 'antd/es/typography/Title';
 import { extraSmallMobileFooterMaxWidth } from '../Layout/Layout.styled';
 
@@ -36,11 +36,24 @@ const TitleStyled = styled(AntTitle)<{
   level?: number | undefined;
   $embedMargins?: boolean;
   $noAdoption?: boolean;
+  $desktopOnly?: boolean;
+  $mobileOnly?: boolean;
 }>`
   margin-top: 0 !important;
   margin-bottom: 24px !important;
   ${({ $embedMargins }) => $embedMargins && 'margin-top: 12px !important;'}
   ${({ $embedMargins }) => $embedMargins && 'margin-bottom: 12px !important;'}
+
+  ${({ $desktopOnly, $token }) => $desktopOnly && `display: none;`}
+  ${({ $mobileOnly, $token }) => $mobileOnly && `display: none;`}
+
+  @media (min-width: ${({ $token }) => $token.screenMDMin}px) {
+    ${({ $desktopOnly }) => $desktopOnly && `display: block;`}
+  }
+
+  @media (max-width: ${({ $token }) => $token.screenSMMax}px) {
+    ${({ $mobileOnly }) => $mobileOnly && `display: block;`}
+  }
 
   //mobile
   @media (max-width: ${({ $token }) => $token.screenSMMax}px) {
@@ -64,8 +77,17 @@ export const Title: React.FC<
   TitleProps & {
     embedMargins?: boolean;
     noAdoption?: boolean;
+    mobileOnly?: boolean;
+    desktopOnly?: boolean;
   }
-> = ({ children, embedMargins, noAdoption, ...rest }) => {
+> = ({
+  children,
+  embedMargins,
+  noAdoption,
+  mobileOnly,
+  desktopOnly,
+  ...rest
+}) => {
   const { token } = useToken();
 
   return (
@@ -74,6 +96,8 @@ export const Title: React.FC<
       {...rest}
       $embedMargins={embedMargins}
       $noAdoption={noAdoption}
+      $desktopOnly={desktopOnly}
+      $mobileOnly={mobileOnly}
     >
       {children}
     </TitleStyled>
