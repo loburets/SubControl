@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Button, GlobalToken, Layout, Menu } from 'antd';
-import { Theme } from '../../hooks/useTheme';
+import { Theme } from '../../store/themeSwitcher.store';
 
 const { Header, Footer } = Layout;
 export const smallDesktopHeaderMaxWidth = 930;

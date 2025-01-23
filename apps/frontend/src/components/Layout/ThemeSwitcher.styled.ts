@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { GlobalToken, Switch } from 'antd';
-import { Theme } from '../../hooks/useTheme';
+import { Theme } from '../../store/themeSwitcher.store';
 import { extraSmallMobileFooterMaxWidth } from './Layout.styled';
 
 export const SwitchContainer = styled.div<{

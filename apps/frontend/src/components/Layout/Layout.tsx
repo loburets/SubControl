@@ -18,11 +18,10 @@ import {
   StyledMenu,
   StyledGithubLink,
 } from './Layout.styled';
-import { useThemeContext } from './AntConfigProvider';
-import { Theme } from '../../hooks/useTheme';
 import { Logo } from './Logo';
 import { useLocation } from 'react-router';
 import { ROUTES } from '../../router/routes';
+import { Theme, useThemeSwitcherStore } from '../../store/themeSwitcher.store';
 
 const { useToken } = theme;
 const { Content } = AntLayout;
@@ -30,7 +29,7 @@ const { Content } = AntLayout;
 const hideNavigationRoutes = [ROUTES.LOGIN, ROUTES.SIGNUP];
 
 const Layout: React.FC<PropsWithChildren> = ({ children }) => {
-  const { toggleTheme, currentTheme } = useThemeContext();
+  const currentTheme = useThemeSwitcherStore((state) => state.currentTheme);
   const { token } = useToken();
   const location = useLocation();
   const hideNavigation = hideNavigationRoutes.includes(location.pathname);
@@ -76,10 +75,7 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
 
       {/* Main Content */}
       <Content>
-        <ThemeSwitcher
-          currentTheme={currentTheme}
-          onThemeToggle={toggleTheme}
-        />
+        <ThemeSwitcher />
         {children}
       </Content>
 

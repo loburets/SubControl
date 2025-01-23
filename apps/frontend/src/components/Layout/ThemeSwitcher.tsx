@@ -1,24 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { theme } from 'antd';
-import { Theme } from '../../hooks/useTheme';
+import { Theme } from '../../store/themeSwitcher.store';
 import { StyledSwitch, SwitchContainer } from './ThemeSwitcher.styled';
-
-type ThemeSwitcherProps = {
-  currentTheme: Theme;
-  onThemeToggle: () => void;
-};
+import { useThemeSwitcherStore } from '../../store/themeSwitcher.store';
 
 const { useToken } = theme;
 
-const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
-  currentTheme,
-  onThemeToggle,
-}) => {
-  const toggleTheme = () => {
-    onThemeToggle();
-  };
-
+const ThemeSwitcher: React.FC = () => {
+  const { currentTheme, toggleTheme, resetCurrentThemeIfRequired } =
+    useThemeSwitcherStore();
   const { token } = useToken();
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      resetCurrentThemeIfRequired();
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [resetCurrentThemeIfRequired]);
 
   return (
     <SwitchContainer $token={token}>
