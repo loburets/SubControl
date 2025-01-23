@@ -20,3 +20,21 @@ export const useLoginMutation = () => {
     },
   });
 };
+
+export const useRegisterMutation = () => {
+  const setToken = useAuthStore((state) => state.setToken);
+
+  return useMutation({
+    mutationFn: async (data: LoginUserRequestDto) => {
+      const response = await axiosApiInstance.post(
+        '/api/v1/auth/register',
+        data
+      );
+      return response.data;
+    },
+    onSuccess: (data: AuthResponseDto) => {
+      setToken(data.accessToken);
+      localStorage.setItem('token', data.accessToken);
+    },
+  });
+};

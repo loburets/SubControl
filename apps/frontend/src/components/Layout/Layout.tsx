@@ -27,7 +27,7 @@ import { ROUTES } from '../../router/routes';
 const { useToken } = theme;
 const { Content } = AntLayout;
 
-const hideNavigationRoutes = [ROUTES.LOGIN, ROUTES.REGISTER];
+const hideNavigationRoutes = [ROUTES.LOGIN, ROUTES.SIGNUP];
 
 const Layout: React.FC<PropsWithChildren> = ({ children }) => {
   const { toggleTheme, currentTheme } = useThemeContext();

@@ -3,7 +3,7 @@ import { Form, Input, Typography } from 'antd';
 import { useForm, Controller } from 'react-hook-form';
 import { CenteredRow } from '../components/Layout/CenteredRow';
 import { SmallCenterCard } from '../components/UI/SmallCenterCard';
-import { useLoginMutation } from '../queries/auth.query';
+import { useRegisterMutation } from '../queries/auth.query';
 import { Link, useNavigate } from 'react-router-dom';
 import { ROUTES } from '../router/routes';
 import { getErrorMessages } from '../utils/errorConvertor';
@@ -21,18 +21,18 @@ interface LoginFormValues {
   password: string;
 }
 
-const Login: React.FC = () => {
+const SignUp: React.FC = () => {
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormValues>();
 
-  const loginMutation = useLoginMutation();
+  const registerMutation = useRegisterMutation();
   const navigate = useNavigate();
 
   const onSubmit = (data: LoginFormValues) => {
-    loginMutation.mutate(data, {
+    registerMutation.mutate(data, {
       onSuccess: () => {
         navigate(ROUTES.HOME);
       },
@@ -42,10 +42,10 @@ const Login: React.FC = () => {
   return (
     <CenteredRow>
       <SmallCenterCard>
-        <StyledTitle level={3}>Login</StyledTitle>
-        {loginMutation.isError && (
+        <StyledTitle level={3}>Sign Up</StyledTitle>
+        {registerMutation.isError && (
           <StyledAlert
-            message={getErrorMessages(loginMutation.error)}
+            message={getErrorMessages(registerMutation.error)}
             type="error"
             showIcon
             closable
@@ -102,20 +102,21 @@ const Login: React.FC = () => {
               type="primary"
               htmlType="submit"
               block
-              loading={loginMutation.isPending}
+              style={{ marginTop: 32 }}
+              loading={registerMutation.isPending}
             >
-              Login
+              Sign Up
             </StyledButton>
           </Form.Item>
         </Form>
 
         <StyledAdditionalText>
-          <Text>Don't have an account?</Text>{' '}
-          <Link to={ROUTES.SIGNUP}>Sign up</Link>
+          <Text>Already have an account?</Text>{' '}
+          <Link to={ROUTES.LOGIN}>Log in</Link>
         </StyledAdditionalText>
       </SmallCenterCard>
     </CenteredRow>
   );
 };
 
-export default Login;
+export default SignUp;

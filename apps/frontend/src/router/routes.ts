@@ -1,6 +1,6 @@
 export const ROUTES = {
   HOME: '/',
-  REGISTER: '/register',
+  SIGNUP: '/sign-up',
   LOGIN: '/login',
   SUBSCRIPTION: 'subscription/:subscriptionId',
   NEXT_PAYMENTS: 'next-payments',
