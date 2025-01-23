@@ -34,6 +34,11 @@ export const StyledHeader = styled(Header)<{
     display: flex;
     justify-content: center;
     align-items: center;
+
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 10;
   }
 
   @media (max-width: ${smallDesktopHeaderMaxWidth}px) {

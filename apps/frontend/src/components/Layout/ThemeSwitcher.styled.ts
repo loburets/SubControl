@@ -10,8 +10,17 @@ export const SwitchContainer = styled.div<{
   justify-content: end;
   align-items: center;
   margin: 16px 24px;
-  position: absolute;
+  position: fixed;
   right: 0;
+  top: 68px;
+  z-index: 20;
+
+  //mobile
+  @media (max-width: ${({ $token }) => $token.screenSMMax}px) {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
 
   @media (max-width: ${extraSmallMobileFooterMaxWidth}px) {
     margin: 6px 12px;

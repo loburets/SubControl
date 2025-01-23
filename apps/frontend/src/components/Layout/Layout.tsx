@@ -36,8 +36,9 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <StyledLayout>
-      <Logo />
+      <Logo mobileOnly />
       <StyledHeader $token={token} $theme={currentTheme}>
+        <Logo />
         {!hideNavigation && (
           <StyledMenu
             items={[

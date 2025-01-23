@@ -11,6 +11,7 @@ const StyledMainContentWrapper = styled.div<{
   background: ${({ $token }) => $token.colorBgBase};
   max-width: 1000px;
   padding: 16px 28px;
+  padding-bottom: 40px;
 
   @media (max-width: ${({ $token }) => $token.screenLGMax}px) {
     max-width: 900px;
@@ -36,11 +37,13 @@ const StyledMainContentWrapper = styled.div<{
   @media (max-width: ${({ $token }) => $token.screenSMMax}px) {
     margin-top: 60px;
     padding: 12px 16px;
+    padding-bottom: 100px;
   }
 
   @media (max-width: ${extraSmallMobileFooterMaxWidth}px) {
     margin-top: 38px;
     padding: 8px 12px;
+    padding-bottom: 80px;
   }
 `;
 
