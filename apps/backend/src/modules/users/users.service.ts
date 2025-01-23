@@ -8,9 +8,11 @@ export class UsersService {
   async create({
     email,
     hashPassword,
+    isDemo,
   }: {
     email: string;
     hashPassword: () => Promise<string>;
+    isDemo?: boolean;
   }) {
     const existingUser = await this.findByEmail(email);
     if (existingUser) {
@@ -21,6 +23,7 @@ export class UsersService {
       data: {
         email,
         password: await hashPassword(),
+        isDemo: isDemo || false,
       },
     });
   }

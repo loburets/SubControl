@@ -33,12 +33,13 @@ export class AuthService {
     };
   }
 
-  async register(user: { email: string; password: string }) {
+  async register(user: { email: string; password: string; isDemo?: boolean }) {
     this.logger.log('Requested to register new user');
 
     const newUser = await this.usersService.create({
       email: user.email,
       hashPassword: async () => await this.hashPassword(user.password),
+      isDemo: user.isDemo,
     });
 
     this.logger.log('Created new user', { userId: newUser.id });
@@ -58,6 +59,7 @@ export class AuthService {
     const userData = await this.register({
       email: `demo-${Date.now()}@example.com`,
       password: `demo-${Date.now()}-${Math.random()}`,
+      isDemo: true,
     });
 
     await this.subscriptionsService.createDemoData(userData.user.id);

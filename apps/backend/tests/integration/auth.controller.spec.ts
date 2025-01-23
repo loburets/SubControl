@@ -120,6 +120,7 @@ describe('AuthController', () => {
   describe('createDemo', () => {
     it('should create user with subscriptions and return access token', async () => {
       const subscriptionsCount = await prisma.subscription.count();
+      const usersCount = await prisma.user.count({ where: { isDemo: true } });
       const response = await controller.createDemo();
 
       expect(response).toHaveProperty('accessToken', expect.any(String));
@@ -131,6 +132,9 @@ describe('AuthController', () => {
       expect(prisma.subscription.count()).resolves.toBeGreaterThan(
         subscriptionsCount
       );
+      expect(
+        prisma.user.count({ where: { isDemo: true } })
+      ).resolves.toBeGreaterThan(usersCount);
     });
   });
 });

@@ -19,6 +19,8 @@ model User {
   email         String   @unique
   password      String
 
+  isDemo        Boolean  @default(false)
+
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   subscriptions Subscription[]
