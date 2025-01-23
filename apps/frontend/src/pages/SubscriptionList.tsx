@@ -37,7 +37,7 @@ const SubscriptionList: React.FC = () => {
     },
     {
       id: 2,
-      name: 'Spotify Spotify Spotify',
+      name: 'Long name Spotify Spotify Spotify Long name Spotify Spotify Spotify',
       period: 'MONTHLY',
       centsPerPeriod: 999,
       currency: 'USD',
@@ -114,7 +114,6 @@ const SubscriptionList: React.FC = () => {
               hoverable
               extra={<Tag color="green">Monthly</Tag>}
             >
-              <p>Period: {subscription.period}</p>
               <p>Price (cents): {subscription.centsPerPeriod}</p>
               <p>Currency: {subscription.currency}</p>
               <p>Total Spent (cents): {subscription.totalSpent}</p>

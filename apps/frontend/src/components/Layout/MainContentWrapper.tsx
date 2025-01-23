@@ -14,23 +14,7 @@ const StyledMainContentWrapper = styled.div<{
   padding-bottom: 40px;
 
   @media (max-width: ${({ $token }) => $token.screenLGMax}px) {
-    max-width: 900px;
-  }
-
-  @media (max-width: ${({ $token }) => $token.screenMDMax}px) {
-    max-width: 900px;
-  }
-
-  @media (max-width: 1100px) {
-    max-width: 800px;
-  }
-
-  @media (max-width: 1000px) {
-    max-width: 700px;
-  }
-
-  @media (max-width: 900px) {
-    max-width: 590px;
+    max-width: 100%;
   }
 
   //mobile
@@ -38,6 +22,7 @@ const StyledMainContentWrapper = styled.div<{
     margin-top: 60px;
     padding: 12px 16px;
     padding-bottom: 100px;
+    max-width: 100%;
   }
 
   @media (max-width: ${extraSmallMobileFooterMaxWidth}px) {
