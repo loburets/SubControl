@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { StyledLogoIcon, StyledLogo } from './Logo.styled';
 import { ROUTES } from '../../router/routes';
 import { theme } from 'antd';

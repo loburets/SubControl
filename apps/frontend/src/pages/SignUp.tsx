@@ -4,7 +4,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { CenteredRow } from '../components/Layout/CenteredRow';
 import { SmallCenterCard } from '../components/UI/SmallCenterCard';
 import { useRegisterMutation } from '../queries/auth.query';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router';
 import { ROUTES } from '../router/routes';
 import { getErrorMessages } from '../utils/errorConvertor';
 import {
@@ -61,7 +61,6 @@ const SignUp: React.FC = () => {
             <Controller
               name="email"
               control={control}
-              defaultValue=""
               rules={{
                 required: 'Email is required',
                 pattern: {
@@ -83,7 +82,6 @@ const SignUp: React.FC = () => {
             <Controller
               name="password"
               control={control}
-              defaultValue=""
               rules={{
                 required: 'Password is required',
                 minLength: {
