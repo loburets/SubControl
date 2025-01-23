@@ -1,8 +1,7 @@
 import React from 'react';
 import { Form, Input, Typography } from 'antd';
 import { useForm, Controller } from 'react-hook-form';
-import { CenteredRow } from '../components/Layout/CenteredRow';
-import { SmallCenterCard } from '../components/UI/SmallCenterCard';
+import { SmallContentCard } from '../components/UI/SmallContentCard';
 import { useRegisterMutation } from '../queries/auth.query';
 import { Link, useNavigate } from 'react-router';
 import { ROUTES } from '../router/routes';
@@ -13,6 +12,7 @@ import {
   StyledButton,
   StyledTitle,
 } from '../components/UI/AuthElementsStyled';
+import { ContainerForCentered } from '../components/Layout/ContainerForCentered';
 
 const { Text } = Typography;
 
@@ -40,8 +40,8 @@ const SignUp: React.FC = () => {
   };
 
   return (
-    <CenteredRow>
-      <SmallCenterCard>
+    <ContainerForCentered>
+      <SmallContentCard>
         <StyledTitle level={3}>Sign Up</StyledTitle>
         {registerMutation.isError && (
           <StyledAlert
@@ -112,8 +112,8 @@ const SignUp: React.FC = () => {
           <Text>Already have an account?</Text>{' '}
           <Link to={ROUTES.LOGIN}>Log in</Link>
         </StyledAdditionalText>
-      </SmallCenterCard>
-    </CenteredRow>
+      </SmallContentCard>
+    </ContainerForCentered>
   );
 };
 

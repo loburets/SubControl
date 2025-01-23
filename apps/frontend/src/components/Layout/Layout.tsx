@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { Layout as AntLayout, theme } from 'antd';
+import { theme } from 'antd';
 import {
   PlusOutlined,
   CalendarOutlined,

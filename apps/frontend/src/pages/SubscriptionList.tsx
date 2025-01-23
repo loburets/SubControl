@@ -1,6 +1,5 @@
 import React from 'react';
 import { Card, Spin, Alert, Row, Col, Typography } from 'antd';
-import styled from 'styled-components';
 import { MainContentWrapper } from '../components/Layout/MainContentWrapper';
 const { Title } = Typography;
 
@@ -121,9 +120,5 @@ const SubscriptionList: React.FC = () => {
     </MainContentWrapper>
   );
 };
-
-// const StyledCard = styled(Card)`
-//   margin: 20px;
-// `;
 
 export default SubscriptionList;

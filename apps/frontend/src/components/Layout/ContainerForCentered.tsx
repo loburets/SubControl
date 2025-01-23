@@ -5,9 +5,15 @@ import { extraSmallMobileFooterMaxWidth } from './Layout.styled';
 
 const { useToken } = theme;
 
-const CenteredRowStyled = styled(Row)<{
+const ContainerForCenteredStyled = styled.div<{
   $token: GlobalToken;
 }>`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: ${({ $token }) => $token.paddingContentHorizontal}px;
+
   // reserve some approximate space for header or footer, not precise to simplify implementation
   min-height: 85vh;
 
@@ -20,12 +26,14 @@ const CenteredRowStyled = styled(Row)<{
   }
 `;
 
-export const CenteredRow: React.FC<PropsWithChildren> = ({ children }) => {
+export const ContainerForCentered: React.FC<PropsWithChildren> = ({
+  children,
+}) => {
   const { token } = useToken();
 
   return (
-    <CenteredRowStyled justify="center" align="middle" $token={token}>
+    <ContainerForCenteredStyled $token={token}>
       {children}
-    </CenteredRowStyled>
+    </ContainerForCenteredStyled>
   );
 };
