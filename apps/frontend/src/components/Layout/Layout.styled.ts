@@ -10,6 +10,11 @@ export const StyledLayout = styled(Layout)`
   min-height: 100vh;
 `;
 
+export const StyledContent = styled(Layout)`
+  display: flex;
+  align-items: center;
+`;
+
 export const StyledMenu = styled(Menu)`
   width: 100%;
   justify-content: center;
@@ -24,6 +29,7 @@ export const StyledHeader = styled(Header)<{
   background-color: ${({ $token, $theme }) =>
     $theme === Theme.Light ? $token.colorBgBase : $token.colorBgBase};
 
+  // desktop
   @media (min-width: ${({ $token }) => $token.screenMDMin}px) {
     display: flex;
     justify-content: center;

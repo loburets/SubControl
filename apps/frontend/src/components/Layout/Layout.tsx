@@ -17,6 +17,7 @@ import {
   StyledLayout,
   StyledMenu,
   StyledGithubLink,
+  StyledContent,
 } from './Layout.styled';
 import { Logo } from './Logo';
 import { useLocation } from 'react-router';
@@ -24,7 +25,6 @@ import { ROUTES } from '../../router/routes';
 import { Theme, useThemeSwitcherStore } from '../../store/themeSwitcher.store';
 
 const { useToken } = theme;
-const { Content } = AntLayout;
 
 const hideNavigationRoutes = [ROUTES.LOGIN, ROUTES.SIGNUP];
 
@@ -74,10 +74,10 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
       </StyledHeader>
 
       {/* Main Content */}
-      <Content>
+      <StyledContent>
         <ThemeSwitcher />
         {children}
-      </Content>
+      </StyledContent>
 
       {/* Footer for Mobile Navigation */}
       {!hideNavigation && (

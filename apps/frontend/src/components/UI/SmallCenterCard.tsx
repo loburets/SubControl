@@ -1,8 +1,12 @@
 import styled from 'styled-components';
-import { Card, GlobalToken, theme } from 'antd';
+import { Card, Col, GlobalToken, theme } from 'antd';
 import React, { PropsWithChildren } from 'react';
-import { CenteredColStyled } from './CenteredColStyled';
 const { useToken } = theme;
+
+const CenteredColStyled = styled(Col)`
+  display: flex;
+  justify-content: center;
+`;
 
 const SmallCenterCardStyled = styled(Card)<{
   $token: GlobalToken;
