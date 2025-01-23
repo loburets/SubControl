@@ -24,9 +24,9 @@ Frontend, backend and landing for the project
 
 - The Testing Trophy instead of the testing pyramid [(the tests are here)](apps/backend/tests)
 - Integration tests made for controllers and they are ready to be run in parallel on the same DB
-- DB Migrations
-- DTOs for requests to prevent injections
-- DTOs for responses to not expose sensitive fields
+- [DB Migration](apps/backend/prisma/migrations)
+- DTOs for requests with [filtering redundant fields to prevent injections](apps/backend/src/main.ts)
+- DTOs for responses [to not expose sensitive fields](apps/backend/src/modules/transformers/transformers.service.ts)
 - Enums for DB/Prisma and in Request/Responses types ([example](packages/shared-dtos/src/subscriptions/requests.dto.ts))
 - Swagger documentation generated per [ts decorators](apps/backend/src/modules/subscriptions/subscriptions.controller.ts) and can [run requests on behalf of a test user](apps/backend/src/utils/swagger.ts)
 - Money are stored as cents (integer value)
