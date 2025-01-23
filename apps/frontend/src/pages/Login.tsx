@@ -6,7 +6,6 @@ import { SmallCenterCard } from '../components/UI/SmallCenterCard';
 import { useLoginMutation } from '../queries/auth.query';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../router/routes';
-import { AxiosError } from 'axios';
 import { getErrorMessages } from '../utils/errorConvertor';
 
 const { Title } = Typography;
