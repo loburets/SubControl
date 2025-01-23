@@ -61,7 +61,6 @@ const SignUp: React.FC = () => {
             <Controller
               name="email"
               control={control}
-              defaultValue=""
               rules={{
                 required: 'Email is required',
                 pattern: {
@@ -83,7 +82,6 @@ const SignUp: React.FC = () => {
             <Controller
               name="password"
               control={control}
-              defaultValue=""
               rules={{
                 required: 'Password is required',
                 minLength: {
