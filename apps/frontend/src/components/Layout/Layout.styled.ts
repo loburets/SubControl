@@ -60,6 +60,7 @@ export const StyledMobileFooter = styled(Footer)<{
   width: 100%;
   padding: 8px 12px;
 
+  //mobile
   @media (max-width: ${({ $token }) => $token.screenSMMax}px) {
     display: flex;
     justify-content: space-between;

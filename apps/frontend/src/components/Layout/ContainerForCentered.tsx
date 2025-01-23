@@ -13,16 +13,11 @@ const ContainerForCenteredStyled = styled.div<{
   align-items: center;
   justify-content: center;
   padding: ${({ $token }) => $token.paddingContentHorizontal}px;
+  min-height: 100vh;
 
-  // reserve some approximate space for header or footer, not precise to simplify implementation
-  min-height: 85vh;
-
-  @media (max-width: ${extraSmallMobileFooterMaxWidth}px) {
-    min-height: 80vh;
-  }
-
+  // reserve some approximate space for header/footer and not precise to simplify implementation
   @media (min-width: ${({ $token }) => $token.screenMDMin}px) {
-    min-height: 92vh;
+    min-height: 90vh;
   }
 `;
 

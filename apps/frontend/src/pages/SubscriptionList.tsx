@@ -98,7 +98,7 @@ const SubscriptionList: React.FC = () => {
 
   return (
     <MainContentWrapper>
-      <Title level={2}>Subscriptions</Title>
+      <Title level={1}>Your subscriptions</Title>
       <Row gutter={[20, 20]}>
         {data?.map((subscription) => (
           <Col key={subscription.id} xs={24} sm={24} md={12} lg={12}>
