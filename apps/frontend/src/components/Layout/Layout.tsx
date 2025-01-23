@@ -21,7 +21,7 @@ import {
 import { useThemeContext } from './AntConfigProvider';
 import { Theme } from '../../hooks/useTheme';
 import { Logo } from './Logo';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { ROUTES } from '../../router/routes';
 
 const { useToken } = theme;
