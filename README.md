@@ -48,7 +48,7 @@ Frontend, backend and landing for the project
 
 ### Some good practices:
 
-- Light/Dark theme [with dynamic changing](apps/frontend/src/components/Layout/AntConfigProvider.tsx) and [default value from device](apps/frontend/src/hooks/useTheme.ts)
+- [Light/Dark theme with dynamic changing](apps/frontend/src/store/themeSwitcher.store.ts) and default value from the device
 - [Tokens in styles](apps/frontend/src/components/Layout/Layout.styled.ts)
 - Responsive design from 320px to 4k
 - [Zustand](apps/frontend/src/store) for global states instead of context
