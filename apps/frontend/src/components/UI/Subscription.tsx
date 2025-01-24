@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { SubscriptionResponseDto } from '@subcontrol/shared-dtos/subscriptions';
 import { Title } from './Title';
 import { Card, Tag } from 'antd';
 import { CalendarOutlined } from '@ant-design/icons';
+import { getSubscriptionUiData } from '../../utils/subscriptionsHelper';
 
 export const Subscription: React.FC<{
   subscription: SubscriptionResponseDto;
 }> = ({ subscription }) => {
+  const subscriptionUiData = useMemo(
+    () => getSubscriptionUiData(subscription),
+    [subscription]
+  );
+
   return (
     <Card
       title={
@@ -17,8 +23,11 @@ export const Subscription: React.FC<{
       type="inner"
       hoverable
       extra={
-        <Tag color="green" icon={<CalendarOutlined />}>
-          Monthly
+        <Tag
+          color={subscriptionUiData.periodTagColor}
+          icon={<CalendarOutlined />}
+        >
+          {subscriptionUiData.periodText}
         </Tag>
       }
     >

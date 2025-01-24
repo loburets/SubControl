@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Alert, Row, Col } from 'antd';
 import { MainContentWrapper } from '../components/Layout/MainContentWrapper';
-import { Title, TitleSpaceStyled } from '../components/UI/Title';
+import { Title } from '../components/UI/Title';
 import { useSubscriptionList } from '../queries/subscriptions.query';
 import { ContainerForCentered } from '../components/Layout/ContainerForCentered';
 import { getErrorMessages } from '../utils/errorConvertor';
