@@ -10,6 +10,11 @@ export const StyledLayout = styled(Layout)`
   min-height: 100vh;
 `;
 
+export const StyledContent = styled(Layout)`
+  display: flex;
+  align-items: center;
+`;
+
 export const StyledMenu = styled(Menu)`
   width: 100%;
   justify-content: center;
@@ -24,10 +29,16 @@ export const StyledHeader = styled(Header)<{
   background-color: ${({ $token, $theme }) =>
     $theme === Theme.Light ? $token.colorBgBase : $token.colorBgBase};
 
+  // desktop
   @media (min-width: ${({ $token }) => $token.screenMDMin}px) {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 10;
   }
 
   @media (max-width: ${smallDesktopHeaderMaxWidth}px) {
@@ -54,6 +65,7 @@ export const StyledMobileFooter = styled(Footer)<{
   width: 100%;
   padding: 8px 12px;
 
+  //mobile
   @media (max-width: ${({ $token }) => $token.screenSMMax}px) {
     display: flex;
     justify-content: space-between;

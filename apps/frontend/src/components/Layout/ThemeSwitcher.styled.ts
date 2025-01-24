@@ -10,11 +10,22 @@ export const SwitchContainer = styled.div<{
   justify-content: end;
   align-items: center;
   margin: 16px 24px;
+  position: fixed;
+  right: 0;
+  top: 68px;
+  z-index: 20;
 
-  // right side on desktop
-  @media (min-width: ${({ $token }) => $token.screenMDMin}px) {
+  // on small desktop switcher is just near the page title in the main content
+  @media (max-width: ${({ $token }) => $token.screenLGMax}px) {
+    position: absolute;
+    z-index: 5;
+  }
+
+  //mobile
+  @media (max-width: ${({ $token }) => $token.screenSMMax}px) {
     position: absolute;
     right: 0;
+    top: 0;
   }
 
   @media (max-width: ${extraSmallMobileFooterMaxWidth}px) {

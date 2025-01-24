@@ -8,6 +8,7 @@ import {
 
 export const StyledLogo = styled.div<{
   $token: GlobalToken;
+  $mobileOnly?: boolean;
 }>`
   cursor: pointer;
   display: flex;
@@ -20,6 +21,11 @@ export const StyledLogo = styled.div<{
   left: 10px;
   padding: 14px;
   color: ${({ $token }) => $token.colorText};
+
+  // desktop
+  @media (min-width: ${({ $token }) => $token.screenMDMin}px) {
+    ${({ $mobileOnly }) => $mobileOnly && 'display: none;'}
+  }
 
   // mini version for small desktops
   @media (min-width: ${({ $token }) =>

@@ -5,6 +5,7 @@ import React from 'react';
 import PrivateRoute from './PrivateRoute';
 import PublicOnlyRoute from './PublicOnlyRoute';
 import SignUp from '../pages/SignUp';
+import SubscriptionList from '../pages/SubscriptionList';
 
 export function AppRouter() {
   return (
@@ -29,7 +30,11 @@ export function AppRouter() {
       {/* private routes */}
       <Route
         path={ROUTES.HOME}
-        Component={() => <PrivateRoute>Home</PrivateRoute>}
+        Component={() => (
+          <PrivateRoute>
+            <SubscriptionList />
+          </PrivateRoute>
+        )}
       ></Route>
     </Routes>
   );
