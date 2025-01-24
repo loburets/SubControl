@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Alert, Row, Col, Button } from 'antd';
+import { Alert, Row, Col, Button, Empty, Space } from 'antd';
 import { MainContentWrapper } from '../components/Layout/MainContentWrapper';
 import { Title } from '../components/UI/Title';
 import { useSubscriptionList } from '../queries/subscriptions.query';
@@ -11,6 +11,7 @@ import { sortSubscriptionsByNextPayment } from '../utils/subscriptionsHelper';
 import { Hider } from '../components/UI/Hider';
 import { SidesSplitter } from '../components/UI/SidesSplitter';
 import { Search } from '../components/UI/Search';
+import { EmptyResults } from '../components/UI/EmptyResults';
 
 const SubscriptionList: React.FC = () => {
   const { isLoading, error, data } = useSubscriptionList();
@@ -36,6 +37,8 @@ const SubscriptionList: React.FC = () => {
         .sort(sortSubscriptionsByNextPayment),
     [filteredSubscriptions]
   );
+  const isEmptySearch = !isLoading && !filteredSubscriptions.length;
+  const isEmptyList = !isLoading && !data?.subscriptions.length;
 
   if (error) {
     return (
@@ -72,6 +75,10 @@ const SubscriptionList: React.FC = () => {
             {isLoading ? <>&nbsp;</> : '(Click to open)'}
           </Title>
         </>
+      )}
+
+      {(isEmptyList || isEmptySearch) && (
+        <EmptyResults isSearch={isEmptySearch} />
       )}
 
       <Row gutter={[20, 20]} style={{ marginBottom: 24 }}>
