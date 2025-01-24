@@ -33,7 +33,7 @@ export const Subscription: React.FC<{
         <Tag
           color={subscriptionUiData.periodTagColor}
           icon={<CalendarOutlined />}
-          style={{ marginRight: 0 }}
+          style={{ marginRight: 0, marginLeft: 8 }}
         >
           {subscriptionUiData.periodText}
         </Tag>

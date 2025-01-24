@@ -39,6 +39,9 @@ const TitleStyled = styled(AntTitle)<{
   $desktopOnly?: boolean;
   $mobileOnly?: boolean;
 }>`
+  text-overflow: ellipsis;
+  overflow: hidden;
+
   margin-top: 0 !important;
   margin-bottom: 24px !important;
   ${({ $embedMargins }) => $embedMargins && 'margin-top: 12px !important;'}
