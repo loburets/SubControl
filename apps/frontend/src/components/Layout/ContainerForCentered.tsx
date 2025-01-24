@@ -1,7 +1,6 @@
 import React, { PropsWithChildren } from 'react';
-import { GlobalToken, Row, theme } from 'antd';
+import { GlobalToken, theme } from 'antd';
 import styled from 'styled-components';
-import { extraSmallMobileFooterMaxWidth } from './Layout.styled';
 
 const { useToken } = theme;
 
