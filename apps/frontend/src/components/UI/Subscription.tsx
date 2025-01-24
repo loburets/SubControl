@@ -41,14 +41,14 @@ export const Subscription: React.FC<{
     >
       <p>
         <SidesSplitter>
-          <div>
+          <span>
             {`${subscriptionUiData.currencySymbol}${subscriptionUiData.costPerMonth}`}
             /month
-          </div>
-          <div>
+          </span>
+          <span>
             {`${subscriptionUiData.currencySymbol}${subscriptionUiData.costPerYear}`}
             /year
-          </div>
+          </span>
         </SidesSplitter>
       </p>
       {subscriptionUiData.nextPaymentDate && (

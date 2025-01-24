@@ -16,20 +16,29 @@ const ContainerStyled = styled.div<{
   max-height: 60vh;
 
   & div {
-    font-size: ${({ $token }) => $token.fontSizeXL}px;
+    font-size: ${({ $token }) => $token.fontSizeLG}px;
   }
 
   //mobile
   @media (max-width: ${({ $token }) => $token.screenSMMax}px) {
     height: calc(70vh - 100px);
+
+    & div {
+      font-size: ${({ $token }) => $token.fontSizeXL}px;
+    }
   }
 `;
 
 const ButtonStyled = styled(Button)<{
   $token: GlobalToken;
 }>`
-  font-size: ${({ $token }) => $token.fontSizeXL}px;
-  padding: 20px;
+  font-size: ${({ $token }) => $token.fontSizeLG}px;
+  padding: 16px;
+
+  @media (max-width: ${({ $token }) => $token.screenSMMax}px) {
+    font-size: ${({ $token }) => $token.fontSizeXL}px;
+    padding: 20px;
+  }
 `;
 
 export const EmptyResults: React.FC<{ isSearch?: boolean }> = ({

@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Alert, Row, Col, Button, Empty, Space } from 'antd';
+import { Alert, Row, Col, Button } from 'antd';
 import { MainContentWrapper } from '../components/Layout/MainContentWrapper';
 import { Title } from '../components/UI/Title';
 import { useSubscriptionList } from '../queries/subscriptions.query';
