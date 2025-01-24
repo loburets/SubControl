@@ -1,11 +1,13 @@
 import React, { useMemo } from 'react';
 import { SubscriptionResponseDto } from '@subcontrol/shared-dtos/subscriptions';
 import { Title } from './Title';
-import { Card, Tag } from 'antd';
+import { Card, GlobalToken, Tag, theme } from 'antd';
 import { CalendarOutlined } from '@ant-design/icons';
 import { getSubscriptionUiData } from '../../utils/subscriptionsHelper';
-import { format } from 'date-fns';
 import { SidesSplitter } from './SidesSplitter';
+import styled from 'styled-components';
+
+const { useToken } = theme;
 
 export const Subscription: React.FC<{
   subscription: SubscriptionResponseDto;
@@ -14,9 +16,12 @@ export const Subscription: React.FC<{
     () => getSubscriptionUiData(subscription),
     [subscription]
   );
+  const { token } = useToken();
 
   return (
-    <Card
+    <StyledCard
+      $isCancelled={!!subscription.cancelledAt}
+      $token={token}
       title={
         <Title level={4} embedMargins noAdoption>
           {subscription.name}
@@ -63,6 +68,14 @@ export const Subscription: React.FC<{
           <strong>Cancelled at {subscriptionUiData.cancelledDate}</strong>
         </p>
       )}
-    </Card>
+    </StyledCard>
   );
 };
+
+const StyledCard = styled(Card)<{
+  $token: GlobalToken;
+  $isCancelled: boolean;
+}>`
+  background-color: ${({ $token, $isCancelled }) =>
+    $isCancelled ? $token.colorBgContainerDisabled : $token.colorBgBase};
+`;

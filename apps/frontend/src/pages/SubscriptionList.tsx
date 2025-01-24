@@ -13,8 +13,18 @@ import { SidesSplitter } from '../components/UI/SidesSplitter';
 
 const SubscriptionList: React.FC = () => {
   const { isLoading, error, data } = useSubscriptionList();
-  const subscriptions = useMemo(
-    () => (data?.subscriptions || []).sort(sortSubscriptionsByNextPayment),
+  const activeSubscriptions = useMemo(
+    () =>
+      (data?.subscriptions || [])
+        .filter((s) => !s.cancelledAt)
+        .sort(sortSubscriptionsByNextPayment),
+    [data]
+  );
+  const cancelledSubscriptions = useMemo(
+    () =>
+      (data?.subscriptions || [])
+        .filter((s) => s.cancelledAt)
+        .sort(sortSubscriptionsByNextPayment),
     [data]
   );
 
@@ -43,7 +53,8 @@ const SubscriptionList: React.FC = () => {
         </SidesSplitter>
       </Hider>
 
-      {(isLoading || subscriptions.length) && (
+      {/*Show as empty during loading to reserve space*/}
+      {(isLoading || data?.subscriptions.length) && (
         <>
           <Title level={4} mobileOnly>
             {isLoading ? <>&nbsp;</> : '(Press to open)'}
@@ -51,8 +62,8 @@ const SubscriptionList: React.FC = () => {
         </>
       )}
 
-      <Row gutter={[20, 20]}>
-        {subscriptions.map((subscription) => (
+      <Row gutter={[20, 20]} style={{ marginBottom: 24 }}>
+        {activeSubscriptions.map((subscription) => (
           <Col key={subscription.id} xs={24} sm={24} md={12} lg={12}>
             <Subscription subscription={subscription} />
           </Col>
@@ -65,12 +76,10 @@ const SubscriptionList: React.FC = () => {
           ))}
       </Row>
 
-      <Title level={3} style={{ marginTop: '24px !important' }}>
-        Cancelled
-      </Title>
+      <Title level={3}>Cancelled</Title>
 
       <Row gutter={[20, 20]}>
-        {subscriptions.map((subscription) => (
+        {cancelledSubscriptions.map((subscription) => (
           <Col key={subscription.id} xs={24} sm={24} md={12} lg={12}>
             <Subscription subscription={subscription} />
           </Col>
