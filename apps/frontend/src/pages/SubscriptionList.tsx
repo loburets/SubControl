@@ -3,6 +3,7 @@ import { Card, Spin, Alert, Row, Col, Tag } from 'antd';
 import { MainContentWrapper } from '../components/Layout/MainContentWrapper';
 import { Title } from '../components/UI/Title';
 import { CalendarOutlined } from '@ant-design/icons';
+import { useSubscriptionList } from '../queries/subscriptions.query';
 
 interface Subscription {
   id: number;
@@ -15,8 +16,7 @@ interface Subscription {
 }
 
 const SubscriptionList: React.FC = () => {
-  const isLoading = false;
-  const error = false;
+  const { isLoading, error } = useSubscriptionList();
   const data: Subscription[] = [
     {
       id: 1,

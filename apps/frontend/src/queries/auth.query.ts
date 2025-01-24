@@ -4,7 +4,7 @@ import {
   AuthResponseDto,
   LoginUserRequestDto,
 } from '@subcontrol/shared-dtos/auth';
-import axiosApiInstance from '../utils/axiosInstances';
+import { axiosApiInstance } from '../utils/axiosInstances';
 
 export const useLoginMutation = () => {
   const setToken = useAuthStore((state) => state.setToken);
