@@ -1,5 +1,5 @@
 import { SubscriptionResponseDto } from '@subcontrol/shared-dtos/subscriptions';
-import { isBefore } from 'date-fns';
+import { format, isBefore } from 'date-fns';
 import type { LiteralUnion } from 'antd/es/_util/type';
 import type {
   PresetColorType,
@@ -46,6 +46,10 @@ export const sortSubscriptionsByNextPayment = (
     : 1;
 };
 
+function formatPrice(cents: number) {
+  return (cents / 100).toFixed(2);
+}
+
 export const getSubscriptionUiData = (
   subscription: SubscriptionResponseDto
 ) => {
@@ -63,8 +67,52 @@ export const getSubscriptionUiData = (
         ? 'Yearly'
         : 'Weekly';
 
+  const periodName =
+    subscription.period === Period.MONTHLY
+      ? 'Month'
+      : subscription.period === Period.YEARLY
+        ? 'Year'
+        : 'Week';
+
   return {
     periodTagColor,
     periodText,
+    periodName,
+    currencySymbol: getCurrencySymbol(subscription.currency),
+    price: formatPrice(subscription.centsPerPeriod),
+    spentAmount: formatPrice(subscription.totalSpent),
+    costPerYear: formatPrice(subscription.costPerYear),
+    costPerMonth: formatPrice(subscription.costPerMonth),
+    nextPaymentDate: subscription.nextPaymentDate
+      ? format(subscription.nextPaymentDate, 'dd MMM yyyy')
+      : null,
+    cancelledDate: subscription.cancelledAt
+      ? format(subscription.cancelledAt, 'dd MMM yyyy')
+      : null,
   };
+};
+
+const getCurrencySymbol = (currency: Currency) => {
+  switch (currency) {
+    case Currency.EUR:
+      return '€';
+    case Currency.GBP:
+      return '£';
+    case Currency.JPY:
+      return '¥';
+    case Currency.AUD:
+      return 'A$';
+    case Currency.CAD:
+      return 'C$';
+    case Currency.RUB:
+      return '₽';
+    case Currency.TRY:
+      return '₺';
+    case Currency.USD:
+      return '$';
+    case Currency.OTHER:
+      return '(other)';
+    default:
+      return '$';
+  }
 };

@@ -9,6 +9,7 @@ import { Subscription } from '../components/UI/Subscription';
 import { SubscriptionSkeleton } from '../components/UI/SubscriptionSkeleton';
 import { sortSubscriptionsByNextPayment } from '../utils/subscriptionsHelper';
 import { Hider } from '../components/UI/Hider';
+import { SidesSplitter } from '../components/UI/SidesSplitter';
 
 const SubscriptionList: React.FC = () => {
   const { isLoading, error, data } = useSubscriptionList();
@@ -34,9 +35,12 @@ const SubscriptionList: React.FC = () => {
       <Title level={1}>Your subscriptions</Title>
 
       <Hider desktopOnly>
-        <Button type="primary" style={{ marginBottom: 24 }}>
-          Create new
-        </Button>
+        <SidesSplitter>
+          <Title level={5}>{isLoading ? <>&nbsp;</> : '(Click to open)'}</Title>
+          <Button type="primary" style={{ marginBottom: 24 }}>
+            Create new
+          </Button>
+        </SidesSplitter>
       </Hider>
 
       {(isLoading || subscriptions.length) && (
@@ -59,6 +63,18 @@ const SubscriptionList: React.FC = () => {
               <SubscriptionSkeleton />
             </Col>
           ))}
+      </Row>
+
+      <Title level={3} style={{ marginTop: '24px !important' }}>
+        Cancelled
+      </Title>
+
+      <Row gutter={[20, 20]}>
+        {subscriptions.map((subscription) => (
+          <Col key={subscription.id} xs={24} sm={24} md={12} lg={12}>
+            <Subscription subscription={subscription} />
+          </Col>
+        ))}
       </Row>
     </MainContentWrapper>
   );

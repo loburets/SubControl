@@ -4,6 +4,8 @@ import { Title } from './Title';
 import { Card, Tag } from 'antd';
 import { CalendarOutlined } from '@ant-design/icons';
 import { getSubscriptionUiData } from '../../utils/subscriptionsHelper';
+import { format } from 'date-fns';
+import { SidesSplitter } from './SidesSplitter';
 
 export const Subscription: React.FC<{
   subscription: SubscriptionResponseDto;
@@ -26,20 +28,41 @@ export const Subscription: React.FC<{
         <Tag
           color={subscriptionUiData.periodTagColor}
           icon={<CalendarOutlined />}
+          style={{ marginRight: 0 }}
         >
           {subscriptionUiData.periodText}
         </Tag>
       }
     >
-      <p>Price (cents): {subscription.centsPerPeriod}</p>
-      <p>Currency: {subscription.currency}</p>
-      <p>Total Spent (cents): {subscription.totalSpent}</p>
       <p>
-        Next Payment Date:{' '}
-        {subscription.nextPaymentDate
-          ? new Date(subscription.nextPaymentDate).toLocaleDateString()
-          : 'N/A'}
+        <SidesSplitter>
+          <div>
+            {`${subscriptionUiData.currencySymbol}${subscriptionUiData.costPerMonth}`}
+            /month
+          </div>
+          <div>
+            {`${subscriptionUiData.currencySymbol}${subscriptionUiData.costPerYear}`}
+            /year
+          </div>
+        </SidesSplitter>
       </p>
+      {subscriptionUiData.nextPaymentDate && (
+        <p>
+          Next Payment: {subscriptionUiData.nextPaymentDate} —{' '}
+          {subscriptionUiData.currencySymbol}
+          {subscriptionUiData.price}
+        </p>
+      )}
+      <p>
+        Total spent:{' '}
+        {`${subscriptionUiData.currencySymbol}${subscriptionUiData.spentAmount}`}
+      </p>
+
+      {subscriptionUiData.cancelledDate && (
+        <p>
+          <strong>Cancelled at {subscriptionUiData.cancelledDate}</strong>
+        </p>
+      )}
     </Card>
   );
 };
