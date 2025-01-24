@@ -53,3 +53,5 @@ Frontend, backend and landing for the project
 - Responsive design from 320px to 4k
 - [Zustand](apps/frontend/src/store) for global states instead of context
 - React testing library for integration tests ([example](apps/frontend/src/pages/Login.test.tsx))
+- Skeletons for loading states
+- Memoization for complex calculations like sorting during rendering

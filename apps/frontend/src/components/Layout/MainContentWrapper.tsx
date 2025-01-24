@@ -9,12 +9,13 @@ const StyledMainContentWrapper = styled.div<{
   $token: GlobalToken;
 }>`
   background: ${({ $token }) => $token.colorBgBase};
-  max-width: 1000px;
+  width: 1000px;
   padding: 16px 28px;
   padding-bottom: 40px;
+  min-height: calc(100vh - 64px);
 
   @media (max-width: ${({ $token }) => $token.screenLGMax}px) {
-    max-width: 100%;
+    width: 100%;
   }
 
   //mobile
@@ -22,7 +23,7 @@ const StyledMainContentWrapper = styled.div<{
     margin-top: 60px;
     padding: 12px 16px;
     padding-bottom: 100px;
-    max-width: 100%;
+    width: 100%;
   }
 
   @media (max-width: ${extraSmallMobileFooterMaxWidth}px) {
