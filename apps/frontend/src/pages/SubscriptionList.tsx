@@ -1,114 +1,68 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Card, Spin, Alert, Row, Col, Tag } from 'antd';
 import { MainContentWrapper } from '../components/Layout/MainContentWrapper';
 import { Title } from '../components/UI/Title';
 import { CalendarOutlined } from '@ant-design/icons';
 import { useSubscriptionList } from '../queries/subscriptions.query';
+import { isBefore } from 'date-fns';
+import { SubscriptionResponseDto } from '@subcontrol/shared-dtos/subscriptions';
+import { ContainerForCentered } from '../components/Layout/ContainerForCentered';
+import { getErrorMessages } from '../utils/errorConvertor';
 
-interface Subscription {
-  id: number;
-  name: string;
-  period: 'YEARLY' | 'MONTHLY' | 'WEEKLY';
-  centsPerPeriod: number;
-  currency: string;
-  totalSpent: number;
-  nextPaymentDate: Date | null;
-}
+const sortSubscriptions = (
+  a: SubscriptionResponseDto,
+  b: SubscriptionResponseDto
+) => {
+  if (
+    (!a.nextPaymentDate && !b.nextPaymentDate) ||
+    a.nextPaymentDate?.toDateString() === b.nextPaymentDate?.toDateString()
+  ) {
+    return 0;
+  }
+  return isBefore(
+    a.nextPaymentDate || new Date(),
+    b.nextPaymentDate || new Date()
+  )
+    ? -1
+    : 1;
+};
 
 const SubscriptionList: React.FC = () => {
-  const { isLoading, error } = useSubscriptionList();
-  const data: Subscription[] = [
-    {
-      id: 1,
-      name: 'Netflix',
-      period: 'MONTHLY',
-      centsPerPeriod: 999,
-      currency: 'USD',
-      totalSpent: 999,
-      nextPaymentDate: new Date(),
-    },
-    {
-      id: 1,
-      name: 'Netflix2',
-      period: 'MONTHLY',
-      centsPerPeriod: 999,
-      currency: 'USD',
-      totalSpent: 999,
-      nextPaymentDate: new Date(),
-    },
-    {
-      id: 2,
-      name: 'Long name Spotify Spotify Spotify Long name Spotify Spotify Spotify',
-      period: 'MONTHLY',
-      centsPerPeriod: 999,
-      currency: 'USD',
-      totalSpent: 999,
-      nextPaymentDate: new Date(),
-    },
-    {
-      id: 2,
-      name: 'Spotify',
-      period: 'MONTHLY',
-      centsPerPeriod: 999,
-      currency: 'USD',
-      totalSpent: 999,
-      nextPaymentDate: new Date(),
-    },
-    {
-      id: 2,
-      name: 'Spotify',
-      period: 'MONTHLY',
-      centsPerPeriod: 999,
-      currency: 'USD',
-      totalSpent: 999,
-      nextPaymentDate: new Date(),
-    },
-    {
-      id: 2,
-      name: 'Spotify',
-      period: 'MONTHLY',
-      centsPerPeriod: 999,
-      currency: 'USD',
-      totalSpent: 999,
-      nextPaymentDate: new Date(),
-    },
-    {
-      id: 2,
-      name: 'Spotify',
-      period: 'MONTHLY',
-      centsPerPeriod: 999,
-      currency: 'USD',
-      totalSpent: 999,
-      nextPaymentDate: new Date(),
-    },
-  ];
-
-  if (isLoading) {
-    return <Spin tip="Loading..." />;
-  }
+  const { isLoading, error, data } = useSubscriptionList();
+  const subscriptions = useMemo(
+    () => (data?.subscriptions || []).sort(sortSubscriptions),
+    [data]
+  );
 
   if (error) {
     return (
-      <Alert
-        message="Error"
-        description="Failed to load subscriptions."
-        type="error"
-      />
+      <ContainerForCentered>
+        <Alert
+          message="Failed to load subscriptions."
+          description={getErrorMessages(error)}
+          type="error"
+        />
+      </ContainerForCentered>
     );
   }
 
   return (
     <MainContentWrapper>
       <Title level={1}>Your subscriptions</Title>
-      {/*TODO: hide when no data*/}
-      <Title level={4} mobileOnly>
-        Press to open
-      </Title>
-      <Title level={5} desktopOnly>
-        Click to open
-      </Title>
+
+      {!isLoading && subscriptions.length && (
+        <>
+          <Title level={4} mobileOnly>
+            Press to open
+          </Title>
+          <Title level={5} desktopOnly>
+            Click to open
+          </Title>
+        </>
+      )}
+
       <Row gutter={[20, 20]}>
-        {data?.map((subscription) => (
+        {subscriptions.map((subscription) => (
           <Col key={subscription.id} xs={24} sm={24} md={12} lg={12}>
             <Card
               title={
