@@ -78,7 +78,10 @@ export const CreateButton = styled(Button)`
   margin: 0 8px;
 `;
 
-export const StyledMobileFooterButton = styled(Button)<{ $token: GlobalToken }>`
+export const StyledMobileFooterButton = styled(Button)<{
+  $token: GlobalToken;
+  $active: boolean;
+}>`
   font-size: ${({ $token }) => $token.fontSize + 2}px;
   font-size: 18px;
   padding: 32px 16px;
@@ -87,6 +90,12 @@ export const StyledMobileFooterButton = styled(Button)<{ $token: GlobalToken }>`
   justify-content: center;
   align-items: center;
   gap: 4px;
+  color: ${({ $token, $active }) =>
+    $active ? $token.colorPrimaryText : $token.colorTextBase} !important;
+
+  &:hover {
+    background: none !important;
+  }
 
   @media (max-width: ${extraSmallMobileFooterMaxWidth}px) {
     padding: 16px 8px;

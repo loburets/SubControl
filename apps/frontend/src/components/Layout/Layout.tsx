@@ -20,7 +20,7 @@ import {
   StyledContent,
 } from './Layout.styled';
 import { Logo } from './Logo';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { ROUTES } from '../../router/routes';
 import { Theme, useThemeSwitcherStore } from '../../store/themeSwitcher.store';
 
@@ -32,6 +32,7 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
   const currentTheme = useThemeSwitcherStore((state) => state.currentTheme);
   const { token } = useToken();
   const location = useLocation();
+  const navigate = useNavigate();
   const hideNavigation = hideNavigationRoutes.includes(location.pathname);
 
   return (
@@ -41,23 +42,32 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
         <Logo />
         {!hideNavigation && (
           <StyledMenu
+            selectedKeys={[location.pathname]}
             items={[
               {
-                key: 'subs',
+                key: ROUTES.HOME,
                 label: 'Subscriptions',
                 icon: <UnorderedListOutlined />,
+                onClick: () => navigate(ROUTES.HOME),
               },
               {
-                key: 'past',
+                key: ROUTES.PAST_PAYMENTS,
                 label: 'Past Payments',
                 icon: <DollarOutlined />,
+                onClick: () => navigate(ROUTES.PAST_PAYMENTS),
               },
               {
-                key: 'next',
+                key: ROUTES.NEXT_PAYMENTS,
                 label: 'Next Payments',
                 icon: <CalendarOutlined />,
+                onClick: () => navigate(ROUTES.NEXT_PAYMENTS),
               },
-              { key: 'stats', label: 'Statistic', icon: <PieChartOutlined /> },
+              {
+                key: ROUTES.STATISTICS,
+                label: 'Statistic',
+                icon: <PieChartOutlined />,
+                onClick: () => navigate(ROUTES.STATISTICS),
+              },
             ]}
             theme={currentTheme === Theme.Dark ? 'dark' : 'light'}
             mode="horizontal"
@@ -85,6 +95,8 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
         <StyledMobileFooter $token={token} $theme={currentTheme}>
           <StyledMobileFooterButton
             $token={token}
+            $active={location.pathname === ROUTES.HOME}
+            onClick={() => navigate(ROUTES.HOME)}
             type="text"
             icon={<UnorderedListOutlined />}
           >
@@ -92,7 +104,9 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
           </StyledMobileFooterButton>
           <StyledMobileFooterButton
             $token={token}
-            type="link"
+            $active={location.pathname === ROUTES.PAST_PAYMENTS}
+            onClick={() => navigate(ROUTES.PAST_PAYMENTS)}
+            type="text"
             icon={<DollarOutlined />}
           >
             Past
@@ -105,6 +119,8 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
           />
           <StyledMobileFooterButton
             $token={token}
+            $active={location.pathname === ROUTES.NEXT_PAYMENTS}
+            onClick={() => navigate(ROUTES.NEXT_PAYMENTS)}
             type="text"
             icon={<CalendarOutlined />}
           >
@@ -112,6 +128,8 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
           </StyledMobileFooterButton>
           <StyledMobileFooterButton
             $token={token}
+            $active={location.pathname === ROUTES.STATISTICS}
+            onClick={() => navigate(ROUTES.STATISTICS)}
             type="text"
             icon={<PieChartOutlined />}
           >
