@@ -1,20 +1,18 @@
 import React, { useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Alert, Button, Card, Tag, Space, Skeleton } from 'antd';
-import {
-  CalendarOutlined,
-  CaretLeftOutlined,
-  LeftOutlined,
-} from '@ant-design/icons';
+import { Alert, Button, Card, Space, Skeleton } from 'antd';
+import { CalendarOutlined, CaretLeftOutlined } from '@ant-design/icons';
 import { MainContentWrapper } from '../components/Layout/MainContentWrapper';
 import { Title } from '../components/UI/Title';
 import { ContainerForCentered } from '../components/Layout/ContainerForCentered';
 import { useSubscription } from '../queries/subscriptions.query';
 import { getErrorMessages } from '../utils/errorConvertor';
-import { getSubscriptionUiData } from '../utils/subscriptionsHelper';
+import { getSubscriptionUiData, Period } from '../utils/subscriptionsHelper';
 import { ROUTES } from '../router/routes';
+import { Tag } from '../components/UI/Tag';
+import { SubscriptionDetailsCard } from '../components/UI/Subscription';
 
-const Subscription: React.FC = () => {
+const SubscriptionDetails: React.FC = () => {
   const { subscriptionId } = useParams();
   const navigate = useNavigate();
   const {
@@ -48,9 +46,9 @@ const Subscription: React.FC = () => {
           Loading...
         </Title>
 
-        <Card>
+        <SubscriptionDetailsCard>
           <Skeleton active />
-        </Card>
+        </SubscriptionDetailsCard>
       </MainContentWrapper>
     );
   }
@@ -64,28 +62,44 @@ const Subscription: React.FC = () => {
         </Title>
       </Space>
 
-      <Card>
+      <SubscriptionDetailsCard isCancelled={!!subscription.cancelledAt}>
         <Tag
+          size={'big'}
           color={subscriptionUiData.periodTagColor}
           icon={<CalendarOutlined />}
-          style={{ marginBottom: 16 }}
         >
           {subscriptionUiData.periodText}
         </Tag>
 
-        <div style={{ marginBottom: 16 }}>
-          <Title level={4}>Monthly Cost</Title>
-          <p>{`${subscriptionUiData.currencySymbol}${subscriptionUiData.costPerMonth}`}</p>
-        </div>
-
-        <div style={{ marginBottom: 16 }}>
-          <Title level={4}>Yearly Cost</Title>
-          <p>{`${subscriptionUiData.currencySymbol}${subscriptionUiData.costPerYear}`}</p>
+        <div style={{ marginBottom: 24 }}>
+          <Title level={4} embedMargins>
+            Cost
+          </Title>
+          <p>
+            {subscription.period === Period.WEEKLY && (
+              <>
+                {`${subscriptionUiData.currencySymbol}${subscriptionUiData.price}`}
+                /week
+                <br />
+                or
+                <br />
+              </>
+            )}
+            {`${subscriptionUiData.currencySymbol}${subscriptionUiData.costPerMonth}`}
+            /month
+            <br />
+            or
+            <br />
+            {`${subscriptionUiData.currencySymbol}${subscriptionUiData.costPerYear}`}
+            /year
+          </p>
         </div>
 
         {subscriptionUiData.nextPaymentDate && (
-          <div style={{ marginBottom: 16 }}>
-            <Title level={4}>Next Payment</Title>
+          <div style={{ marginBottom: 24 }}>
+            <Title level={4} embedMargins>
+              Next Payment
+            </Title>
             <p>
               {subscriptionUiData.nextPaymentDate} —{' '}
               {subscriptionUiData.currencySymbol}
@@ -94,19 +108,24 @@ const Subscription: React.FC = () => {
           </div>
         )}
 
-        <div style={{ marginBottom: 16 }}>
-          <Title level={4}>Total Spent</Title>
+        <div style={{ marginBottom: 24 }}>
+          <Title level={4} embedMargins>
+            Total Spent
+          </Title>
           <p>{`${subscriptionUiData.currencySymbol}${subscriptionUiData.spentAmount}`}</p>
         </div>
 
         {subscriptionUiData.cancelledDate && (
           <div style={{ marginBottom: 16 }}>
-            <Title level={4}>Cancellation Date</Title>
+            <Title level={4} embedMargins>
+              Cancellation Date
+            </Title>
             <p>{subscriptionUiData.cancelledDate}</p>
           </div>
         )}
 
         <Space style={{ marginTop: 24 }}>
+          <Button danger>Delete</Button>
           <Button
             type="primary"
             onClick={() =>
@@ -118,16 +137,12 @@ const Subscription: React.FC = () => {
               )
             }
           >
-            Edit
-          </Button>
-          <Button danger>Cancel Subscription</Button>
-          <Button danger type="primary">
-            Delete
+            Edit / {subscription.cancelledAt ? 'Re-activate' : 'Cancel'}
           </Button>
         </Space>
-      </Card>
+      </SubscriptionDetailsCard>
     </MainContentWrapper>
   );
 };
 
-export default Subscription;
+export default SubscriptionDetails;

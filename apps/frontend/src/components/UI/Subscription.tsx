@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react';
+import React, { PropsWithChildren, useMemo } from 'react';
 import { SubscriptionResponseDto } from '@subcontrol/shared-dtos/subscriptions';
 import { Title } from './Title';
-import { Card, GlobalToken, Tag, theme } from 'antd';
+import { Card, CardProps, GlobalToken, Tag, theme } from 'antd';
 import { CalendarOutlined } from '@ant-design/icons';
 import { getSubscriptionUiData } from '../../utils/subscriptionsHelper';
 import { SidesSplitter } from './SidesSplitter';
@@ -90,3 +90,15 @@ const StyledCard = styled(Card)<{
   background-color: ${({ $token, $isCancelled }) =>
     $isCancelled ? $token.colorBgContainerDisabled : $token.colorBgBase};
 `;
+
+export const SubscriptionDetailsCard: React.FC<
+  CardProps & PropsWithChildren & { isCancelled?: boolean }
+> = ({ isCancelled, children, ...rest }) => {
+  const { token } = useToken();
+
+  return (
+    <StyledCard $token={token} $isCancelled={isCancelled || false} {...rest}>
+      {children}
+    </StyledCard>
+  );
+};

@@ -6,7 +6,7 @@ import PrivateRoute from './PrivateRoute';
 import PublicOnlyRoute from './PublicOnlyRoute';
 import SignUp from '../pages/SignUp';
 import SubscriptionList from '../pages/SubscriptionList';
-import Subscription from '../pages/Subscription';
+import SubscriptionDetails from '../pages/SubscriptionDetails';
 
 export function AppRouter() {
   return (
@@ -41,7 +41,7 @@ export function AppRouter() {
         path={ROUTES.SUBSCRIPTION_DETAILS}
         Component={() => (
           <PrivateRoute>
-            <Subscription />
+            <SubscriptionDetails />
           </PrivateRoute>
         )}
       ></Route>
