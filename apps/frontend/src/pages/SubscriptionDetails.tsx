@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Alert, Button, Space, Skeleton, Modal } from 'antd';
+import { Alert, Button, Space, Modal } from 'antd';
 import { CalendarOutlined, CaretLeftOutlined } from '@ant-design/icons';
 import { MainContentWrapper } from '../components/Layout/MainContentWrapper';
 import { Title } from '../components/UI/Title';
@@ -70,9 +70,7 @@ const SubscriptionDetails: React.FC = () => {
           Loading...
         </Title>
 
-        <SubscriptionDetailsCard>
-          <Skeleton active />
-        </SubscriptionDetailsCard>
+        <SubscriptionDetailsCard loading></SubscriptionDetailsCard>
       </MainContentWrapper>
     );
   }
