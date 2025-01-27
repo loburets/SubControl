@@ -6,6 +6,8 @@ import { CalendarOutlined } from '@ant-design/icons';
 import { getSubscriptionUiData } from '../../utils/subscriptionsHelper';
 import { SidesSplitter } from './SidesSplitter';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router';
+import { ROUTES } from '../../router/routes';
 
 const { useToken } = theme;
 
@@ -17,9 +19,18 @@ export const Subscription: React.FC<{
     [subscription]
   );
   const { token } = useToken();
+  const navigate = useNavigate();
 
   return (
     <StyledCard
+      onClick={() => {
+        navigate(
+          ROUTES.SUBSCRIPTION_DETAILS.replace(
+            ':subscriptionId',
+            subscription.id.toString()
+          )
+        );
+      }}
       $isCancelled={!!subscription.cancelledAt}
       $token={token}
       title={

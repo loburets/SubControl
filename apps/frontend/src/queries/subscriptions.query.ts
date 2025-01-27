@@ -22,6 +22,18 @@ export const useSubscriptionList = () => {
   });
 };
 
+export const useSubscription = (subscriptionId: number) => {
+  return useQuery<SubscriptionResponseDto>({
+    queryKey: ['subscription', subscriptionId],
+    queryFn: async () => {
+      const response = await axiosApiInstance.get<SubscriptionResponseDto>(
+        `api/v1/subscriptions/${subscriptionId}`
+      );
+      return hydrateSubscriptionDates(response.data);
+    },
+  });
+};
+
 const hydrateSubscriptionDates = (
   subscription: SubscriptionResponseDto
 ): SubscriptionResponseDto => ({
