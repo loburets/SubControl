@@ -1,17 +1,19 @@
 import React, { useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Alert, Button, Card, Space, Skeleton } from 'antd';
+import { Alert, Button, Space, Skeleton, Modal } from 'antd';
 import { CalendarOutlined, CaretLeftOutlined } from '@ant-design/icons';
 import { MainContentWrapper } from '../components/Layout/MainContentWrapper';
 import { Title } from '../components/UI/Title';
 import { ContainerForCentered } from '../components/Layout/ContainerForCentered';
-import { useSubscription } from '../queries/subscriptions.query';
+import {
+  useSubscription,
+  useDeleteSubscription,
+} from '../queries/subscriptions.query';
 import { getErrorMessages } from '../utils/errorConvertor';
 import { getSubscriptionUiData, Period } from '../utils/subscriptionsHelper';
 import { ROUTES } from '../router/routes';
 import { Tag } from '../components/UI/Tag';
 import { SubscriptionDetailsCard } from '../components/UI/Subscription';
-
 const SubscriptionDetails: React.FC = () => {
   const { subscriptionId } = useParams();
   const navigate = useNavigate();
@@ -20,10 +22,32 @@ const SubscriptionDetails: React.FC = () => {
     data: subscription,
     error,
   } = useSubscription(Number(subscriptionId));
+  const deleteSubscription = useDeleteSubscription();
   const subscriptionUiData = useMemo(
     () => (subscription ? getSubscriptionUiData(subscription) : null),
     [subscription]
   );
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = React.useState(false);
+  const [isDeleting, setIsDeleting] = React.useState(false);
+
+  const handleDelete = async () => {
+    setIsDeleting(true);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      await deleteSubscription.mutateAsync(Number(subscriptionId) + 1);
+      navigate(ROUTES.HOME);
+    } catch (error) {
+      Modal.error({
+        title: 'Failed to delete subscription',
+        content: getErrorMessages(error as Error),
+        centered: true,
+      });
+    } finally {
+      setIsDeleting(false);
+      setIsDeleteModalOpen(false);
+    }
+  };
 
   if (error) {
     return (
@@ -125,7 +149,9 @@ const SubscriptionDetails: React.FC = () => {
         )}
 
         <Space style={{ marginTop: 24 }}>
-          <Button danger>Delete</Button>
+          <Button danger onClick={() => setIsDeleteModalOpen(true)}>
+            Delete
+          </Button>
           <Button
             type="primary"
             onClick={() =>
@@ -140,6 +166,21 @@ const SubscriptionDetails: React.FC = () => {
             Edit / {subscription.cancelledAt ? 'Re-activate' : 'Cancel'}
           </Button>
         </Space>
+
+        <Modal
+          title="Delete"
+          open={isDeleteModalOpen}
+          onCancel={() => setIsDeleteModalOpen(false)}
+          okText="Delete"
+          okType="danger"
+          cancelText="Cancel"
+          confirmLoading={isDeleting}
+          onOk={handleDelete}
+          centered
+          width={400}
+        >
+          Are you sure you want to delete this subscription?
+        </Modal>
       </SubscriptionDetailsCard>
     </MainContentWrapper>
   );
