@@ -79,8 +79,8 @@ const TitleStyled = styled(AntTitle)<{
   ${({ $isLink }) => $isLink && `cursor: pointer;`}
 
   &:hover {
-    color: ${({ $token, $isLink }) =>
-      $isLink ? $token.colorLinkHover : 'inherit'};
+    ${({ $token, $isLink }) =>
+      $isLink ? `color: :${$token.colorLinkHover}` : ''};
   }
 
   // back arrow
