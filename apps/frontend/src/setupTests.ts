@@ -15,7 +15,16 @@ jest.mock('axios', () => ({
   default: {
     get: jest.fn(),
     post: jest.fn(),
-    create: jest.fn(),
+    create: jest.fn(() => ({
+      interceptors: {
+        request: {
+          use: jest.fn(),
+        },
+        response: {
+          use: jest.fn(),
+        },
+      },
+    })),
   },
 }));
 
