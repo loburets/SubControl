@@ -38,6 +38,7 @@ const TitleStyled = styled(AntTitle)<{
   $noAdoption?: boolean;
   $desktopOnly?: boolean;
   $mobileOnly?: boolean;
+  $isLink?: boolean;
 }>`
   text-overflow: ellipsis;
   overflow: hidden;
@@ -74,6 +75,19 @@ const TitleStyled = styled(AntTitle)<{
     ${({ $embedMargins }) => $embedMargins && 'margin-top: 12px !important;'}
     ${({ $embedMargins }) => $embedMargins && 'margin-bottom: 12px !important;'}
   }
+
+  ${({ $isLink }) => $isLink && `cursor: pointer;`}
+
+  &:hover {
+    color: ${({ $token, $isLink }) =>
+      $isLink ? $token.colorLinkHover : 'inherit'};
+  }
+
+  // back arrow
+  & svg {
+    width: 80%;
+    margin-right: 4px;
+  }
 `;
 
 export const Title: React.FC<
@@ -82,6 +96,7 @@ export const Title: React.FC<
     noAdoption?: boolean;
     mobileOnly?: boolean;
     desktopOnly?: boolean;
+    isLink?: boolean;
   }
 > = ({
   children,
@@ -89,6 +104,7 @@ export const Title: React.FC<
   noAdoption,
   mobileOnly,
   desktopOnly,
+  isLink,
   ...rest
 }) => {
   const { token } = useToken();
@@ -101,6 +117,7 @@ export const Title: React.FC<
       $noAdoption={noAdoption}
       $desktopOnly={desktopOnly}
       $mobileOnly={mobileOnly}
+      $isLink={isLink}
     >
       {children}
     </TitleStyled>

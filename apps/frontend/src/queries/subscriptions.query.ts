@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   SubscriptionListResponseDto,
   SubscriptionResponseDto,
@@ -18,6 +18,26 @@ export const useSubscriptionList = () => {
           hydrateSubscriptionDates
         ),
       };
+    },
+  });
+};
+
+export const useSubscription = (subscriptionId: number) => {
+  return useQuery<SubscriptionResponseDto>({
+    queryKey: ['subscription', subscriptionId],
+    queryFn: async () => {
+      const response = await axiosApiInstance.get<SubscriptionResponseDto>(
+        `api/v1/subscriptions/${subscriptionId}`
+      );
+      return hydrateSubscriptionDates(response.data);
+    },
+  });
+};
+
+export const useDeleteSubscription = () => {
+  return useMutation({
+    mutationFn: async (subscriptionId: number) => {
+      await axiosApiInstance.delete(`api/v1/subscriptions/${subscriptionId}`);
     },
   });
 };

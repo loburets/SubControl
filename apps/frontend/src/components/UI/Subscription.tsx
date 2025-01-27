@@ -1,11 +1,13 @@
-import React, { useMemo } from 'react';
+import React, { PropsWithChildren, useMemo } from 'react';
 import { SubscriptionResponseDto } from '@subcontrol/shared-dtos/subscriptions';
 import { Title } from './Title';
-import { Card, GlobalToken, Tag, theme } from 'antd';
+import { Card, CardProps, GlobalToken, Tag, theme } from 'antd';
 import { CalendarOutlined } from '@ant-design/icons';
 import { getSubscriptionUiData } from '../../utils/subscriptionsHelper';
 import { SidesSplitter } from './SidesSplitter';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router';
+import { ROUTES } from '../../router/routes';
 
 const { useToken } = theme;
 
@@ -17,9 +19,18 @@ export const Subscription: React.FC<{
     [subscription]
   );
   const { token } = useToken();
+  const navigate = useNavigate();
 
   return (
     <StyledCard
+      onClick={() => {
+        navigate(
+          ROUTES.SUBSCRIPTION_DETAILS.replace(
+            ':subscriptionId',
+            subscription.id.toString()
+          )
+        );
+      }}
       $isCancelled={!!subscription.cancelledAt}
       $token={token}
       title={
@@ -79,3 +90,15 @@ const StyledCard = styled(Card)<{
   background-color: ${({ $token, $isCancelled }) =>
     $isCancelled ? $token.colorBgContainerDisabled : $token.colorBgBase};
 `;
+
+export const SubscriptionDetailsCard: React.FC<
+  CardProps & PropsWithChildren & { isCancelled?: boolean }
+> = ({ isCancelled, children, ...rest }) => {
+  const { token } = useToken();
+
+  return (
+    <StyledCard $token={token} $isCancelled={isCancelled || false} {...rest}>
+      {children}
+    </StyledCard>
+  );
+};

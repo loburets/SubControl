@@ -6,6 +6,7 @@ import PrivateRoute from './PrivateRoute';
 import PublicOnlyRoute from './PublicOnlyRoute';
 import SignUp from '../pages/SignUp';
 import SubscriptionList from '../pages/SubscriptionList';
+import SubscriptionDetails from '../pages/SubscriptionDetails';
 
 export function AppRouter() {
   return (
@@ -33,6 +34,14 @@ export function AppRouter() {
         Component={() => (
           <PrivateRoute>
             <SubscriptionList />
+          </PrivateRoute>
+        )}
+      ></Route>
+      <Route
+        path={ROUTES.SUBSCRIPTION_DETAILS}
+        Component={() => (
+          <PrivateRoute>
+            <SubscriptionDetails />
           </PrivateRoute>
         )}
       ></Route>
