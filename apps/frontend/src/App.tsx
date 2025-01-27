@@ -4,20 +4,23 @@ import { AppRouter } from './router/AppRouter';
 import Layout from './components/Layout/Layout';
 import { AntConfigProvider } from './components/Layout/AntConfigProvider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ErrorBoundary } from './utils/bugsnag';
 
 const queryClient = new QueryClient();
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <AntConfigProvider>
-          <Layout>
-            <AppRouter />
-          </Layout>
-        </AntConfigProvider>
-      </BrowserRouter>
-    </QueryClientProvider>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <AntConfigProvider>
+            <Layout>
+              <AppRouter />
+            </Layout>
+          </AntConfigProvider>
+        </BrowserRouter>
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 }
 

@@ -6,6 +6,9 @@
   "author": "Dmitry Loburets <dmitry.loburets@gmail.com> (https://github.com/loburets)",
   "license": "MIT",
   "dependencies": {
+    "@bugsnag/browser-performance": "^2.11.0",
+    "@bugsnag/js": "^8.2.0",
+    "@bugsnag/plugin-react": "^8.2.0",
     "@subcontrol/shared-dtos": "*",
     "@tanstack/react-query": "^5.64.2",
     "@testing-library/jest-dom": "^5.14.1",
