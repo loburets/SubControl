@@ -11,4 +11,9 @@ module.exports = {
     eqeqeq: ['error', 'always'],
     '@typescript-eslint/no-unused-vars': 'warn',
   },
+  ignorePatterns: ['**/dist/*'],
+  env: {
+    node: true,
+    es6: true,
+  },
 };
