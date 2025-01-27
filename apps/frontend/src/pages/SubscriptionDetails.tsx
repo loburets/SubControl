@@ -35,7 +35,7 @@ const SubscriptionDetails: React.FC = () => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      await deleteSubscription.mutateAsync(Number(subscriptionId) + 1);
+      await deleteSubscription.mutateAsync(Number(subscriptionId));
       navigate(ROUTES.HOME);
     } catch (error) {
       Modal.error({
