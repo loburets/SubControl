@@ -1,13 +1,14 @@
 import React, { PropsWithChildren, useMemo } from 'react';
 import { SubscriptionResponseDto } from '@subcontrol/shared-dtos/subscriptions';
 import { Title } from './Title';
-import { Card, CardProps, GlobalToken, Tag, theme } from 'antd';
+import { Card, CardProps, Divider, GlobalToken, Tag, theme } from 'antd';
 import { CalendarOutlined } from '@ant-design/icons';
 import { getSubscriptionUiData } from '../../utils/subscriptionsHelper';
 import { SidesSplitter } from './SidesSplitter';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router';
 import { ROUTES } from '../../router/routes';
+import { Price } from './Price';
 
 const { useToken } = theme;
 
@@ -53,15 +54,16 @@ export const Subscription: React.FC<{
       <p>
         <SidesSplitter>
           <span>
-            {`${subscriptionUiData.currencySymbol}${subscriptionUiData.costPerMonth}`}
+            <Price>{`${subscriptionUiData.currencySymbol}${subscriptionUiData.costPerMonth}`}</Price>
             /month
           </span>
           <span>
-            {`${subscriptionUiData.currencySymbol}${subscriptionUiData.costPerYear}`}
+            <Price>{`${subscriptionUiData.currencySymbol}${subscriptionUiData.costPerYear}`}</Price>
             /year
           </span>
         </SidesSplitter>
       </p>
+      <Divider style={{ margin: 0 }} />
       {subscriptionUiData.nextPaymentDate && (
         <p>
           Next Payment: {subscriptionUiData.nextPaymentDate} —{' '}
