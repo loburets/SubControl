@@ -12,14 +12,17 @@ const FormContainerStyled = styled.div<{
     & input {
       padding: 8px 11px !important;
     }
+    & input[type='password'] {
+      padding: 5px 0px !important;
+    }
     & .ant-picker input {
-      padding: 4px 0 !important;
+      padding: 5px 0 !important;
     }
     & .ant-select {
-      height: 40px !important;
+      height: 42px !important;
     }
     & .ant-select-selector {
-      height: 40px !important;
+      height: 42px !important;
     }
     & .ant-select-arrow {
       margin-top: -2px;
@@ -29,10 +32,10 @@ const FormContainerStyled = styled.div<{
       margin: 4px;
     }
     & .ant-radio-button-wrapper {
-      height: 36px;
+      height: 42px;
       margin: 0;
-      padding-inline: 18px;
-      padding-block: 2px;
+      padding-inline: 16px;
+      padding-block: 5px;
     }
   }
 `;

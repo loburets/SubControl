@@ -54,4 +54,5 @@ Frontend, backend and landing for the project
 - React testing library for integration tests ([example](apps/frontend/src/pages/Login.test.tsx))
 - Skeletons for loading states
 - Memoization for complex calculations like sorting during rendering
-- No special Form manager as Ant Design Form is enough
+- No special Form manager as Ant Design Form is enough ([example](apps/frontend/src/components/UI/SubscriptionForm.tsx))
+- Form elements [are bigger](/FormContainer.tsx) on mobile for easier touch

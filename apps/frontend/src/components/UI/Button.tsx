@@ -9,7 +9,7 @@ const ButtonStyled = styled(AntButton)<{
 }>`
   //mobile
   @media (max-width: ${({ $token }) => $token.screenSMMax}px) {
-    height: 36px;
+    height: 42px;
     padding: 0 16px;
   }
 `;
