@@ -42,7 +42,6 @@ Frontend, backend and landing for the project
 - TypeScript
 - React
 - Ant Design
-- React Hook Form
 - Styled Components
 - TanStack React Query
 
@@ -55,3 +54,4 @@ Frontend, backend and landing for the project
 - React testing library for integration tests ([example](apps/frontend/src/pages/Login.test.tsx))
 - Skeletons for loading states
 - Memoization for complex calculations like sorting during rendering
+- No special Form manager as Ant Design Form is enough
