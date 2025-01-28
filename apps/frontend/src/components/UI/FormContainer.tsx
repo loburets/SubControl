@@ -15,11 +15,24 @@ const FormContainerStyled = styled.div<{
     & .ant-picker input {
       padding: 4px 0 !important;
     }
+    & .ant-select {
+      height: 40px !important;
+    }
     & .ant-select-selector {
       height: 40px !important;
     }
     & .ant-select-arrow {
       margin-top: -2px;
+    }
+    & .ant-checkbox {
+      transform: scale(1.5);
+      margin: 4px;
+    }
+    & .ant-radio-button-wrapper {
+      height: 36px;
+      margin: 0;
+      padding-inline: 18px;
+      padding-block: 2px;
     }
   }
 `;

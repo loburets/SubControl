@@ -4,7 +4,6 @@ import {
   Input,
   Select,
   DatePicker,
-  Button,
   InputNumber,
   Checkbox,
   Radio,
@@ -17,6 +16,7 @@ import { Currency, Period } from '../../utils/subscriptionsHelper';
 import dayjs from 'dayjs';
 import { FormContainer } from './FormContainer';
 import { LargeCalendarGlobalStyles } from './LargeCalendarGlobalStyles';
+import { Button } from './Button';
 
 interface SubscriptionFormProps {
   initialValues?: {
@@ -200,7 +200,7 @@ export const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
         </Form.Item>
 
         <Form.Item>
-          <div style={{ display: 'flex', gap: '8px' }}>
+          <div style={{ display: 'flex', gap: '12px', marginTop: '8px' }}>
             <Button onClick={() => navigate(ROUTES.HOME)}>Cancel</Button>
             <Button type="primary" htmlType="submit" loading={isLoading}>
               {submitText}
