@@ -15,7 +15,7 @@ const ContainerStyled = styled.div<{
     width: 100%;
 
     & input {
-      padding: 8px;
+      padding: 8px 11px;
     }
   }
 `;

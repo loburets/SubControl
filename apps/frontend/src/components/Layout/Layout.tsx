@@ -115,6 +115,7 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
             type="primary"
             shape="circle"
             icon={<PlusOutlined />}
+            onClick={() => navigate(ROUTES.SUBSCRIPTION_CREATE)}
             size="large"
           />
           <StyledMobileFooterButton

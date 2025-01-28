@@ -7,6 +7,8 @@ import PublicOnlyRoute from './PublicOnlyRoute';
 import SignUp from '../pages/SignUp';
 import SubscriptionList from '../pages/SubscriptionList';
 import SubscriptionDetails from '../pages/SubscriptionDetails';
+import SubscriptionCreate from '../pages/SubscriptionCreate';
+import SubscriptionEdit from '../pages/SubscriptionEdit';
 
 export function AppRouter() {
   return (
@@ -42,6 +44,22 @@ export function AppRouter() {
         Component={() => (
           <PrivateRoute>
             <SubscriptionDetails />
+          </PrivateRoute>
+        )}
+      ></Route>
+      <Route
+        path={ROUTES.SUBSCRIPTION_CREATE}
+        Component={() => (
+          <PrivateRoute>
+            <SubscriptionCreate />
+          </PrivateRoute>
+        )}
+      ></Route>
+      <Route
+        path={ROUTES.SUBSCRIPTION_EDIT}
+        Component={() => (
+          <PrivateRoute>
+            <SubscriptionEdit />
           </PrivateRoute>
         )}
       ></Route>

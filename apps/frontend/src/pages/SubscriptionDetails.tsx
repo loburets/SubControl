@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Alert, Button, Space, Modal } from 'antd';
+import { Alert, Space, Modal } from 'antd';
 import { CalendarOutlined, CaretLeftOutlined } from '@ant-design/icons';
 import { MainContentWrapper } from '../components/Layout/MainContentWrapper';
 import { Title } from '../components/UI/Title';
@@ -14,6 +14,8 @@ import { getSubscriptionUiData, Period } from '../utils/subscriptionsHelper';
 import { ROUTES } from '../router/routes';
 import { Tag } from '../components/UI/Tag';
 import { SubscriptionDetailsCard } from '../components/UI/Subscription';
+import { Price } from '../components/UI/Price';
+import { Button } from '../components/UI/Button';
 const SubscriptionDetails: React.FC = () => {
   const { subscriptionId } = useParams();
   const navigate = useNavigate();
@@ -100,19 +102,19 @@ const SubscriptionDetails: React.FC = () => {
           <p>
             {subscription.period === Period.WEEKLY && (
               <>
-                {`${subscriptionUiData.currencySymbol}${subscriptionUiData.price}`}
+                <Price>{`${subscriptionUiData.currencySymbol}${subscriptionUiData.price}`}</Price>
                 /week
                 <br />
                 or
                 <br />
               </>
             )}
-            {`${subscriptionUiData.currencySymbol}${subscriptionUiData.costPerMonth}`}
+            <Price>{`${subscriptionUiData.currencySymbol}${subscriptionUiData.costPerMonth}`}</Price>
             /month
             <br />
             or
             <br />
-            {`${subscriptionUiData.currencySymbol}${subscriptionUiData.costPerYear}`}
+            <Price>{`${subscriptionUiData.currencySymbol}${subscriptionUiData.costPerYear}`}</Price>
             /year
           </p>
         </div>
@@ -146,7 +148,7 @@ const SubscriptionDetails: React.FC = () => {
           </div>
         )}
 
-        <Space style={{ marginTop: 24 }}>
+        <Space style={{ marginTop: 24, columnGap: 12 }}>
           <Button danger onClick={() => setIsDeleteModalOpen(true)}>
             Delete
           </Button>

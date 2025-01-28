@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { Alert, Button, Typography } from 'antd';
+import { Alert, Typography } from 'antd';
+import { Button } from './Button';
 
 const { Title } = Typography;
 

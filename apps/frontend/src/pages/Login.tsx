@@ -13,6 +13,7 @@ import {
   StyledTitle,
 } from '../components/UI/AuthElementsStyled';
 import { ContainerForCentered } from '../components/Layout/ContainerForCentered';
+import { FormContainer } from '../components/UI/FormContainer';
 
 const { Text } = Typography;
 
@@ -52,60 +53,69 @@ const Login: React.FC = () => {
           />
         )}
 
-        <Form layout="vertical" onFinish={handleSubmit(onSubmit)}>
-          <Form.Item
-            label="Email"
-            validateStatus={errors.email ? 'error' : ''}
-            help={errors.email?.message}
-          >
-            <Controller
-              name="email"
-              control={control}
-              rules={{
-                required: 'Email is required',
-                pattern: {
-                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                  message: 'Enter a valid email address',
-                },
-              }}
-              render={({ field }) => (
-                <Input {...field} type="email" placeholder="Enter your email" />
-              )}
-            />
-          </Form.Item>
-
-          <Form.Item
-            label="Password"
-            validateStatus={errors.password ? 'error' : ''}
-            help={errors.password?.message}
-          >
-            <Controller
-              name="password"
-              control={control}
-              rules={{
-                required: 'Password is required',
-                minLength: {
-                  value: 3,
-                  message: 'Password must be at least 3 characters long',
-                },
-              }}
-              render={({ field }) => (
-                <Input.Password {...field} placeholder="Enter your password" />
-              )}
-            />
-          </Form.Item>
-
-          <Form.Item>
-            <StyledButton
-              type="primary"
-              htmlType="submit"
-              block
-              loading={loginMutation.isPending}
+        <FormContainer>
+          <Form layout="vertical" onFinish={handleSubmit(onSubmit)}>
+            <Form.Item
+              label="Email"
+              validateStatus={errors.email ? 'error' : ''}
+              help={errors.email?.message}
             >
-              Login
-            </StyledButton>
-          </Form.Item>
-        </Form>
+              <Controller
+                name="email"
+                control={control}
+                rules={{
+                  required: 'Email is required',
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: 'Enter a valid email address',
+                  },
+                }}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    type="email"
+                    placeholder="Enter your email"
+                  />
+                )}
+              />
+            </Form.Item>
+
+            <Form.Item
+              label="Password"
+              validateStatus={errors.password ? 'error' : ''}
+              help={errors.password?.message}
+            >
+              <Controller
+                name="password"
+                control={control}
+                rules={{
+                  required: 'Password is required',
+                  minLength: {
+                    value: 3,
+                    message: 'Password must be at least 3 characters long',
+                  },
+                }}
+                render={({ field }) => (
+                  <Input.Password
+                    {...field}
+                    placeholder="Enter your password"
+                  />
+                )}
+              />
+            </Form.Item>
+
+            <Form.Item>
+              <StyledButton
+                type="primary"
+                htmlType="submit"
+                block
+                loading={loginMutation.isPending}
+              >
+                Login
+              </StyledButton>
+            </Form.Item>
+          </Form>
+        </FormContainer>
 
         <StyledAdditionalText>
           <Text>Don't have an account?</Text>{' '}

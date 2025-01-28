@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import { Button, Empty, GlobalToken, theme } from 'antd';
+import { Empty, GlobalToken, theme } from 'antd';
 import React from 'react';
+import { Button } from './Button';
 
 const { useToken } = theme;
 

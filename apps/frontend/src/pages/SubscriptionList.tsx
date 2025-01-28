@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Alert, Row, Col, Button } from 'antd';
+import { Alert, Row, Col } from 'antd';
 import { MainContentWrapper } from '../components/Layout/MainContentWrapper';
 import { Title } from '../components/UI/Title';
 import { useSubscriptionList } from '../queries/subscriptions.query';
@@ -12,6 +12,7 @@ import { Hider } from '../components/UI/Hider';
 import { SidesSplitter } from '../components/UI/SidesSplitter';
 import { Search } from '../components/UI/Search';
 import { EmptyResults } from '../components/UI/EmptyResults';
+import { Button } from '../components/UI/Button';
 
 const SubscriptionList: React.FC = () => {
   const { isLoading, error, data } = useSubscriptionList();
