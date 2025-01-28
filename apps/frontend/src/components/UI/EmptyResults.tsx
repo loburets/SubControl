@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { Empty, GlobalToken, theme } from 'antd';
 import React from 'react';
 import { Button } from './Button';
+import { ROUTES } from '../../router/routes';
+import { useNavigate } from 'react-router';
 
 const { useToken } = theme;
 
@@ -46,6 +48,8 @@ export const EmptyResults: React.FC<{ isSearch?: boolean }> = ({
   isSearch,
 }) => {
   const { token } = useToken();
+  const navigate = useNavigate();
+
   const description = isSearch
     ? 'No results found.'
     : 'No subscriptions found. Add your first subscription to get started.';
@@ -54,7 +58,11 @@ export const EmptyResults: React.FC<{ isSearch?: boolean }> = ({
     <ContainerStyled $token={token}>
       <Empty description={description}>
         {!isSearch && (
-          <ButtonStyled $token={token} type="primary">
+          <ButtonStyled
+            $token={token}
+            type="primary"
+            onClick={() => navigate(ROUTES.SUBSCRIPTION_CREATE)}
+          >
             Create new
           </ButtonStyled>
         )}

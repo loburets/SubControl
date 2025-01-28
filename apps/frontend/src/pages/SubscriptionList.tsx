@@ -13,10 +13,13 @@ import { SidesSplitter } from '../components/UI/SidesSplitter';
 import { Search } from '../components/UI/Search';
 import { EmptyResults } from '../components/UI/EmptyResults';
 import { Button } from '../components/UI/Button';
+import { ROUTES } from '../router/routes';
+import { useNavigate } from 'react-router';
 
 const SubscriptionList: React.FC = () => {
   const { isLoading, error, data } = useSubscriptionList();
   const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
 
   const filteredSubscriptions = useMemo(() => {
     const lowerCaseQuery = searchQuery.toLowerCase().trim();
@@ -38,8 +41,9 @@ const SubscriptionList: React.FC = () => {
         .sort(sortSubscriptionsByNextPayment),
     [filteredSubscriptions]
   );
-  const isEmptySearch = !isLoading && !filteredSubscriptions.length;
   const isEmptyList = !isLoading && !data?.subscriptions.length;
+  const isEmptySearch =
+    !isLoading && !filteredSubscriptions.length && !isEmptyList;
 
   if (error) {
     return (
@@ -60,7 +64,11 @@ const SubscriptionList: React.FC = () => {
       <SidesSplitter>
         <Search searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
         <Hider desktopOnly>
-          <Button type="primary" style={{ marginBottom: 24 }}>
+          <Button
+            type="primary"
+            style={{ marginBottom: 24 }}
+            onClick={() => navigate(ROUTES.SUBSCRIPTION_CREATE)}
+          >
             Create new
           </Button>
         </Hider>
