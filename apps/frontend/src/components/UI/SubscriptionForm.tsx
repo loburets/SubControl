@@ -8,14 +8,15 @@ import {
   InputNumber,
   Checkbox,
   Radio,
-  theme,
   Grid,
+  theme,
 } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../router/routes';
 import { Currency, Period } from '../../utils/subscriptionsHelper';
 import dayjs from 'dayjs';
 import { FormContainer } from './FormContainer';
+import { LargeCalendarGlobalStyles } from './LargeCalendarGlobalStyles';
 
 interface SubscriptionFormProps {
   initialValues?: {
@@ -47,7 +48,7 @@ export const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const screens = Grid.useBreakpoint();
-
+  const { token } = theme.useToken();
   // Add state for cancelled checkbox
   const [isCancelled, setIsCancelled] = React.useState(
     !!initialValues?.cancelledAt
@@ -79,6 +80,7 @@ export const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
 
   return (
     <FormContainer>
+      <LargeCalendarGlobalStyles $token={token} />
       <Form
         form={form}
         layout="vertical"
@@ -131,7 +133,10 @@ export const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
           required={false}
           rules={[{ required: true, message: 'Please select start date' }]}
         >
-          <DatePicker style={{ width: '100%' }} />
+          <DatePicker
+            style={{ width: '100%' }}
+            popupClassName="custom-large-calendar-popup"
+          />
         </Form.Item>
 
         <Form.Item>
@@ -145,7 +150,10 @@ export const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
 
         {isCancelled && (
           <Form.Item name="cancelledAt" label="Cancellation Date">
-            <DatePicker style={{ width: '100%' }} />
+            <DatePicker
+              style={{ width: '100%' }}
+              popupClassName="custom-large-calendar-popup"
+            />
           </Form.Item>
         )}
 
