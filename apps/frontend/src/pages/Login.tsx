@@ -1,6 +1,5 @@
 import React from 'react';
 import { Form, Input, Typography } from 'antd';
-import { useForm, Controller } from 'react-hook-form';
 import { SmallContentCard } from '../components/UI/SmallContentCard';
 import { useLoginMutation } from '../queries/auth.query';
 import { Link, useNavigate } from 'react-router';
@@ -23,17 +22,12 @@ interface LoginFormValues {
 }
 
 const Login: React.FC = () => {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginFormValues>();
-
+  const [form] = Form.useForm<LoginFormValues>();
   const loginMutation = useLoginMutation();
   const navigate = useNavigate();
 
-  const onSubmit = (data: LoginFormValues) => {
-    loginMutation.mutate(data, {
+  const onFinish = (values: LoginFormValues) => {
+    loginMutation.mutate(values, {
       onSuccess: () => {
         navigate(ROUTES.HOME);
       },
@@ -54,54 +48,43 @@ const Login: React.FC = () => {
         )}
 
         <FormContainer>
-          <Form layout="vertical" onFinish={handleSubmit(onSubmit)}>
+          <Form
+            form={form}
+            layout="vertical"
+            onFinish={onFinish}
+          >
             <Form.Item
+              name="email"
               label="Email"
-              validateStatus={errors.email ? 'error' : ''}
-              help={errors.email?.message}
+              rules={[
+                {
+                  required: true,
+                  message: 'Email is required',
+                },
+                {
+                  type: 'email',
+                  message: 'Enter a valid email address',
+                },
+              ]}
             >
-              <Controller
-                name="email"
-                control={control}
-                rules={{
-                  required: 'Email is required',
-                  pattern: {
-                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                    message: 'Enter a valid email address',
-                  },
-                }}
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    type="email"
-                    placeholder="Enter your email"
-                  />
-                )}
-              />
+              <Input placeholder="Enter your email" />
             </Form.Item>
 
             <Form.Item
+              name="password"
               label="Password"
-              validateStatus={errors.password ? 'error' : ''}
-              help={errors.password?.message}
+              rules={[
+                {
+                  required: true,
+                  message: 'Password is required',
+                },
+                {
+                  min: 3,
+                  message: 'Password must be at least 3 characters long',
+                },
+              ]}
             >
-              <Controller
-                name="password"
-                control={control}
-                rules={{
-                  required: 'Password is required',
-                  minLength: {
-                    value: 3,
-                    message: 'Password must be at least 3 characters long',
-                  },
-                }}
-                render={({ field }) => (
-                  <Input.Password
-                    {...field}
-                    placeholder="Enter your password"
-                  />
-                )}
-              />
+              <Input.Password placeholder="Enter your password" />
             </Form.Item>
 
             <Form.Item>

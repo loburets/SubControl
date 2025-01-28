@@ -1,5 +1,5 @@
 import { SubscriptionResponseDto } from '@subcontrol/shared-dtos/subscriptions';
-import { format, isBefore } from 'date-fns';
+import dayjs from 'dayjs';
 import type { LiteralUnion } from 'antd/es/_util/type';
 import type {
   PresetColorType,
@@ -38,9 +38,8 @@ export const sortSubscriptionsByNextPayment = (
   ) {
     return 0;
   }
-  return isBefore(
-    a.nextPaymentDate || new Date(),
-    b.nextPaymentDate || new Date()
+  return dayjs(a.nextPaymentDate || new Date()).isBefore(
+    dayjs(b.nextPaymentDate || new Date())
   )
     ? -1
     : 1;
@@ -84,10 +83,10 @@ export const getSubscriptionUiData = (
     costPerYear: formatPrice(subscription.costPerYear),
     costPerMonth: formatPrice(subscription.costPerMonth),
     nextPaymentDate: subscription.nextPaymentDate
-      ? format(subscription.nextPaymentDate, 'dd MMM yyyy')
+      ? dayjs(subscription.nextPaymentDate).format('DD MMM YYYY')
       : null,
     cancelledDate: subscription.cancelledAt
-      ? format(subscription.cancelledAt, 'dd MMM yyyy')
+      ? dayjs(subscription.cancelledAt).format('DD MMM YYYY')
       : null,
   };
 };
