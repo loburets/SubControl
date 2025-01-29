@@ -48,11 +48,7 @@ const SignUp: React.FC = () => {
         )}
 
         <FormContainer>
-          <Form
-            form={form}
-            layout="vertical"
-            onFinish={onFinish}
-          >
+          <Form form={form} layout="vertical" onFinish={onFinish}>
             <Form.Item
               name="email"
               label="Email"

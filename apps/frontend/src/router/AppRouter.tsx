@@ -9,6 +9,8 @@ import SubscriptionList from '../pages/SubscriptionList';
 import SubscriptionDetails from '../pages/SubscriptionDetails';
 import SubscriptionCreate from '../pages/SubscriptionCreate';
 import SubscriptionEdit from '../pages/SubscriptionEdit';
+import PastPayments from '../pages/PastPayments';
+import NextPayments from '../pages/NextPayments';
 
 export function AppRouter() {
   return (
@@ -63,6 +65,22 @@ export function AppRouter() {
           </PrivateRoute>
         )}
       ></Route>
+      <Route
+        path={ROUTES.PAST_PAYMENTS}
+        Component={() => (
+          <PrivateRoute>
+            <PastPayments />
+          </PrivateRoute>
+        )}
+      />
+      <Route
+        path={ROUTES.NEXT_PAYMENTS}
+        Component={() => (
+          <PrivateRoute>
+            <NextPayments />
+          </PrivateRoute>
+        )}
+      />
     </Routes>
   );
 }

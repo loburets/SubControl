@@ -18,23 +18,27 @@ import { FormContainer } from './FormContainer';
 import { LargeCalendarGlobalStyles } from './LargeCalendarGlobalStyles';
 import { Button } from './Button';
 
+interface SubscriptionFormValues {
+  name: string;
+  period: Period;
+  centsPerPeriod: number;
+  currency: Currency;
+  startedAt: Date;
+  cancelledAt?: Date | null;
+}
+
+interface SubscriptionFormValuesInternal {
+  name: string;
+  period: Period;
+  pricePerPeriod: number;
+  currency: Currency;
+  startedAt: dayjs.Dayjs;
+  cancelledAt?: dayjs.Dayjs | null;
+}
+
 interface SubscriptionFormProps {
-  initialValues?: {
-    name: string;
-    period: Period;
-    centsPerPeriod: number;
-    currency: Currency;
-    startedAt: Date;
-    cancelledAt?: Date | null;
-  };
-  onSubmit: (values: {
-    name: string;
-    period: Period;
-    centsPerPeriod: number;
-    currency: Currency;
-    startedAt: Date;
-    cancelledAt?: Date | null;
-  }) => Promise<void>;
+  initialValues?: SubscriptionFormValues;
+  onSubmit: (values: SubscriptionFormValues) => Promise<void>;
   isLoading?: boolean;
   submitText?: string;
 }
@@ -63,7 +67,7 @@ export const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
     }
   }, [isCancelled, form]);
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: SubscriptionFormValuesInternal) => {
     const { pricePerPeriod, ...restValues } = values;
 
     try {
