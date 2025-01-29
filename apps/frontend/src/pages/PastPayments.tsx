@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { Alert, Row, Col } from 'antd';
 import { MainContentWrapper } from '../components/Layout/MainContentWrapper';
 import { Title } from '../components/UI/Title';
@@ -7,10 +7,36 @@ import { ContainerForCentered } from '../components/Layout/ContainerForCentered'
 import { getErrorMessages } from '../utils/errorConvertor';
 import { Payment } from '../components/UI/Payment';
 import { SubscriptionSkeleton } from '../components/UI/SubscriptionSkeleton';
-import { getCurrencySymbol } from '../utils/subscriptionsHelper';
+import {
+  formatPrice,
+  getCurrencySymbol,
+  sortPaymentsByDate,
+} from '../utils/subscriptionsHelper';
+import { TextBlock } from '../components/UI/TextBlock';
+import { Button } from '../components/UI/Button';
+
+const ITEMS_PER_PAGE = 15;
 
 const PastPayments: React.FC = () => {
   const { isLoading, error, data } = useSubscriptionStats();
+  const [displayCount, setDisplayCount] = useState(ITEMS_PER_PAGE);
+
+  const payments = useMemo(
+    () => data?.pastPayments.sort(sortPaymentsByDate('desc')) || [],
+    [data]
+  );
+  const showPaymentsAbsence = !payments.length && !isLoading;
+
+  const displayedPayments = useMemo(
+    () => payments.slice(0, displayCount),
+    [payments, displayCount]
+  );
+
+  const hasMore = payments.length > displayCount;
+
+  const handleLoadMore = () => {
+    setDisplayCount((prev) => prev + ITEMS_PER_PAGE);
+  };
 
   if (error) {
     return (
@@ -28,37 +54,41 @@ const PastPayments: React.FC = () => {
     <MainContentWrapper>
       <Title level={1}>Past Payments</Title>
 
-      {data?.totalSpent.map((amount) => {
-        const currencySymbol = getCurrencySymbol(amount.currency);
-        return (
-          <Alert
-            key={amount.currency}
-            message={`Total spent: ${currencySymbol}${amount.amount / 100}`}
-            type="info"
-            style={{ marginBottom: 24 }}
-          />
-        );
-      })}
+      {!showPaymentsAbsence && (
+        <TextBlock>
+          <p>
+            Total spent:{' '}
+            {data?.totalSpent
+              .map((amount) => {
+                const currencySymbol = getCurrencySymbol(amount.currency);
+                return `${currencySymbol}${formatPrice(amount.amount)}`;
+              })
+              .join(', ') || 'Loading...'}
+          </p>
+        </TextBlock>
+      )}
 
       <Row gutter={[20, 20]}>
-        {data?.pastPayments.map((payment) => (
-          <Col
-            key={`${payment.subscriptionId}-${payment.date}`}
-            xs={24}
-            sm={24}
-            md={12}
-            lg={12}
-          >
+        {displayedPayments.map((payment) => (
+          <Col key={`${payment.subscriptionId}-${payment.date}`} span={24}>
             <Payment payment={payment} />
           </Col>
         ))}
         {isLoading &&
           Array.from({ length: 2 }).map((_, index) => (
-            <Col key={index} xs={24} sm={24} md={12} lg={12}>
+            <Col key={index} span={24}>
               <SubscriptionSkeleton />
             </Col>
           ))}
       </Row>
+
+      {hasMore && !isLoading && (
+        <Row justify="center" style={{ marginTop: 24, marginBottom: 8 }}>
+          <Button onClick={handleLoadMore}>Load More</Button>
+        </Row>
+      )}
+
+      {showPaymentsAbsence && <TextBlock>No past payments.</TextBlock>}
     </MainContentWrapper>
   );
 };

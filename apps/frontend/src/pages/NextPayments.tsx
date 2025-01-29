@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Alert, Row, Col, Typography } from 'antd';
+import { Alert, Row, Col } from 'antd';
 import { MainContentWrapper } from '../components/Layout/MainContentWrapper';
 import { Title } from '../components/UI/Title';
 import { useSubscriptionStats } from '../queries/subscriptions.query';
@@ -15,14 +15,14 @@ import {
 import { TextBlock } from '../components/UI/TextBlock';
 import { Button } from '../components/UI/Button';
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 15;
 
 const NextPayments: React.FC = () => {
   const { isLoading, error, data } = useSubscriptionStats();
   const [displayCount, setDisplayCount] = useState(ITEMS_PER_PAGE);
 
   const payments = useMemo(
-    () => data?.nextPayments.sort(sortPaymentsByDate) || [],
+    () => data?.nextPayments.sort(sortPaymentsByDate('asc')) || [],
     [data]
   );
   const showPaymentsAbsence = !payments.length && !isLoading;

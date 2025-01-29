@@ -48,20 +48,23 @@ export const sortSubscriptionsByNextPayment = (
     : 1;
 };
 
-export const sortPaymentsByDate = (
-  a: SubscriptionPaymentResponseDto,
-  b: SubscriptionPaymentResponseDto
-) => {
-  if (
-    (!a.date && !b.date) ||
-    a.date?.toDateString() === b.date?.toDateString()
-  ) {
-    return 0;
-  }
-  return dayjs(a.date || new Date()).isBefore(dayjs(b.date || new Date()))
-    ? -1
-    : 1;
-};
+export const sortPaymentsByDate =
+  (order: 'asc' | 'desc') =>
+  (a: SubscriptionPaymentResponseDto, b: SubscriptionPaymentResponseDto) => {
+    if (
+      (!a.date && !b.date) ||
+      a.date?.toDateString() === b.date?.toDateString()
+    ) {
+      return 0;
+    }
+    return dayjs(a.date || new Date()).isBefore(dayjs(b.date || new Date()))
+      ? order === 'asc'
+        ? -1
+        : 1
+      : order === 'asc'
+        ? 1
+        : -1;
+  };
 
 export const getSubscriptionUiData = (
   subscription: SubscriptionResponseDto
