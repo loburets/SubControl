@@ -25,6 +25,7 @@ const NextPayments: React.FC = () => {
     () => data?.nextPayments.sort(sortPaymentsByDate) || [],
     [data]
   );
+  const showPaymentsAbsence = !payments.length && !isLoading;
 
   const displayedPayments = useMemo(
     () => payments.slice(0, displayCount),
@@ -52,26 +53,29 @@ const NextPayments: React.FC = () => {
   return (
     <MainContentWrapper>
       <Title level={1}>Next Payments</Title>
-      <TextBlock>
-        <p>
-          Next 30 days:{' '}
-          {data?.next30DaysAmount
-            .map((amount) => {
-              const currencySymbol = getCurrencySymbol(amount.currency);
-              return `${currencySymbol}${formatPrice(amount.amount)}`;
-            })
-            .join(', ') || 'Loading...'}
-        </p>
-        <p>
-          Next 365 days:{' '}
-          {data?.next365DaysAmount
-            .map((amount) => {
-              const currencySymbol = getCurrencySymbol(amount.currency);
-              return `${currencySymbol}${formatPrice(amount.amount)}`;
-            })
-            .join(', ') || 'Loading...'}
-        </p>
-      </TextBlock>
+
+      {!showPaymentsAbsence && (
+        <TextBlock>
+          <p>
+            Next 30 days:{' '}
+            {data?.next30DaysAmount
+              .map((amount) => {
+                const currencySymbol = getCurrencySymbol(amount.currency);
+                return `${currencySymbol}${formatPrice(amount.amount)}`;
+              })
+              .join(', ') || 'Loading...'}
+          </p>
+          <p>
+            Next 365 days:{' '}
+            {data?.next365DaysAmount
+              .map((amount) => {
+                const currencySymbol = getCurrencySymbol(amount.currency);
+                return `${currencySymbol}${formatPrice(amount.amount)}`;
+              })
+              .join(', ') || 'Loading...'}
+          </p>
+        </TextBlock>
+      )}
 
       <Row gutter={[20, 20]}>
         {displayedPayments.map((payment) => (
@@ -92,6 +96,8 @@ const NextPayments: React.FC = () => {
           <Button onClick={handleLoadMore}>Load More</Button>
         </Row>
       )}
+
+      {showPaymentsAbsence && <TextBlock>No upcoming payments.</TextBlock>}
     </MainContentWrapper>
   );
 };
