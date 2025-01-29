@@ -11,6 +11,7 @@ import SubscriptionCreate from '../pages/SubscriptionCreate';
 import SubscriptionEdit from '../pages/SubscriptionEdit';
 import PastPayments from '../pages/PastPayments';
 import NextPayments from '../pages/NextPayments';
+import Statistics from '../pages/Statistics';
 
 export function AppRouter() {
   return (
@@ -78,6 +79,14 @@ export function AppRouter() {
         Component={() => (
           <PrivateRoute>
             <NextPayments />
+          </PrivateRoute>
+        )}
+      />
+      <Route
+        path={ROUTES.STATISTICS}
+        Component={() => (
+          <PrivateRoute>
+            <Statistics />
           </PrivateRoute>
         )}
       />
