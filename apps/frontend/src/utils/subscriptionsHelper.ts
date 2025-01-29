@@ -45,10 +45,6 @@ export const sortSubscriptionsByNextPayment = (
     : 1;
 };
 
-export function formatPrice(cents: number) {
-  return (cents / 100).toFixed(2);
-}
-
 export const getSubscriptionUiData = (
   subscription: SubscriptionResponseDto
 ) => {
@@ -83,15 +79,15 @@ export const getSubscriptionUiData = (
     costPerYear: formatPrice(subscription.costPerYear),
     costPerMonth: formatPrice(subscription.costPerMonth),
     nextPaymentDate: subscription.nextPaymentDate
-      ? dayjs(subscription.nextPaymentDate).format('DD MMM YYYY')
+      ? formatDate(subscription.nextPaymentDate)
       : null,
     cancelledDate: subscription.cancelledAt
-      ? dayjs(subscription.cancelledAt).format('DD MMM YYYY')
+      ? formatDate(subscription.cancelledAt)
       : null,
   };
 };
 
-const getCurrencySymbol = (currency: Currency) => {
+export const getCurrencySymbol = (currency: Currency) => {
   switch (currency) {
     case Currency.EUR:
       return '€';
@@ -115,3 +111,11 @@ const getCurrencySymbol = (currency: Currency) => {
       return '$';
   }
 };
+
+export function formatPrice(cents: number) {
+  return (cents / 100).toFixed(2);
+}
+
+export function formatDate(date: Date) {
+  return dayjs(date).format('DD MMM YYYY');
+}

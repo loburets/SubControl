@@ -3,6 +3,8 @@ import {
   SubscriptionListResponseDto,
   SubscriptionRequestDto,
   SubscriptionResponseDto,
+  SubscriptionStatsResponseDto,
+  SubscriptionPaymentResponseDto,
 } from '@subcontrol/shared-dtos/subscriptions';
 import { axiosApiInstance } from '../utils/axiosInstances';
 
@@ -68,6 +70,22 @@ export const useUpdateSubscription = () => {
   });
 };
 
+export const useSubscriptionStats = () => {
+  return useQuery<SubscriptionStatsResponseDto>({
+    queryKey: ['subscriptionStats'],
+    queryFn: async () => {
+      const response = await axiosApiInstance.get<SubscriptionStatsResponseDto>(
+        'api/v1/subscriptions/stats'
+      );
+      return {
+        ...response.data,
+        nextPayments: response.data.nextPayments.map(hydratePaymentDates),
+        pastPayments: response.data.pastPayments.map(hydratePaymentDates),
+      };
+    },
+  });
+};
+
 const hydrateSubscriptionDates = (
   subscription: SubscriptionResponseDto
 ): SubscriptionResponseDto => ({
@@ -76,4 +94,11 @@ const hydrateSubscriptionDates = (
     ? new Date(subscription.nextPaymentDate)
     : null,
   createdAt: new Date(subscription.createdAt),
+});
+
+const hydratePaymentDates = (
+  payment: SubscriptionPaymentResponseDto
+): SubscriptionPaymentResponseDto => ({
+  ...payment,
+  date: new Date(payment.date),
 });
