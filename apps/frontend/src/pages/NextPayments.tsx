@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Alert, Row, Col, Typography } from 'antd';
 import { MainContentWrapper } from '../components/Layout/MainContentWrapper';
 import { Title } from '../components/UI/Title';
@@ -13,13 +13,29 @@ import {
   sortPaymentsByDate,
 } from '../utils/subscriptionsHelper';
 import { TextBlock } from '../components/UI/TextBlock';
+import { Button } from '../components/UI/Button';
+
+const ITEMS_PER_PAGE = 10;
 
 const NextPayments: React.FC = () => {
   const { isLoading, error, data } = useSubscriptionStats();
+  const [displayCount, setDisplayCount] = useState(ITEMS_PER_PAGE);
+
   const payments = useMemo(
     () => data?.nextPayments.sort(sortPaymentsByDate) || [],
     [data]
   );
+
+  const displayedPayments = useMemo(
+    () => payments.slice(0, displayCount),
+    [payments, displayCount]
+  );
+
+  const hasMore = payments.length > displayCount;
+
+  const handleLoadMore = () => {
+    setDisplayCount((prev) => prev + ITEMS_PER_PAGE);
+  };
 
   if (error) {
     return (
@@ -58,7 +74,7 @@ const NextPayments: React.FC = () => {
       </TextBlock>
 
       <Row gutter={[20, 20]}>
-        {payments.map((payment) => (
+        {displayedPayments.map((payment) => (
           <Col key={`${payment.subscriptionId}-${payment.date}`} span={24}>
             <Payment payment={payment} />
           </Col>
@@ -70,6 +86,12 @@ const NextPayments: React.FC = () => {
             </Col>
           ))}
       </Row>
+
+      {hasMore && !isLoading && (
+        <Row justify="center" style={{ marginTop: 24, marginBottom: 8 }}>
+          <Button onClick={handleLoadMore}>Load More</Button>
+        </Row>
+      )}
     </MainContentWrapper>
   );
 };
