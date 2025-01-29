@@ -6,6 +6,8 @@ import {
   formatDate,
   formatPrice,
   getCurrencySymbol,
+  getPeriodNaming,
+  getPeriodTagColor,
 } from '../../utils/subscriptionsHelper';
 import { Price } from './Price';
 import { Title } from './Title';
@@ -15,6 +17,7 @@ export const Payment: React.FC<{
 }> = ({ payment }) => {
   const currencySymbol = getCurrencySymbol(payment.currency);
   const formattedDate = formatDate(payment.date);
+  const { periodText } = getPeriodNaming(payment.period);
 
   return (
     <Card
@@ -25,12 +28,18 @@ export const Payment: React.FC<{
         </Title>
       }
       extra={
-        <Tag color="blue" icon={<CalendarOutlined />}>
-          {formattedDate}
+        <Tag
+          color={getPeriodTagColor(payment.period)}
+          icon={<CalendarOutlined />}
+        >
+          {periodText}
         </Tag>
       }
     >
-      <Price>{`${currencySymbol}${formatPrice(payment.amount)}`}</Price>
+      <p>
+        {formattedDate} —{' '}
+        <Price>{`${currencySymbol}${formatPrice(payment.amount)}`}</Price>
+      </p>
     </Card>
   );
 };

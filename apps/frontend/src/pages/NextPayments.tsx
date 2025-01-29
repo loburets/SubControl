@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Alert, Row, Col, Typography } from 'antd';
 import { MainContentWrapper } from '../components/Layout/MainContentWrapper';
 import { Title } from '../components/UI/Title';
@@ -7,11 +7,19 @@ import { ContainerForCentered } from '../components/Layout/ContainerForCentered'
 import { getErrorMessages } from '../utils/errorConvertor';
 import { Payment } from '../components/UI/Payment';
 import { SubscriptionSkeleton } from '../components/UI/SubscriptionSkeleton';
-import { formatPrice, getCurrencySymbol } from '../utils/subscriptionsHelper';
+import {
+  formatPrice,
+  getCurrencySymbol,
+  sortPaymentsByDate,
+} from '../utils/subscriptionsHelper';
 import { TextBlock } from '../components/UI/TextBlock';
 
 const NextPayments: React.FC = () => {
   const { isLoading, error, data } = useSubscriptionStats();
+  const payments = useMemo(
+    () => data?.nextPayments.sort(sortPaymentsByDate) || [],
+    [data]
+  );
 
   if (error) {
     return (
@@ -36,7 +44,7 @@ const NextPayments: React.FC = () => {
               const currencySymbol = getCurrencySymbol(amount.currency);
               return `${currencySymbol}${formatPrice(amount.amount)}`;
             })
-            .join(', ')}
+            .join(', ') || 'Loading...'}
         </p>
         <p>
           Next 365 days:{' '}
@@ -45,12 +53,12 @@ const NextPayments: React.FC = () => {
               const currencySymbol = getCurrencySymbol(amount.currency);
               return `${currencySymbol}${formatPrice(amount.amount)}`;
             })
-            .join(', ')}
+            .join(', ') || 'Loading...'}
         </p>
       </TextBlock>
 
       <Row gutter={[20, 20]}>
-        {data?.nextPayments.map((payment) => (
+        {payments.map((payment) => (
           <Col key={`${payment.subscriptionId}-${payment.date}`} span={24}>
             <Payment payment={payment} />
           </Col>
