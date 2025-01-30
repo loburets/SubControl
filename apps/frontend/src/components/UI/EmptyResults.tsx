@@ -4,6 +4,7 @@ import React from 'react';
 import { Button } from './Button';
 import { ROUTES } from '../../router/routes';
 import { useNavigate } from 'react-router';
+import { extraSmallMobileFooterMaxWidth } from '../Layout/Layout.styled';
 
 const { useToken } = theme;
 
@@ -15,8 +16,11 @@ const ContainerStyled = styled.div<{
   justify-content: center;
 
   width: 100%;
-  height: 700px;
-  max-height: 60vh;
+  height: calc(100vh - 440px);
+
+  @media (min-width: ${({ $token }) => $token.screenMDMin}px) {
+    max-height: 700px;
+  }
 
   & div {
     font-size: ${({ $token }) => $token.fontSizeLG}px;
@@ -24,10 +28,18 @@ const ContainerStyled = styled.div<{
 
   //mobile
   @media (max-width: ${({ $token }) => $token.screenSMMax}px) {
-    height: calc(70vh - 100px);
+    height: calc(100vh - 520px);
 
     & div {
       font-size: ${({ $token }) => $token.fontSizeXL}px;
+    }
+  }
+
+  @media (max-width: ${extraSmallMobileFooterMaxWidth}px) {
+    height: calc(100vh - 280px);
+
+    & div {
+      font-size: ${({ $token }) => $token.fontSizeLG}px;
     }
   }
 `;
