@@ -35,7 +35,7 @@ export const Subscription: React.FC<{
       $isCancelled={!!subscription.cancelledAt}
       $token={token}
       title={
-        <Title level={4} embedMargins noAdoption>
+        <Title level={4} embedMargins noAdoptation>
           {subscription.name}
         </Title>
       }

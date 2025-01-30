@@ -40,7 +40,9 @@ const FormContainerStyled = styled.div<{
   }
 `;
 
-export const FormContainer: React.FC<PropsWithChildren> = ({ children }) => {
+export const FormElementsAdjuster: React.FC<PropsWithChildren> = ({
+  children,
+}) => {
   const { token } = useToken();
 
   return <FormContainerStyled $token={token}>{children}</FormContainerStyled>;

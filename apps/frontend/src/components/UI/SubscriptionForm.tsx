@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../router/routes';
 import { Currency, Period } from '../../utils/subscriptionsHelper';
 import dayjs from 'dayjs';
-import { FormContainer } from './FormContainer';
+import { FormElementsAdjuster } from './FormElementsAdjuster';
 import { LargeCalendarGlobalStyles } from './LargeCalendarGlobalStyles';
 import { Button } from './Button';
 
@@ -83,7 +83,7 @@ export const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
   };
 
   return (
-    <FormContainer>
+    <FormElementsAdjuster>
       <LargeCalendarGlobalStyles $token={token} />
       <Form
         form={form}
@@ -212,6 +212,6 @@ export const SubscriptionForm: React.FC<SubscriptionFormProps> = ({
           </div>
         </Form.Item>
       </Form>
-    </FormContainer>
+    </FormElementsAdjuster>
   );
 };
