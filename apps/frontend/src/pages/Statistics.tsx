@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Alert, Row, Col, Card, Statistic, Radio } from 'antd';
+import { Alert, Row, Col, Card, Statistic, Radio, theme, Divider } from 'antd';
 import { MainContentWrapper } from '../components/Layout/MainContentWrapper';
 import { Title } from '../components/UI/Title';
 import { useSubscriptionStats } from '../queries/subscriptions.query';
@@ -26,6 +26,7 @@ const Statistics: React.FC = () => {
     () => [...(data?.pastPayments || []), ...(data?.nextPayments || [])],
     [data]
   );
+  const { token } = theme.useToken();
 
   if (error) {
     return (
@@ -65,16 +66,44 @@ const Statistics: React.FC = () => {
         </Row>
       ) : (
         <>
-          <Row
+          <StyledRow gutter={[20, 20]}>
+            {[
+              {
+                title: 'Total Spent',
+                value: data?.totalSpent,
+                color: token.colorErrorText,
+              },
+              {
+                title: 'Next 30 Days',
+                value: data?.next30DaysAmount,
+                color: token.colorInfoText,
+              },
+              {
+                title: 'Next 365 Days',
+                value: data?.next365DaysAmount,
+                color: token.colorInfoText,
+              },
+            ].map((item, index) => (
+              <Col xs={24} sm={8} md={8} lg={8} key={index}>
+                <Card size="small">
+                  <Statistic
+                    title={item.title}
+                    value={renderAmountStats(item.value)}
+                    valueStyle={{ color: item.color }}
+                  />
+                </Card>
+              </Col>
+            ))}
+          </StyledRow>
+
+          <StyledRow
             justify="space-between"
             align="middle"
             style={{ marginBottom: 16 }}
           >
             <Col xs={0} sm={0} md={12} lg={12}>
               <Hider desktopOnly>
-                <TextBlock marginBottom={0}>
-                  Click charts to see amounts
-                </TextBlock>
+                <TextBlock marginBottom={0}>Click to see amounts</TextBlock>
               </Hider>
             </Col>
             <Col>
@@ -90,88 +119,41 @@ const Statistics: React.FC = () => {
                 </Radio.Group>
               </FormElementsAdjuster>
             </Col>
-          </Row>
+          </StyledRow>
 
           {chartType === 'pie' && (
             <Hider mobileOnly>
-              <TextBlock>Press charts to see amounts</TextBlock>
+              <TextBlock>Press to see amounts</TextBlock>
             </Hider>
           )}
-          <SpendingChart payments={allPayments} chartType={chartType} />
 
-          <StyledRow gutter={[20, 20]}>
-            <Col xs={24} sm={12} md={12} lg={6}>
-              <StyledCard>
-                <Statistic
-                  title="Next 30 Days"
-                  value={renderAmountStats(data?.next30DaysAmount)}
-                  valueStyle={{ color: '#1677ff' }}
-                />
-              </StyledCard>
-            </Col>
-            <Col xs={24} sm={12} md={12} lg={6}>
-              <StyledCard>
-                <Statistic
-                  title="Next 365 Days"
-                  value={renderAmountStats(data?.next365DaysAmount)}
-                  valueStyle={{ color: '#1677ff' }}
-                />
-              </StyledCard>
-            </Col>
-            <Col xs={24} sm={12} md={12} lg={6}>
-              <StyledCard>
-                <Statistic
-                  title="Total Spent"
-                  value={renderAmountStats(data?.totalSpent)}
-                  valueStyle={{ color: '#cf1322' }}
-                />
-              </StyledCard>
-            </Col>
-            <Col xs={24} sm={12} md={12} lg={6}>
-              <StyledCard>
-                <Statistic
-                  title="Expected This Year"
-                  value={renderAmountStats(data?.expectedSpentThisYear)}
-                  valueStyle={{ color: '#389e0d' }}
-                />
-              </StyledCard>
-            </Col>
+          <StyledRow>
+            <SpendingChart payments={allPayments} chartType={chartType} />
           </StyledRow>
 
           <StyledRow gutter={[20, 20]}>
-            <Col xs={24} sm={12}>
-              <StyledCard title="Past 30 Days">
-                <TextBlock>
-                  <p>Spent: {renderAmountStats(data?.spentPast30Days)}</p>
-                </TextBlock>
-              </StyledCard>
-            </Col>
-            <Col xs={24} sm={12}>
-              <StyledCard title="Past 365 Days">
-                <TextBlock>
-                  <p>Spent: {renderAmountStats(data?.spentPast365Days)}</p>
-                </TextBlock>
-              </StyledCard>
-            </Col>
-          </StyledRow>
-
-          <StyledRow gutter={[20, 20]}>
-            <Col xs={24} sm={12}>
-              <StyledCard title="Last Year">
-                <TextBlock>
-                  <p>Spent: {renderAmountStats(data?.spentLastYear)}</p>
-                </TextBlock>
-              </StyledCard>
-            </Col>
-            <Col xs={24} sm={12}>
-              <StyledCard title="This Year">
-                <TextBlock>
-                  <p>
-                    Expected: {renderAmountStats(data?.expectedSpentThisYear)}
-                  </p>
-                </TextBlock>
-              </StyledCard>
-            </Col>
+            {[
+              {
+                title: 'Past 30 Days',
+                value: data?.spentPast30Days,
+                color: token.colorErrorText,
+              },
+              {
+                title: 'Past 365 Days',
+                value: data?.spentPast365Days,
+                color: token.colorInfoText,
+              },
+            ].map((item, index) => (
+              <Col xs={24} sm={12} md={12} lg={12} key={index}>
+                <Card size="small">
+                  <Statistic
+                    title={item.title}
+                    value={renderAmountStats(item.value)}
+                    valueStyle={{ color: item.color }}
+                  />
+                </Card>
+              </Col>
+            ))}
           </StyledRow>
         </>
       )}
@@ -180,11 +162,7 @@ const Statistics: React.FC = () => {
 };
 
 const StyledRow = styled(Row)`
-  margin-bottom: 20px;
-`;
-
-const StyledCard = styled(Card)`
-  height: 100%;
+  margin-bottom: 36px;
 `;
 
 export default Statistics;

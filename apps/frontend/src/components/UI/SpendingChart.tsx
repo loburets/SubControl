@@ -8,7 +8,7 @@ import {
 } from '../../utils/subscriptionsHelper';
 import { Card, Row, Col, Skeleton, theme, GlobalToken, Grid } from 'antd';
 import styled from 'styled-components';
-import { generateChartData } from '../../utils/statsChartHelper';
+import { ChartData, generateChartData } from '../../utils/statsChartHelper';
 import { Title } from './Title';
 import { TextBlock } from './TextBlock';
 
@@ -80,11 +80,7 @@ export const SpendingChart: React.FC<SpendingChartProps> = ({
         y: {
           beginAtZero: true,
           ticks: {
-            callback: function (
-              value: string,
-              index: number,
-              ticks: any
-            ): string {
+            callback: function (value: string, index: number): string {
               const datasets = (this as any).chart.data.datasets as Array<{
                 data: number[];
               }>;
@@ -135,15 +131,7 @@ export const SpendingChart: React.FC<SpendingChartProps> = ({
                     data: chartData.get(currency)?.nextYearData,
                   },
                 ].map(({ year, data }) => {
-                  const dataLength = data?.datasets[0]
-                    ? data?.datasets[0].data.length
-                    : 0;
-                  const barHeightMultiplier = 20;
-                  const minBarHeight = 60;
-                  const barHeight =
-                    dataLength * barHeightMultiplier > minBarHeight
-                      ? dataLength * barHeightMultiplier
-                      : minBarHeight;
+                  const barHeight = getBarHeight(data);
 
                   return (
                     <Col
@@ -153,7 +141,12 @@ export const SpendingChart: React.FC<SpendingChartProps> = ({
                       md={isDesktopBarChart ? 24 : 8}
                       lg={isDesktopBarChart ? 24 : 8}
                     >
-                      <ChartTitle level={5} noAdoptation $token={token}>
+                      <ChartTitle
+                        level={5}
+                        noAdoptation
+                        $token={token}
+                        isDesktopBarChart={isDesktopBarChart}
+                      >
                         {year} Spending
                       </ChartTitle>
                       <ChartTextBlock $token={token}>
@@ -186,11 +179,26 @@ export const SpendingChart: React.FC<SpendingChartProps> = ({
   );
 };
 
+const getBarHeight = (data?: ChartData) => {
+  const dataLength = data?.datasets[0] ? data?.datasets[0].data.length : 0;
+  const barHeightMultiplier = 24;
+  const minBarHeight = 60;
+  return dataLength * barHeightMultiplier > minBarHeight
+    ? dataLength * barHeightMultiplier
+    : minBarHeight;
+};
+
 const ChartTitle = styled(Title)<{
   $token: GlobalToken;
+  isDesktopBarChart?: boolean;
 }>`
   text-align: center;
   margin-bottom: 16px !important;
+
+  ${({ isDesktopBarChart }) =>
+    isDesktopBarChart && 'margin-bottom: 4px !important;'}
+  ${({ isDesktopBarChart }) =>
+    isDesktopBarChart && 'margin-top: 8px !important;'}
 
   //mobile
   @media (max-width: ${({ $token }) => $token.screenSMMax}px) {

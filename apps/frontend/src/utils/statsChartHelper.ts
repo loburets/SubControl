@@ -9,7 +9,9 @@ interface SubscriptionTotal {
 
 type SubscriptionsTotals = Map<number, SubscriptionTotal>;
 type SubscriptionsTotalsPerCurrency = Map<Currency, SubscriptionsTotals>;
-type ChartData = ReturnType<typeof generateChartDataPerSubscriptionsTotals>;
+export type ChartData = ReturnType<
+  typeof generateChartDataPerSubscriptionsTotals
+>;
 type ChartDataPerCurrency = Map<
   Currency,
   {
