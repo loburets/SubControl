@@ -29,6 +29,8 @@ const generateChartDataPerSubscriptionsTotals = (
     })
   );
 
+  const totalAmount = data.reduce((acc, item) => acc + item.amount, 0);
+
   return {
     labels: data.map((item) => item.name),
     datasets: [
@@ -57,6 +59,7 @@ const generateChartDataPerSubscriptionsTotals = (
         borderWidth: 1,
       },
     ],
+    totalAmount,
   };
 };
 

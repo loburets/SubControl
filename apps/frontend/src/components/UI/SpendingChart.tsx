@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { SubscriptionPaymentResponseDto } from '@subcontrol/shared-dtos/subscriptions';
 import {
   Currency,
+  formatPrice,
   getCurrencyName,
   getCurrencySymbol,
 } from '../../utils/subscriptionsHelper';
@@ -9,6 +10,7 @@ import { Card, Row, Col, Skeleton } from 'antd';
 import styled from 'styled-components';
 import { generateChartData } from '../../utils/statsChartHelper';
 import { Title } from './Title';
+import { TextBlock } from './TextBlock';
 
 interface SpendingChartProps {
   payments?: SubscriptionPaymentResponseDto[];
@@ -40,6 +42,7 @@ export const SpendingChart: React.FC<SpendingChartProps> = ({
         position: 'right',
       },
     },
+    offset: 5,
   };
 
   const { uniqueCurrencies, chartData } = useMemo(
@@ -53,35 +56,38 @@ export const SpendingChart: React.FC<SpendingChartProps> = ({
         return (
           <Col key={currency} span={24}>
             <Card
-              title={`Spending ${getCurrencySymbol(currency as Currency)} (${getCurrencyName(currency as Currency)} )`}
+              title={`Spending ${getCurrencySymbol(currency as Currency)} (${getCurrencyName(currency as Currency)})`}
             >
               {PieComponent && chartData.has(currency) ? (
                 <>
                   <Row gutter={[8, 0]}>
                     {[
                       {
-                        year: 'Past',
+                        year: new Date().getFullYear() - 1,
                         data: chartData.get(currency)?.pastYearData,
                       },
                       {
-                        year: 'This',
+                        year: new Date().getFullYear(),
                         data: chartData.get(currency)?.thisYearData,
                       },
                       {
-                        year: 'Next',
+                        year: new Date().getFullYear() + 1,
                         data: chartData.get(currency)?.nextYearData,
                       },
                     ].map(({ year, data }) => (
-                      <Col
-                        key={year}
-                        xs={24}
-                        sm={24}
-                        md={24}
-                        lg={8}
-                        style={{ maxHeight: 300 }}
-                      >
-                        <ChartTitle level={5}>{year} Year Spending</ChartTitle>
-                        <PieComponent options={options} data={data} />
+                      <Col key={year} xs={24} sm={24} md={24} lg={8}>
+                        <ChartTitle level={5} noAdoption>
+                          {year} Spending
+                        </ChartTitle>
+                        <ChartTextBlock>
+                          {formatPrice((data?.totalAmount || 0) * 100)}
+                          {getCurrencySymbol(currency)}
+                        </ChartTextBlock>
+                        <PieComponent
+                          options={options}
+                          data={data}
+                          style={{ maxHeight: 150 }}
+                        />
                       </Col>
                     ))}
                   </Row>
@@ -99,5 +105,11 @@ export const SpendingChart: React.FC<SpendingChartProps> = ({
 
 const ChartTitle = styled(Title)`
   text-align: center;
-  margin: 0 !important;
+  margin-bottom: 16px !important;
+`;
+
+const ChartTextBlock = styled(TextBlock)`
+  text-align: center;
+  width: 100%;
+  margin-bottom: 8px;
 `;

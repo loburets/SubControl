@@ -60,6 +60,7 @@ const Statistics: React.FC = () => {
         </Row>
       ) : (
         <>
+          <TextBlock>Click charts to see amount</TextBlock>
           <SpendingChart payments={allPayments} />
 
           <StyledRow gutter={[20, 20]}>
