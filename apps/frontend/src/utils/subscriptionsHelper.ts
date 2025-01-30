@@ -115,6 +115,31 @@ export const getCurrencySymbol = (currency: Currency) => {
   }
 };
 
+export const getCurrencyName = (currency: Currency) => {
+  switch (currency) {
+    case Currency.EUR:
+      return 'Euro';
+    case Currency.GBP:
+      return 'British Pound';
+    case Currency.JPY:
+      return 'Japanese Yen';
+    case Currency.AUD:
+      return 'Australian Dollar';
+    case Currency.CAD:
+      return 'Canadian Dollar';
+    case Currency.RUB:
+      return 'Russian Ruble';
+    case Currency.TRY:
+      return 'Turkish Lira';
+    case Currency.USD:
+      return 'US Dollar';
+    case Currency.OTHER:
+      return 'Your other Currency';
+    default:
+      return 'Unknown Currency';
+  }
+};
+
 export function formatPrice(cents: number) {
   return (cents / 100).toFixed(2);
 }

@@ -1,30 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { SubscriptionPaymentResponseDto } from '@subcontrol/shared-dtos/subscriptions';
-import { Currency, getCurrencySymbol } from '../../utils/subscriptionsHelper';
-import { Card, Row, Col } from 'antd';
+import {
+  Currency,
+  getCurrencyName,
+  getCurrencySymbol,
+} from '../../utils/subscriptionsHelper';
+import { Card, Row, Col, Skeleton } from 'antd';
 import styled from 'styled-components';
-
-interface ChartOptions {
-  responsive: boolean;
-  plugins: {
-    legend: {
-      position: 'right' | 'bottom' | 'left' | 'top';
-    };
-    title: {
-      display: boolean;
-      text: string;
-    };
-  };
-}
+import { ChartOptions, generateChartData } from '../../utils/statsChartHelper';
 
 interface SpendingChartProps {
-  pastPayments?: SubscriptionPaymentResponseDto[];
-  nextPayments?: SubscriptionPaymentResponseDto[];
+  payments?: SubscriptionPaymentResponseDto[];
 }
 
 export const SpendingChart: React.FC<SpendingChartProps> = ({
-  pastPayments = [],
-  nextPayments = [],
+  payments = [],
 }) => {
   // as dynamically imported
   /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -43,70 +33,6 @@ export const SpendingChart: React.FC<SpendingChartProps> = ({
     initChart();
   }, []);
 
-  const getSubscriptionTotals = (
-    payments: SubscriptionPaymentResponseDto[]
-  ) => {
-    const totals = new Map<Currency, Map<number, number>>();
-
-    payments.forEach((payment) => {
-      if (!totals.has(payment.currency)) {
-        totals.set(payment.currency, new Map());
-      }
-      const currencyMap = totals.get(payment.currency)!;
-      const currentAmount = currencyMap.get(payment.subscriptionId) || 0;
-      currencyMap.set(payment.subscriptionId, currentAmount + payment.amount);
-    });
-
-    return totals;
-  };
-
-  const generateChartData = (
-    subscriptionTotals: Map<number, number>,
-    payments: SubscriptionPaymentResponseDto[]
-  ) => {
-    const subscriptionNames = new Map(
-      payments.map((p) => [p.subscriptionId, p.subscriptionName])
-    );
-
-    const data = Array.from(subscriptionTotals.entries()).map(
-      ([id, amount]) => ({
-        id,
-        amount,
-        name: subscriptionNames.get(id) || 'Unknown',
-      })
-    );
-
-    return {
-      labels: data.map((item) => item.name),
-      datasets: [
-        {
-          data: data.map((item) => item.amount / 100), // Convert cents to dollars
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.5)',
-            'rgba(54, 162, 235, 0.5)',
-            'rgba(255, 206, 86, 0.5)',
-            'rgba(75, 192, 192, 0.5)',
-            'rgba(153, 102, 255, 0.5)',
-            'rgba(255, 159, 64, 0.5)',
-            'rgba(255, 99, 132, 0.5)',
-            'rgba(54, 162, 235, 0.5)',
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)',
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-          ],
-          borderWidth: 1,
-        },
-      ],
-    };
-  };
-
   const options: ChartOptions = {
     responsive: true,
     plugins: {
@@ -120,47 +46,44 @@ export const SpendingChart: React.FC<SpendingChartProps> = ({
     },
   };
 
-  const pastTotals = getSubscriptionTotals(pastPayments);
-  const nextTotals = getSubscriptionTotals(nextPayments);
-  const uniqueCurrencies = new Set([
-    ...Array.from(pastTotals.keys()),
-    ...Array.from(nextTotals.keys()),
-  ]);
+  const { uniqueCurrencies, chartData } = useMemo(
+    () => generateChartData(payments),
+    [payments]
+  );
 
   return (
     <Row gutter={[20, 20]}>
-      {Array.from(uniqueCurrencies).map((currency) => (
-        <Col key={currency} xs={24} md={12}>
-          <StyledCard
-            title={`Distribution (${getCurrencySymbol(currency as Currency)})`}
-          >
-            {PieComponent && pastTotals.get(currency) && (
-              <>
-                <ChartTitle>Past Year Spending</ChartTitle>
-                <PieComponent
-                  options={options}
-                  data={generateChartData(
-                    pastTotals.get(currency)!,
-                    pastPayments
-                  )}
-                />
-              </>
-            )}
-            {PieComponent && nextTotals.get(currency) && (
-              <>
-                <ChartTitle>Next Year Spending</ChartTitle>
-                <PieComponent
-                  options={options}
-                  data={generateChartData(
-                    nextTotals.get(currency)!,
-                    nextPayments
-                  )}
-                />
-              </>
-            )}
-          </StyledCard>
-        </Col>
-      ))}
+      {uniqueCurrencies.map((currency) => {
+        return (
+          <Col key={currency} xs={24} md={12}>
+            <StyledCard
+              title={`Spending ${getCurrencySymbol(currency as Currency)} (${getCurrencyName(currency as Currency)} )`}
+            >
+              {PieComponent && chartData.has(currency) ? (
+                <>
+                  <ChartTitle>Past Year Spending</ChartTitle>
+                  <PieComponent
+                    options={options}
+                    data={chartData.get(currency)?.pastYearData}
+                  />
+                  <ChartTitle>This Year Spending</ChartTitle>
+                  <PieComponent
+                    options={options}
+                    data={chartData.get(currency)?.thisYearData}
+                  />
+                  <ChartTitle>Next Year Spending</ChartTitle>
+                  <PieComponent
+                    options={options}
+                    data={chartData.get(currency)?.nextYearData}
+                  />
+                </>
+              ) : (
+                <Skeleton />
+              )}
+            </StyledCard>
+          </Col>
+        );
+      })}
     </Row>
   );
 };

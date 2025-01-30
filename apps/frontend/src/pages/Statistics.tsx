@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Alert, Row, Col, Card, Statistic } from 'antd';
 import { MainContentWrapper } from '../components/Layout/MainContentWrapper';
 import { Title } from '../components/UI/Title';
@@ -17,6 +17,10 @@ import { SpendingChart } from '../components/UI/SpendingChart';
 
 const Statistics: React.FC = () => {
   const { isLoading, error, data } = useSubscriptionStats();
+  const allPayments = useMemo(
+    () => [...(data?.pastPayments || []), ...(data?.nextPayments || [])],
+    [data]
+  );
 
   if (error) {
     return (
@@ -56,10 +60,7 @@ const Statistics: React.FC = () => {
         </Row>
       ) : (
         <>
-          <SpendingChart
-            pastPayments={data?.pastPayments}
-            nextPayments={data?.nextPayments}
-          />
+          <SpendingChart payments={allPayments} />
 
           <StyledRow gutter={[20, 20]}>
             <Col xs={24} sm={12} md={12} lg={6}>
