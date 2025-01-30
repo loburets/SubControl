@@ -1,5 +1,6 @@
 import { Currency } from './subscriptionsHelper';
 import { SubscriptionPaymentResponseDto } from '@subcontrol/shared-dtos/subscriptions';
+import { GlobalToken } from 'antd';
 
 interface SubscriptionTotal {
   subscriptionName: string;
@@ -19,15 +20,16 @@ type ChartDataPerCurrency = Map<
 >;
 
 const generateChartDataPerSubscriptionsTotals = (
-  subscriptionTotals: SubscriptionsTotals
+  subscriptionTotals: SubscriptionsTotals,
+  token: GlobalToken
 ) => {
-  const data = Array.from(subscriptionTotals.entries()).map(
-    ([id, subscriptionTotal]) => ({
+  const data = Array.from(subscriptionTotals.entries())
+    .map(([id, subscriptionTotal]) => ({
       id,
       amount: subscriptionTotal.amount / 100,
       name: subscriptionTotal.subscriptionName,
-    })
-  );
+    }))
+    .sort((a, b) => b.amount - a.amount);
 
   const totalAmount = data.reduce((acc, item) => acc + item.amount, 0);
 
@@ -37,24 +39,30 @@ const generateChartDataPerSubscriptionsTotals = (
       {
         data: data.map((item) => item.amount),
         backgroundColor: [
-          'rgba(255, 99, 132, 0.5)',
-          'rgba(54, 162, 235, 0.5)',
-          'rgba(255, 206, 86, 0.5)',
-          'rgba(75, 192, 192, 0.5)',
-          'rgba(153, 102, 255, 0.5)',
-          'rgba(255, 159, 64, 0.5)',
-          'rgba(255, 99, 132, 0.5)',
-          'rgba(54, 162, 235, 0.5)',
+          '#1677ff90',
+          '#44465590',
+          '#f0255790',
+          '#a9aabc90',
+          '#b0002a90',
+          '#417a7790',
+          '#d666e490',
+          '#ffc65d90',
+          '#a7aee690',
+          '#00daf290',
+          '#e93c0090',
         ],
         borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
+          '#1677ff',
+          '#444655',
+          '#f02557',
+          '#a9aabc',
+          '#b0002a',
+          '#417a77',
+          '#d666e4',
+          '#ffc65d',
+          '#a7aee6',
+          '#00daf2',
+          '#e93c00',
         ],
         borderWidth: 1,
       },
@@ -85,7 +93,8 @@ const getPaymentsTotals = (payments: SubscriptionPaymentResponseDto[]) => {
 };
 
 export const generateChartData = (
-  payments: SubscriptionPaymentResponseDto[]
+  payments: SubscriptionPaymentResponseDto[],
+  token: GlobalToken
 ) => {
   const pastYearTotals = getPaymentsTotals(
     payments.filter(
@@ -114,13 +123,16 @@ export const generateChartData = (
   for (const currency of uniqueCurrencies) {
     chartData.set(currency, {
       nextYearData: generateChartDataPerSubscriptionsTotals(
-        nextYearTotals.get(currency) || new Map()
+        nextYearTotals.get(currency) || new Map(),
+        token
       ),
       pastYearData: generateChartDataPerSubscriptionsTotals(
-        pastYearTotals.get(currency) || new Map()
+        pastYearTotals.get(currency) || new Map(),
+        token
       ),
       thisYearData: generateChartDataPerSubscriptionsTotals(
-        thisYearTotals.get(currency) || new Map()
+        thisYearTotals.get(currency) || new Map(),
+        token
       ),
     });
   }

@@ -44,11 +44,10 @@ export const SpendingChart: React.FC<SpendingChartProps> = ({
         position: 'right',
       },
     },
-    offset: 5,
   };
 
   const { uniqueCurrencies, chartData } = useMemo(
-    () => generateChartData(payments),
+    () => generateChartData(payments, token),
     [payments]
   );
 
