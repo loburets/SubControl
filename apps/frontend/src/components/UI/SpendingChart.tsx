@@ -6,7 +6,7 @@ import {
   getCurrencyName,
   getCurrencySymbol,
 } from '../../utils/subscriptionsHelper';
-import { Card, Row, Col, Skeleton } from 'antd';
+import { Card, Row, Col, Skeleton, theme, GlobalToken, Grid } from 'antd';
 import styled from 'styled-components';
 import { generateChartData } from '../../utils/statsChartHelper';
 import { Title } from './Title';
@@ -22,6 +22,8 @@ export const SpendingChart: React.FC<SpendingChartProps> = ({
   // as dynamically imported
   /* eslint-disable @typescript-eslint/no-explicit-any */
   const [PieComponent, setPieComponent] = useState<any>(null);
+  const screens = Grid.useBreakpoint();
+  const { token } = theme.useToken();
 
   useEffect(() => {
     const initChart = async () => {
@@ -60,33 +62,39 @@ export const SpendingChart: React.FC<SpendingChartProps> = ({
             >
               {PieComponent && chartData.has(currency) ? (
                 <>
-                  <Row gutter={[8, 0]}>
+                  <Row
+                    gutter={[16, 16]}
+                    style={
+                      // workaround to not update ant card body puddings on mobile
+                      screens.md ? {} : { marginTop: -16, marginBottom: -8 }
+                    }
+                  >
                     {[
                       {
                         year: new Date().getFullYear() - 1,
                         data: chartData.get(currency)?.pastYearData,
                       },
                       {
-                        year: new Date().getFullYear(),
+                        year: `${new Date().getFullYear()} planned`,
                         data: chartData.get(currency)?.thisYearData,
                       },
                       {
-                        year: new Date().getFullYear() + 1,
+                        year: `${new Date().getFullYear() + 1} planned`,
                         data: chartData.get(currency)?.nextYearData,
                       },
                     ].map(({ year, data }) => (
-                      <Col key={year} xs={24} sm={24} md={24} lg={8}>
-                        <ChartTitle level={5} noAdoption>
+                      <Col key={year} xs={24} sm={24} md={8} lg={8}>
+                        <ChartTitle level={5} noAdoption $token={token}>
                           {year} Spending
                         </ChartTitle>
-                        <ChartTextBlock>
+                        <ChartTextBlock $token={token}>
                           {formatPrice((data?.totalAmount || 0) * 100)}
                           {getCurrencySymbol(currency)}
                         </ChartTextBlock>
                         <PieComponent
                           options={options}
                           data={data}
-                          style={{ maxHeight: 150 }}
+                          style={{ maxHeight: screens.md ? 160 : 120 }}
                         />
                       </Col>
                     ))}
@@ -103,13 +111,28 @@ export const SpendingChart: React.FC<SpendingChartProps> = ({
   );
 };
 
-const ChartTitle = styled(Title)`
+const ChartTitle = styled(Title)<{
+  $token: GlobalToken;
+}>`
   text-align: center;
   margin-bottom: 16px !important;
+
+  //mobile
+  @media (max-width: ${({ $token }) => $token.screenSMMax}px) {
+    margin-bottom: 4px !important;
+    margin-top: 12px !important;
+  }
 `;
 
-const ChartTextBlock = styled(TextBlock)`
+const ChartTextBlock = styled(TextBlock)<{
+  $token: GlobalToken;
+}>`
   text-align: center;
   width: 100%;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
+
+  //mobile
+  @media (max-width: ${({ $token }) => $token.screenSMMax}px) {
+    margin-bottom: 4px;
+  }
 `;
