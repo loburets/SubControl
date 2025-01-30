@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Alert, Row, Col, Card, Statistic } from 'antd';
+import { Alert, Row, Col, Card, Statistic, Radio } from 'antd';
 import { MainContentWrapper } from '../components/Layout/MainContentWrapper';
 import { Title } from '../components/UI/Title';
 import { useSubscriptionStats } from '../queries/subscriptions.query';
@@ -14,8 +14,13 @@ import {
 import { TextBlock } from '../components/UI/TextBlock';
 import styled from 'styled-components';
 import { SpendingChart } from '../components/UI/SpendingChart';
+import { FormContainer } from '../components/UI/FormContainer';
+import { Hider } from '../components/UI/Hider';
+
+type ChartType = 'pie' | 'bar';
 
 const Statistics: React.FC = () => {
+  const [chartType, setChartType] = React.useState<ChartType>('pie');
   const { isLoading, error, data } = useSubscriptionStats();
   const allPayments = useMemo(
     () => [...(data?.pastPayments || []), ...(data?.nextPayments || [])],
@@ -60,8 +65,39 @@ const Statistics: React.FC = () => {
         </Row>
       ) : (
         <>
-          <TextBlock>Click charts to see amount</TextBlock>
-          <SpendingChart payments={allPayments} />
+          <Row
+            justify="space-between"
+            align="middle"
+            style={{ marginBottom: 16 }}
+          >
+            <Col xs={0} sm={0} md={12} lg={12}>
+              <Hider desktopOnly>
+                <TextBlock marginBottom={0}>
+                  Click charts to see amounts
+                </TextBlock>
+              </Hider>
+            </Col>
+            <Col>
+              <FormContainer>
+                <Radio.Group
+                  value={chartType}
+                  onChange={(e) => setChartType(e.target.value)}
+                  optionType="button"
+                  buttonStyle="solid"
+                >
+                  <Radio.Button value="pie">Pie Chart</Radio.Button>
+                  <Radio.Button value="bar">Bar Chart</Radio.Button>
+                </Radio.Group>
+              </FormContainer>
+            </Col>
+          </Row>
+
+          {chartType === 'pie' && (
+            <Hider mobileOnly>
+              <TextBlock>Press charts to see amounts</TextBlock>
+            </Hider>
+          )}
+          <SpendingChart payments={allPayments} chartType={chartType} />
 
           <StyledRow gutter={[20, 20]}>
             <Col xs={24} sm={12} md={12} lg={6}>

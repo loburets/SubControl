@@ -1,6 +1,6 @@
 import { Currency } from './subscriptionsHelper';
 import { SubscriptionPaymentResponseDto } from '@subcontrol/shared-dtos/subscriptions';
-import { GlobalToken } from 'antd';
+import { ChartType } from '../components/UI/SpendingChart';
 
 interface SubscriptionTotal {
   subscriptionName: string;
@@ -21,9 +21,9 @@ type ChartDataPerCurrency = Map<
 
 const generateChartDataPerSubscriptionsTotals = (
   subscriptionTotals: SubscriptionsTotals,
-  token: GlobalToken
+  chartType: ChartType
 ) => {
-  const data = Array.from(subscriptionTotals.entries())
+  let data = Array.from(subscriptionTotals.entries())
     .map(([id, subscriptionTotal]) => ({
       id,
       amount: subscriptionTotal.amount / 100,
@@ -32,38 +32,59 @@ const generateChartDataPerSubscriptionsTotals = (
     .sort((a, b) => b.amount - a.amount);
 
   const totalAmount = data.reduce((acc, item) => acc + item.amount, 0);
+  const maxPieChartAmount = 7;
+
+  if (data.length > maxPieChartAmount && chartType === 'pie') {
+    const topData = data.slice(0, maxPieChartAmount);
+    const otherAmount = data
+      .slice(maxPieChartAmount)
+      .reduce((acc, item) => acc + item.amount, 0);
+
+    data = [
+      ...topData,
+      {
+        id: -1,
+        amount: otherAmount,
+        name: 'Other (See Bar Chart)',
+      },
+    ];
+  }
 
   return {
     labels: data.map((item) => item.name),
     datasets: [
       {
         data: data.map((item) => item.amount),
-        backgroundColor: [
-          '#1677ffbb',
-          '#444655bb',
-          '#f02557bb',
-          '#a9aabcbb',
-          '#b0002abb',
-          '#417a77bb',
-          '#d666e4bb',
-          '#ffc65dbb',
-          '#a7aee6bb',
-          '#00daf2bb',
-          '#e93c00bb',
-        ],
-        borderColor: [
-          '#1677ff',
-          '#444655',
-          '#f02557',
-          '#a9aabc',
-          '#b0002a',
-          '#417a77',
-          '#d666e4',
-          '#ffc65d',
-          '#a7aee6',
-          '#00daf2',
-          '#e93c00',
-        ],
+        backgroundColor: Array.from({ length: 10 })
+          .map((_) => [
+            '#1677ffbb',
+            '#444655bb',
+            '#f02557bb',
+            '#a9aabcbb',
+            '#b0002abb',
+            '#417a77bb',
+            '#d666e4bb',
+            '#ffc65dbb',
+            '#a7aee6bb',
+            '#00daf2bb',
+            '#e93c00bb',
+          ])
+          .flat(),
+        borderColor: Array.from({ length: 10 })
+          .map((_) => [
+            '#1677ff',
+            '#444655',
+            '#f02557',
+            '#a9aabc',
+            '#b0002a',
+            '#417a77',
+            '#d666e4',
+            '#ffc65d',
+            '#a7aee6',
+            '#00daf2',
+            '#e93c00',
+          ])
+          .flat(),
         borderWidth: 1,
       },
     ],
@@ -94,7 +115,7 @@ const getPaymentsTotals = (payments: SubscriptionPaymentResponseDto[]) => {
 
 export const generateChartData = (
   payments: SubscriptionPaymentResponseDto[],
-  token: GlobalToken
+  chartType: ChartType
 ) => {
   const pastYearTotals = getPaymentsTotals(
     payments.filter(
@@ -117,6 +138,9 @@ export const generateChartData = (
       ...Array.from(pastYearTotals.keys()),
       ...Array.from(nextYearTotals.keys()),
     ])
+  ).sort(
+    (a, b) =>
+      (thisYearTotals.get(b)?.size || 0) - (thisYearTotals.get(a)?.size || 0)
   );
 
   const chartData: ChartDataPerCurrency = new Map();
@@ -124,15 +148,15 @@ export const generateChartData = (
     chartData.set(currency, {
       nextYearData: generateChartDataPerSubscriptionsTotals(
         nextYearTotals.get(currency) || new Map(),
-        token
+        chartType
       ),
       pastYearData: generateChartDataPerSubscriptionsTotals(
         pastYearTotals.get(currency) || new Map(),
-        token
+        chartType
       ),
       thisYearData: generateChartDataPerSubscriptionsTotals(
         thisYearTotals.get(currency) || new Map(),
-        token
+        chartType
       ),
     });
   }
