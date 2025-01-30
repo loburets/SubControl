@@ -99,7 +99,7 @@ const getPaymentsTotals = (payments: SubscriptionPaymentResponseDto[]) => {
     if (!totals.has(payment.currency)) {
       totals.set(payment.currency, new Map());
     }
-    const currencyMap = totals.get(payment.currency)!;
+    const currencyMap = totals.get(payment.currency) as SubscriptionsTotals;
 
     const currentAmount = currencyMap.get(payment.subscriptionId)?.amount || 0;
     currencyMap.set(payment.subscriptionId, {

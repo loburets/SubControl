@@ -61,41 +61,40 @@ export const SpendingChart: React.FC<SpendingChartProps> = ({
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: {
-        position: chartType === 'pie' ? 'right' : 'left',
-        labels: {
-          padding: 6,
-          boxWidth: 12,
-          font: {
-            size: 12,
-          },
-          generateLabels: (chart: any) => {
-            const data = chart.data;
-            if (data.labels.length && data.datasets.length) {
-              return data.labels.map((label: string, i: number) => {
-                const value = data.datasets[0].data[i];
-                return {
-                  text:
-                    chartType === 'pie'
-                      ? label
-                      : `${label} (${value.toFixed(2)})`,
-                  fillStyle: data.datasets[0].backgroundColor[i],
-                  strokeStyle: data.datasets[0].borderColor[i],
-                  lineWidth: 1,
-                  hidden: false,
-                  index: i,
-                };
-              });
+      legend:
+        chartType === 'pie'
+          ? {
+              position: 'right',
+              labels: {
+                padding: 6,
+                boxWidth: 12,
+                font: {
+                  size: 12,
+                },
+              },
             }
-            return [];
-          },
-        },
-      },
+          : false,
     },
     ...(chartType === 'bar' && {
       scales: {
         y: {
           beginAtZero: true,
+          ticks: {
+            callback: function (
+              value: string,
+              index: number,
+              ticks: any
+            ): string {
+              const datasets = (this as any).chart.data.datasets as Array<{
+                data: number[];
+              }>;
+              const labels = (this as any).chart.data.labels as string[];
+              if (datasets[0] && datasets[0].data && labels) {
+                return `${labels[index]} (${datasets[0].data[index].toFixed(2)})`;
+              }
+              return value;
+            },
+          },
         },
       },
       indexAxis: 'y',
@@ -108,6 +107,7 @@ export const SpendingChart: React.FC<SpendingChartProps> = ({
   );
 
   const SelectedChart = ChartComponent?.[chartType];
+  const isDesktopBarChart = chartType === 'bar' && screens.md;
 
   return (
     <Row gutter={[20, 20]}>
@@ -134,24 +134,47 @@ export const SpendingChart: React.FC<SpendingChartProps> = ({
                     year: `${new Date().getFullYear() + 1} planned`,
                     data: chartData.get(currency)?.nextYearData,
                   },
-                ].map(({ year, data }) => (
-                  <Col key={year} xs={24} sm={24} md={8} lg={8}>
-                    <ChartTitle level={5} noAdoption $token={token}>
-                      {year} Spending
-                    </ChartTitle>
-                    <ChartTextBlock $token={token}>
-                      {getCurrencySymbol(currency)}
-                      {formatPrice((data?.totalAmount || 0) * 100)}
-                    </ChartTextBlock>
-                    <SelectedChart
-                      options={options}
-                      data={data}
-                      style={{
-                        maxHeight: screens.md ? 160 : 120,
-                      }}
-                    />
-                  </Col>
-                ))}
+                ].map(({ year, data }) => {
+                  const dataLength = data?.datasets[0]
+                    ? data?.datasets[0].data.length
+                    : 0;
+                  const barHeightMultiplier = 20;
+                  const minBarHeight = 60;
+                  const barHeight =
+                    dataLength * barHeightMultiplier > minBarHeight
+                      ? dataLength * barHeightMultiplier
+                      : minBarHeight;
+
+                  return (
+                    <Col
+                      key={year}
+                      xs={24}
+                      sm={24}
+                      md={isDesktopBarChart ? 24 : 8}
+                      lg={isDesktopBarChart ? 24 : 8}
+                    >
+                      <ChartTitle level={5} noAdoptation $token={token}>
+                        {year} Spending
+                      </ChartTitle>
+                      <ChartTextBlock $token={token}>
+                        {getCurrencySymbol(currency)}
+                        {formatPrice((data?.totalAmount || 0) * 100)}
+                      </ChartTextBlock>
+                      <SelectedChart
+                        options={options}
+                        data={data}
+                        style={{
+                          maxHeight:
+                            chartType === 'bar'
+                              ? barHeight
+                              : screens.md
+                                ? 160
+                                : 120,
+                        }}
+                      />
+                    </Col>
+                  );
+                })}
               </Row>
             ) : (
               <Skeleton />

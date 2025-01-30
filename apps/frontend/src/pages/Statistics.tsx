@@ -14,7 +14,7 @@ import {
 import { TextBlock } from '../components/UI/TextBlock';
 import styled from 'styled-components';
 import { SpendingChart } from '../components/UI/SpendingChart';
-import { FormContainer } from '../components/UI/FormContainer';
+import { FormElementsAdjuster } from '../components/UI/FormElementsAdjuster';
 import { Hider } from '../components/UI/Hider';
 
 type ChartType = 'pie' | 'bar';
@@ -78,7 +78,7 @@ const Statistics: React.FC = () => {
               </Hider>
             </Col>
             <Col>
-              <FormContainer>
+              <FormElementsAdjuster>
                 <Radio.Group
                   value={chartType}
                   onChange={(e) => setChartType(e.target.value)}
@@ -88,7 +88,7 @@ const Statistics: React.FC = () => {
                   <Radio.Button value="pie">Pie Chart</Radio.Button>
                   <Radio.Button value="bar">Bar Chart</Radio.Button>
                 </Radio.Group>
-              </FormContainer>
+              </FormElementsAdjuster>
             </Col>
           </Row>
 

@@ -23,7 +23,7 @@ export const Payment: React.FC<{
     <Card
       type="inner"
       title={
-        <Title level={4} embedMargins noAdoption>
+        <Title level={4} embedMargins noAdoptation>
           {payment.subscriptionName}
         </Title>
       }

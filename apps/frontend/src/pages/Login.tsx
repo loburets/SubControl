@@ -12,7 +12,7 @@ import {
   StyledTitle,
 } from '../components/UI/AuthElementsStyled';
 import { ContainerForCentered } from '../components/Layout/ContainerForCentered';
-import { FormContainer } from '../components/UI/FormContainer';
+import { FormElementsAdjuster } from '../components/UI/FormElementsAdjuster';
 
 const { Text } = Typography;
 
@@ -47,7 +47,7 @@ const Login: React.FC = () => {
           />
         )}
 
-        <FormContainer>
+        <FormElementsAdjuster>
           <Form form={form} layout="vertical" onFinish={onFinish}>
             <Form.Item
               name="email"
@@ -94,7 +94,7 @@ const Login: React.FC = () => {
               </StyledButton>
             </Form.Item>
           </Form>
-        </FormContainer>
+        </FormElementsAdjuster>
 
         <StyledAdditionalText>
           <Text>Don't have an account?</Text>{' '}

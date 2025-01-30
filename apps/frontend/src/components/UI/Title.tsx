@@ -35,7 +35,7 @@ const TitleStyled = styled(AntTitle)<{
   $token: GlobalToken;
   level?: number | undefined;
   $embedMargins?: boolean;
-  $noAdoption?: boolean;
+  $noAdoptation?: boolean;
   $desktopOnly?: boolean;
   $mobileOnly?: boolean;
   $isLink?: boolean;
@@ -61,16 +61,16 @@ const TitleStyled = styled(AntTitle)<{
 
   //mobile
   @media (max-width: ${({ $token }) => $token.screenSMMax}px) {
-    font-size: ${({ $token, level, $noAdoption }) =>
-      getFontSize(level, $token, $noAdoption ? 0 : 1)}px !important;
+    font-size: ${({ $token, level, $noAdoptation }) =>
+      getFontSize(level, $token, $noAdoptation ? 0 : 1)}px !important;
     margin-bottom: 20px !important;
     ${({ $embedMargins }) => $embedMargins && 'margin-top: 12px !important;'}
     ${({ $embedMargins }) => $embedMargins && 'margin-bottom: 12px !important;'}
   }
 
   @media (max-width: ${extraSmallMobileFooterMaxWidth}px) {
-    font-size: ${({ $token, level, $noAdoption }) =>
-      getFontSize(level, $token, $noAdoption ? 0 : 3)}px !important;
+    font-size: ${({ $token, level, $noAdoptation }) =>
+      getFontSize(level, $token, $noAdoptation ? 0 : 3)}px !important;
     margin-bottom: 12px !important;
     ${({ $embedMargins }) => $embedMargins && 'margin-top: 12px !important;'}
     ${({ $embedMargins }) => $embedMargins && 'margin-bottom: 12px !important;'}
@@ -93,7 +93,7 @@ const TitleStyled = styled(AntTitle)<{
 export const Title: React.FC<
   TitleProps & {
     embedMargins?: boolean;
-    noAdoption?: boolean;
+    noAdoptation?: boolean;
     mobileOnly?: boolean;
     desktopOnly?: boolean;
     isLink?: boolean;
@@ -101,7 +101,7 @@ export const Title: React.FC<
 > = ({
   children,
   embedMargins,
-  noAdoption,
+  noAdoptation,
   mobileOnly,
   desktopOnly,
   isLink,
@@ -114,7 +114,7 @@ export const Title: React.FC<
       $token={token}
       {...rest}
       $embedMargins={embedMargins}
-      $noAdoption={noAdoption}
+      $noAdoptation={noAdoptation}
       $desktopOnly={desktopOnly}
       $mobileOnly={mobileOnly}
       $isLink={isLink}
