@@ -16,17 +16,21 @@ import styled from 'styled-components';
 import { SpendingChart } from '../components/UI/SpendingChart';
 import { FormElementsAdjuster } from '../components/UI/FormElementsAdjuster';
 import { Hider } from '../components/UI/Hider';
+import { Button } from '../components/UI/Button';
+import { ROUTES } from '../router/routes';
+import { useNavigate } from 'react-router';
 
 type ChartType = 'pie' | 'bar';
 
 const Statistics: React.FC = () => {
+  const { token } = theme.useToken();
+  const navigate = useNavigate();
   const [chartType, setChartType] = React.useState<ChartType>('pie');
   const { isLoading, error, data } = useSubscriptionStats();
   const allPayments = useMemo(
     () => [...(data?.pastPayments || []), ...(data?.nextPayments || [])],
     [data]
   );
-  const { token } = theme.useToken();
 
   if (error) {
     return (
@@ -37,6 +41,24 @@ const Statistics: React.FC = () => {
           type="error"
         />
       </ContainerForCentered>
+    );
+  }
+
+  if (!isLoading && allPayments.length === 0) {
+    return (
+      <MainContentWrapper>
+        <Title level={1}>Statistics</Title>
+        <TextBlock>No statistic found, create a subscription</TextBlock>
+        <div>
+          <Button
+            type="primary"
+            style={{ marginBottom: 24 }}
+            onClick={() => navigate(ROUTES.SUBSCRIPTION_CREATE)}
+          >
+            Create new
+          </Button>
+        </div>
+      </MainContentWrapper>
     );
   }
 
