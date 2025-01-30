@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  AmountResponseDto,
-  SubscriptionPaymentResponseDto,
-} from '@subcontrol/shared-dtos/subscriptions';
+import { SubscriptionPaymentResponseDto } from '@subcontrol/shared-dtos/subscriptions';
 import { Currency, getCurrencySymbol } from '../../utils/subscriptionsHelper';
 import { Card, Row, Col } from 'antd';
 import styled from 'styled-components';
@@ -29,6 +26,8 @@ export const SpendingChart: React.FC<SpendingChartProps> = ({
   pastPayments = [],
   nextPayments = [],
 }) => {
+  // as dynamically imported
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   const [PieComponent, setPieComponent] = useState<any>(null);
 
   useEffect(() => {
@@ -38,7 +37,7 @@ export const SpendingChart: React.FC<SpendingChartProps> = ({
       Chart.register(ArcElement, Tooltip, Legend);
 
       const { Pie } = await import('react-chartjs-2');
-      setPieComponent(() => Pie);
+      setPieComponent(Pie);
     };
 
     initChart();
@@ -47,7 +46,7 @@ export const SpendingChart: React.FC<SpendingChartProps> = ({
   const getSubscriptionTotals = (
     payments: SubscriptionPaymentResponseDto[]
   ) => {
-    const totals = new Map<string, Map<number, number>>();
+    const totals = new Map<Currency, Map<number, number>>();
 
     payments.forEach((payment) => {
       if (!totals.has(payment.currency)) {

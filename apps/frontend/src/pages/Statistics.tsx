@@ -48,8 +48,8 @@ const Statistics: React.FC = () => {
 
       {isLoading ? (
         <Row gutter={[20, 20]}>
-          {Array.from({ length: 4 }).map((_, index) => (
-            <Col key={index} xs={24} sm={12} md={12} lg={6}>
+          {Array.from({ length: 3 }).map((_, index) => (
+            <Col key={index} span={24}>
               <SubscriptionSkeleton />
             </Col>
           ))}
@@ -57,10 +57,6 @@ const Statistics: React.FC = () => {
       ) : (
         <>
           <SpendingChart
-            // past30Days={data?.spentPast30Days}
-            // past365Days={data?.spentPast365Days}
-            // expectedThisYear={data?.expectedSpentThisYear}
-            // lastYear={data?.spentLastYear}
             pastPayments={data?.pastPayments}
             nextPayments={data?.nextPayments}
           />
