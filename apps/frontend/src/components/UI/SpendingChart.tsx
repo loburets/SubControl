@@ -7,7 +7,8 @@ import {
 } from '../../utils/subscriptionsHelper';
 import { Card, Row, Col, Skeleton } from 'antd';
 import styled from 'styled-components';
-import { ChartOptions, generateChartData } from '../../utils/statsChartHelper';
+import { generateChartData } from '../../utils/statsChartHelper';
+import { Title } from './Title';
 
 interface SpendingChartProps {
   payments?: SubscriptionPaymentResponseDto[];
@@ -33,15 +34,10 @@ export const SpendingChart: React.FC<SpendingChartProps> = ({
     initChart();
   }, []);
 
-  const options: ChartOptions = {
-    responsive: true,
+  const options = {
     plugins: {
       legend: {
         position: 'right',
-      },
-      title: {
-        display: true,
-        text: 'Subscription Distribution',
       },
     },
   };
@@ -55,32 +51,45 @@ export const SpendingChart: React.FC<SpendingChartProps> = ({
     <Row gutter={[20, 20]}>
       {uniqueCurrencies.map((currency) => {
         return (
-          <Col key={currency} xs={24} md={12}>
-            <StyledCard
+          <Col key={currency} span={24}>
+            <Card
               title={`Spending ${getCurrencySymbol(currency as Currency)} (${getCurrencyName(currency as Currency)} )`}
             >
               {PieComponent && chartData.has(currency) ? (
                 <>
-                  <ChartTitle>Past Year Spending</ChartTitle>
-                  <PieComponent
-                    options={options}
-                    data={chartData.get(currency)?.pastYearData}
-                  />
-                  <ChartTitle>This Year Spending</ChartTitle>
-                  <PieComponent
-                    options={options}
-                    data={chartData.get(currency)?.thisYearData}
-                  />
-                  <ChartTitle>Next Year Spending</ChartTitle>
-                  <PieComponent
-                    options={options}
-                    data={chartData.get(currency)?.nextYearData}
-                  />
+                  <Row gutter={[8, 0]}>
+                    {[
+                      {
+                        year: 'Past',
+                        data: chartData.get(currency)?.pastYearData,
+                      },
+                      {
+                        year: 'This',
+                        data: chartData.get(currency)?.thisYearData,
+                      },
+                      {
+                        year: 'Next',
+                        data: chartData.get(currency)?.nextYearData,
+                      },
+                    ].map(({ year, data }) => (
+                      <Col
+                        key={year}
+                        xs={24}
+                        sm={24}
+                        md={24}
+                        lg={8}
+                        style={{ maxHeight: 300 }}
+                      >
+                        <ChartTitle level={5}>{year} Year Spending</ChartTitle>
+                        <PieComponent options={options} data={data} />
+                      </Col>
+                    ))}
+                  </Row>
                 </>
               ) : (
                 <Skeleton />
               )}
-            </StyledCard>
+            </Card>
           </Col>
         );
       })}
@@ -88,12 +97,7 @@ export const SpendingChart: React.FC<SpendingChartProps> = ({
   );
 };
 
-const StyledCard = styled(Card)`
-  margin-bottom: 20px;
-`;
-
-const ChartTitle = styled.h3`
+const ChartTitle = styled(Title)`
   text-align: center;
-  margin: 20px 0;
-  color: rgba(0, 0, 0, 0.85);
+  margin: 0 !important;
 `;

@@ -1,19 +1,6 @@
 import { Currency } from './subscriptionsHelper';
 import { SubscriptionPaymentResponseDto } from '@subcontrol/shared-dtos/subscriptions';
 
-export interface ChartOptions {
-  responsive: boolean;
-  plugins: {
-    legend: {
-      position: 'right' | 'bottom' | 'left' | 'top';
-    };
-    title: {
-      display: boolean;
-      text: string;
-    };
-  };
-}
-
 interface SubscriptionTotal {
   subscriptionName: string;
   amount: number;
