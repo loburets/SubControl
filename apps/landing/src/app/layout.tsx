@@ -1,19 +1,30 @@
-import type { Metadata } from 'next';
-import './globals.css';
+// All Mantine packages except `@mantine/hooks` require styles imports
+import '@mantine/core/styles.css';
 
-export const metadata: Metadata = {
+import {
+  ColorSchemeScript,
+  MantineProvider,
+  mantineHtmlProps,
+} from '@mantine/core';
+
+export const metadata = {
   title: 'SubControl',
   description: 'Manage your spending on subscriptions',
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en" {...mantineHtmlProps}>
+      <head>
+        <ColorSchemeScript />
+      </head>
+      <body>
+        <MantineProvider>{children}</MantineProvider>
+      </body>
     </html>
   );
 }
