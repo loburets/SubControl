@@ -181,8 +181,8 @@ export const SpendingChart: React.FC<SpendingChartProps> = ({
 
 const getBarHeight = (data?: ChartData) => {
   const dataLength = data?.datasets[0] ? data?.datasets[0].data.length : 0;
-  const barHeightMultiplier = 24;
-  const minBarHeight = 60;
+  const barHeightMultiplier = dataLength > 5 ? 24 : 50;
+  const minBarHeight = 70;
   return dataLength * barHeightMultiplier > minBarHeight
     ? dataLength * barHeightMultiplier
     : minBarHeight;

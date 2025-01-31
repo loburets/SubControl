@@ -20,5 +20,5 @@ export const getErrorMessages = (error: Error) => {
     return error.message;
   }
 
-  return 'Unknown error';
+  return 'Something went wrong.';
 };
