@@ -1,14 +1,16 @@
 import React from 'react';
 import { Form, Input, Typography } from 'antd';
 import { SmallContentCard } from '../components/UI/SmallContentCard';
-import { useRegisterMutation } from '../queries/auth.query';
+import { useDemoMutation, useRegisterMutation } from '../queries/auth.query';
 import { Link, useNavigate } from 'react-router';
 import { ROUTES } from '../router/routes';
 import { getErrorMessages } from '../utils/errorConvertor';
 import {
+  AnimatedDemoButton,
   StyledAdditionalText,
   StyledAlert,
   StyledButton,
+  StyledDivider,
   StyledTitle,
 } from '../components/UI/AuthElementsStyled';
 import { ContainerForCentered } from '../components/Layout/ContainerForCentered';
@@ -24,10 +26,19 @@ interface LoginFormValues {
 const SignUp: React.FC = () => {
   const [form] = Form.useForm<LoginFormValues>();
   const registerMutation = useRegisterMutation();
+  const demoMutation = useDemoMutation();
   const navigate = useNavigate();
 
   const onFinish = (values: LoginFormValues) => {
     registerMutation.mutate(values, {
+      onSuccess: () => {
+        navigate(ROUTES.HOME);
+      },
+    });
+  };
+
+  const handleDemoClick = () => {
+    demoMutation.mutate(undefined, {
       onSuccess: () => {
         navigate(ROUTES.HOME);
       },
@@ -88,7 +99,6 @@ const SignUp: React.FC = () => {
                 type="primary"
                 htmlType="submit"
                 block
-                style={{ marginTop: 32 }}
                 loading={registerMutation.isPending}
               >
                 Sign Up
@@ -96,6 +106,18 @@ const SignUp: React.FC = () => {
             </Form.Item>
           </Form>
         </FormElementsAdjuster>
+
+        <StyledDivider>OR</StyledDivider>
+
+        <AnimatedDemoButton
+          block
+          onClick={handleDemoClick}
+          loading={demoMutation.isPending}
+          color="purple"
+          variant="solid"
+        >
+          Try Demo Mode
+        </AnimatedDemoButton>
 
         <StyledAdditionalText>
           <Text>Already have an account?</Text>{' '}

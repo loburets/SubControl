@@ -38,3 +38,18 @@ export const useRegisterMutation = () => {
     },
   });
 };
+
+export const useDemoMutation = () => {
+  const setToken = useAuthStore((state) => state.setToken);
+
+  return useMutation({
+    mutationFn: async () => {
+      const response = await axiosApiInstance.post('/api/v1/auth/demo');
+      return response.data;
+    },
+    onSuccess: (data: AuthResponseDto) => {
+      setToken(data.accessToken);
+      localStorage.setItem('token', data.accessToken);
+    },
+  });
+};
