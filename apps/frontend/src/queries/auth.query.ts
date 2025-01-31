@@ -16,7 +16,6 @@ export const useLoginMutation = () => {
     },
     onSuccess: (data: AuthResponseDto) => {
       setToken(data.accessToken);
-      localStorage.setItem('token', data.accessToken);
     },
   });
 };
@@ -34,7 +33,6 @@ export const useRegisterMutation = () => {
     },
     onSuccess: (data: AuthResponseDto) => {
       setToken(data.accessToken);
-      localStorage.setItem('token', data.accessToken);
     },
   });
 };
@@ -49,7 +47,7 @@ export const useDemoMutation = () => {
     },
     onSuccess: (data: AuthResponseDto) => {
       setToken(data.accessToken);
-      localStorage.setItem('token', data.accessToken);
+      localStorage.setItem('demo', 'true');
     },
   });
 };
