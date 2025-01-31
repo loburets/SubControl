@@ -64,6 +64,7 @@ export const StyledMobileFooter = styled(Footer)<{
   bottom: 0;
   width: 100%;
   padding: 8px 12px;
+  z-index: 10;
 
   //mobile
   @media (max-width: ${({ $token }) => $token.screenSMMax}px) {
