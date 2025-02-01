@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
 import { theme } from 'antd';
-import { Theme } from '../../store/themeSwitcher.store';
-import { StyledSwitch, SwitchContainer } from './ThemeSwitcher.styled';
-import { useThemeSwitcherStore } from '../../store/themeSwitcher.store';
+import { Theme, useThemeSwitcherStore } from '../../store/themeSwitcher.store';
+import {
+  StyledSwitch,
+  SwitchContainer,
+  ThemeSwitcherGlobalStyles,
+} from './ThemeSwitcher.styled';
 
 const { useToken } = theme;
 
@@ -21,6 +24,7 @@ const ThemeSwitcher: React.FC = () => {
 
   return (
     <SwitchContainer $token={token}>
+      <ThemeSwitcherGlobalStyles $token={token} $currentTheme={currentTheme} />
       <StyledSwitch
         $token={token}
         $currentTheme={currentTheme}

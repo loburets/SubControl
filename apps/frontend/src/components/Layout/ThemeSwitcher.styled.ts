@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import { GlobalToken, Switch } from 'antd';
 import { Theme } from '../../store/themeSwitcher.store';
 import { extraSmallMobileFooterMaxWidth } from './Layout.styled';
@@ -45,5 +45,19 @@ export const StyledSwitch = styled(Switch)<{
 
   @media (max-width: ${extraSmallMobileFooterMaxWidth}px) {
     transform: scale(1);
+  }
+`;
+
+export const ThemeSwitcherGlobalStyles = createGlobalStyle<{
+  $token: GlobalToken;
+  $currentTheme: Theme;
+}>`
+  body {
+    background: ${({ $currentTheme, $token }) => ($currentTheme === Theme.Dark ? $token.colorBgContainer : $token.colorBgBase)};
+
+    //mobile
+    @media (max-width: ${({ $token }) => $token.screenSMMax}px) {
+      background: ${({ $currentTheme, $token }) => ($currentTheme === Theme.Dark ? $token.colorBgBase : $token.colorBgLayout)};
+    }
   }
 `;
