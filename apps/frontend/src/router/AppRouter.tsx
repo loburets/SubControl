@@ -12,6 +12,7 @@ import SubscriptionEdit from '../pages/SubscriptionEdit';
 import PastPayments from '../pages/PastPayments';
 import NextPayments from '../pages/NextPayments';
 import Statistics from '../pages/Statistics';
+import Demo from '../pages/Demo';
 
 export function AppRouter() {
   return (
@@ -30,6 +31,14 @@ export function AppRouter() {
         Component={() => (
           <PublicOnlyRoute>
             <SignUp />
+          </PublicOnlyRoute>
+        )}
+      ></Route>
+      <Route
+        path={ROUTES.DEMO}
+        Component={() => (
+          <PublicOnlyRoute>
+            <Demo />
           </PublicOnlyRoute>
         )}
       ></Route>
