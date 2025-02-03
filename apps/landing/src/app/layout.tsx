@@ -1,13 +1,12 @@
 // All Mantine packages except `@mantine/hooks` require styles imports
 import '@mantine/core/styles.css';
-
 import {
   ColorSchemeScript,
   MantineProvider,
-  mantineHtmlProps,
   MantineColorsTuple,
   createTheme,
 } from '@mantine/core';
+import { ThemeSwitcher } from '../components/ThemeSwitcher';
 
 export const metadata = {
   title: 'SubControl',
@@ -27,7 +26,8 @@ const brandColors: MantineColorsTuple = [
   '#0056b6',
 ];
 
-const defaultTextColor = '#425466';
+const defaultTextColor =
+  'light-dark(rgba(66,84,102,0.88), rgba(232,234,236,0.85))';
 
 // TODO remove redundant styles
 const theme = createTheme({
@@ -98,12 +98,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" {...mantineHtmlProps}>
+    <html lang="en">
       <head>
         <ColorSchemeScript />
       </head>
       <body>
         <MantineProvider theme={theme} defaultColorScheme="light">
+          <div
+            style={{
+              position: 'fixed',
+              top: '20px',
+              right: '20px',
+              zIndex: 1000,
+            }}
+          >
+            <ThemeSwitcher />
+          </div>
           {children}
         </MantineProvider>
       </body>
