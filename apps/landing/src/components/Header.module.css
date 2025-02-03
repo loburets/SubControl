@@ -1,17 +1,18 @@
 .header {
-  height: 60px;
   margin-bottom: 120px;
   background-color: var(--mantine-color-body);
   border-bottom: 1px solid
     light-dark(var(--mantine-color-gray-3), var(--mantine-color-body));
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .inner {
-  height: 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 16px;
+  padding: 12px 16px;
 }
 
 .logo {
