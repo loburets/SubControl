@@ -34,14 +34,6 @@ export function AppRouter() {
           </PublicOnlyRoute>
         )}
       ></Route>
-      <Route
-        path={ROUTES.DEMO}
-        Component={() => (
-          <PublicOnlyRoute>
-            <Demo />
-          </PublicOnlyRoute>
-        )}
-      ></Route>
       {/* private routes */}
       <Route
         path={ROUTES.HOME}
@@ -99,6 +91,8 @@ export function AppRouter() {
           </PrivateRoute>
         )}
       />
+      {/* common routes */}
+      <Route path={ROUTES.DEMO} Component={() => <Demo />}></Route>
     </Routes>
   );
 }
