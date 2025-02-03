@@ -5,8 +5,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <Container>
-        {/* Header with Theme Toggle */}
+      <Container size="lg">
         <Group my="lg">
           <Title order={2}>Subscription Tracker</Title>
         </Group>

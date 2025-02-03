@@ -13,10 +13,20 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px 16px;
+
+  @media (max-width: 500px) {
+    justify-content: center;
+  }
 }
 
 .logo {
-  @media (max-width: 600px) {
+  @media (max-width: 500px) {
+    display: none;
+  }
+}
+
+.github {
+  @media (max-width: 340px) {
     display: none;
   }
 }

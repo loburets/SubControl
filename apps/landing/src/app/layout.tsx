@@ -7,6 +7,7 @@ import {
   MantineColorsTuple,
   createTheme,
 } from '@mantine/core';
+import classes from './Layout.module.css';
 
 export const metadata = {
   title: 'SubControl',
@@ -67,7 +68,7 @@ export default function RootLayout({
       <head>
         <ColorSchemeScript />
       </head>
-      <body>
+      <body className={classes.body}>
         <MantineProvider theme={theme} defaultColorScheme="light">
           {children}
         </MantineProvider>
