@@ -13,6 +13,7 @@ import {
   UserAddOutlined,
 } from '@ant-design/icons';
 import { ThemeSwitcher } from '@/components/ThemeSwitcher';
+import { GitHubLink } from '@/components/GitHubLink';
 
 const appUrl = process.env.NEXT_PUBLIC_APP_URL;
 
@@ -69,6 +70,7 @@ export function Header() {
               </Button>
             ))}
             <ThemeSwitcher />
+            <GitHubLink />
           </Group>
         </div>
       </Container>

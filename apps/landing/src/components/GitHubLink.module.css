@@ -1,0 +1,16 @@
+.link {
+  width: 26px;
+  height: 26px;
+  background: light-dark(var(--mantine-color-white), var(--mantine-color-dark-6));
+  border: light-dark(1px solid var(--mantine-color-gray-3), 1px solid var(--mantine-color-dark-4));
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
+  color: light-dark(var(--text-color-light-theme), var(--text-color-dark-theme));
+}
