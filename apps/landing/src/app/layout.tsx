@@ -34,9 +34,9 @@ const theme = createTheme({
   },
   primaryColor: 'brand',
   defaultRadius: 'md',
-  fontFamily: 'Inter, system-ui, sans-serif',
+  fontFamily:
+    "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji'",
   headings: {
-    fontFamily: 'Inter, system-ui, sans-serif',
     fontWeight: '600',
     sizes: {
       h1: { fontSize: '2.5rem', lineHeight: '1.2' },
