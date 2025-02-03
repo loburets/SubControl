@@ -4,7 +4,6 @@ import { PropsWithChildren, useEffect, useState } from 'react';
 import { extraSmallMobileFooterMaxWidth } from './Layout.styled';
 import { LogoutOutlined } from '@ant-design/icons';
 import { useLogout } from '../../hooks/useLogout';
-import { AnimatedDemoButton } from '../UI/AuthElementsStyled';
 import { Button } from '../UI/Button';
 
 const { useToken } = theme;

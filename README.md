@@ -47,6 +47,7 @@ Frontend, backend and landing for the project
 
 ### Some good practices:
 
+- React Hooks for reusable parts [(example)][apps/frontend/src/hooks/useDemo.ts]
 - [Light/Dark theme with dynamic changing](apps/frontend/src/store/themeSwitcher.store.ts) and default value from the device
 - [Tokens in styles](apps/frontend/src/components/Layout/Layout.styled.ts)
 - Responsive design from 320px to 4k

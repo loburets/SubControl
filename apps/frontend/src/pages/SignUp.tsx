@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Input, Typography } from 'antd';
 import { SmallContentCard } from '../components/UI/SmallContentCard';
-import { useDemoMutation, useRegisterMutation } from '../queries/auth.query';
+import { useRegisterMutation } from '../queries/auth.query';
 import { Link, useNavigate } from 'react-router';
 import { ROUTES } from '../router/routes';
 import { getErrorMessages } from '../utils/errorConvertor';
@@ -15,6 +15,7 @@ import {
 } from '../components/UI/AuthElementsStyled';
 import { ContainerForCentered } from '../components/Layout/ContainerForCentered';
 import { FormElementsAdjuster } from '../components/UI/FormElementsAdjuster';
+import { useDemo } from '../hooks/useDemo';
 
 const { Text } = Typography;
 
@@ -26,7 +27,7 @@ interface LoginFormValues {
 const SignUp: React.FC = () => {
   const [form] = Form.useForm<LoginFormValues>();
   const registerMutation = useRegisterMutation();
-  const demoMutation = useDemoMutation();
+  const { isDemoLoading, demoError, startDemo } = useDemo();
   const navigate = useNavigate();
 
   const onFinish = (values: LoginFormValues) => {
@@ -37,21 +38,15 @@ const SignUp: React.FC = () => {
     });
   };
 
-  const handleDemoClick = () => {
-    demoMutation.mutate(undefined, {
-      onSuccess: () => {
-        navigate(ROUTES.HOME);
-      },
-    });
-  };
-
   return (
     <ContainerForCentered>
       <SmallContentCard>
         <StyledTitle level={3}>Sign Up</StyledTitle>
-        {registerMutation.isError && (
+        {(registerMutation.isError || demoError) && (
           <StyledAlert
-            message={getErrorMessages(registerMutation.error)}
+            message={getErrorMessages(
+              registerMutation.error || demoError || new Error()
+            )}
             type="error"
             showIcon
             closable
@@ -111,8 +106,8 @@ const SignUp: React.FC = () => {
 
         <AnimatedDemoButton
           block
-          onClick={handleDemoClick}
-          loading={demoMutation.isPending}
+          onClick={startDemo}
+          loading={isDemoLoading}
           color="purple"
           variant="solid"
         >

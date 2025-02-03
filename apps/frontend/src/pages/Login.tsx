@@ -1,7 +1,7 @@
 import React from 'react';
-import { Form, Input, Typography, Space, Divider } from 'antd';
+import { Form, Input, Typography } from 'antd';
 import { SmallContentCard } from '../components/UI/SmallContentCard';
-import { useLoginMutation, useDemoMutation } from '../queries/auth.query';
+import { useLoginMutation } from '../queries/auth.query';
 import { Link, useNavigate } from 'react-router';
 import { ROUTES } from '../router/routes';
 import { getErrorMessages } from '../utils/errorConvertor';
@@ -15,8 +15,7 @@ import {
 } from '../components/UI/AuthElementsStyled';
 import { ContainerForCentered } from '../components/Layout/ContainerForCentered';
 import { FormElementsAdjuster } from '../components/UI/FormElementsAdjuster';
-import styled, { keyframes } from 'styled-components';
-import { Button } from '../components/UI/Button';
+import { useDemo } from '../hooks/useDemo';
 
 const { Text } = Typography;
 
@@ -28,7 +27,7 @@ interface LoginFormValues {
 const Login: React.FC = () => {
   const [form] = Form.useForm<LoginFormValues>();
   const loginMutation = useLoginMutation();
-  const demoMutation = useDemoMutation();
+  const { demoError, isDemoLoading, startDemo } = useDemo();
   const navigate = useNavigate();
 
   const onFinish = (values: LoginFormValues) => {
@@ -39,22 +38,14 @@ const Login: React.FC = () => {
     });
   };
 
-  const handleDemoClick = () => {
-    demoMutation.mutate(undefined, {
-      onSuccess: () => {
-        navigate(ROUTES.HOME);
-      },
-    });
-  };
-
   return (
     <ContainerForCentered>
       <SmallContentCard>
         <StyledTitle level={3}>Login</StyledTitle>
-        {(loginMutation.isError || demoMutation.isError) && (
+        {(loginMutation.isError || demoError) && (
           <StyledAlert
             message={getErrorMessages(
-              loginMutation.error || demoMutation.error || new Error()
+              loginMutation.error || demoError || new Error()
             )}
             type="error"
             showIcon
@@ -106,8 +97,8 @@ const Login: React.FC = () => {
 
         <AnimatedDemoButton
           block
-          onClick={handleDemoClick}
-          loading={demoMutation.isPending}
+          onClick={startDemo}
+          loading={isDemoLoading}
           color="purple"
           variant="solid"
         >
