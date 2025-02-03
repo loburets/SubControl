@@ -39,6 +39,9 @@ export function ThemeSwitcher() {
   useEffect(() => {
     const timer = setInterval(() => {
       const currentTheme = calculateCurrentTheme();
+      if (currentTheme == computedColorScheme) {
+        return;
+      }
       setColorScheme(currentTheme);
     }, 1000);
 

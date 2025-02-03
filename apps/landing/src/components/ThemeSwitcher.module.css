@@ -1,5 +1,4 @@
 .switcher {
-  position: relative;
   width: 26px;
   height: 26px;
   background: light-dark(var(--mantine-color-white), var(--mantine-color-dark-6));
@@ -13,15 +12,14 @@
   transform: translate(-50%, -50%);
   width: 16px;
   height: 16px;
-  transition: opacity 0.2s, transform 0.2s;
 }
 
 .light {
   opacity: light-dark(1, 0);
-  color: var(--mantine-color-yellow-4);
+  color: var(--text-color-light-theme);
 }
 
 .dark {
   opacity: light-dark(0, 1);
-  color: var(--mantine-color-blue-4);
+  color: var(--text-color-dark-theme);
 }
