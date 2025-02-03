@@ -1,6 +1,10 @@
 'use client';
 
-import { ActionIcon, useComputedColorScheme, useMantineColorScheme } from '@mantine/core';
+import {
+  ActionIcon,
+  useComputedColorScheme,
+  useMantineColorScheme,
+} from '@mantine/core';
 import { SunOutlined, MoonOutlined } from '@ant-design/icons';
 import cx from 'clsx';
 import classes from './ThemeSwitcher.module.css';
@@ -11,9 +15,11 @@ export function ThemeSwitcher() {
 
   return (
     <ActionIcon
-      onClick={() => setColorScheme(computedColorScheme === 'light' ? 'dark' : 'light')}
+      onClick={() =>
+        setColorScheme(computedColorScheme === 'light' ? 'dark' : 'light')
+      }
       variant="default"
-      size="xl"
+      size="compact-sm"
       aria-label="Toggle color scheme"
       className={classes.switcher}
     >
@@ -21,4 +27,4 @@ export function ThemeSwitcher() {
       <MoonOutlined className={cx(classes.icon, classes.dark)} />
     </ActionIcon>
   );
-} 
+}

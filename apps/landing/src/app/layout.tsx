@@ -7,7 +7,6 @@ import {
   MantineColorsTuple,
   createTheme,
 } from '@mantine/core';
-import { ThemeSwitcher } from '../components/ThemeSwitcher';
 
 export const metadata = {
   title: 'SubControl',
@@ -105,16 +104,6 @@ export default function RootLayout({
       </head>
       <body>
         <MantineProvider theme={theme} defaultColorScheme="light">
-          <div
-            style={{
-              position: 'fixed',
-              top: '20px',
-              right: '20px',
-              zIndex: 1000,
-            }}
-          >
-            <ThemeSwitcher />
-          </div>
           {children}
         </MantineProvider>
       </body>

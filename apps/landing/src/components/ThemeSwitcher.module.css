@@ -1,7 +1,7 @@
 .switcher {
   position: relative;
-  width: 36px;
-  height: 36px;
+  width: 26px;
+  height: 26px;
   background: light-dark(var(--mantine-color-white), var(--mantine-color-dark-6));
   border: light-dark(1px solid var(--mantine-color-gray-3), 1px solid var(--mantine-color-dark-4));
 }
@@ -11,8 +11,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   transition: opacity 0.2s, transform 0.2s;
 }
 
@@ -24,4 +24,4 @@
 .dark {
   opacity: light-dark(0, 1);
   color: var(--mantine-color-blue-4);
-} 
+}

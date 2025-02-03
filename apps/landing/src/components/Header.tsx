@@ -12,6 +12,7 @@ import {
   RocketOutlined,
   UserAddOutlined,
 } from '@ant-design/icons';
+import { ThemeSwitcher } from '@/components/ThemeSwitcher';
 
 const links: {
   title: string;
@@ -65,6 +66,7 @@ export function Header() {
                 {link.title}
               </Button>
             ))}
+            <ThemeSwitcher />
           </Group>
         </div>
       </Container>
