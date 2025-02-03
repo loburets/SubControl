@@ -14,6 +14,8 @@ import {
 } from '@ant-design/icons';
 import { ThemeSwitcher } from '@/components/ThemeSwitcher';
 
+const appUrl = process.env.NEXT_PUBLIC_APP_URL;
+
 const links: {
   title: string;
   href: string;
@@ -23,7 +25,7 @@ const links: {
 }[] = [
   {
     title: 'Demo',
-    href: 'https://mantine.dev',
+    href: `${appUrl}/demo`,
     leftSection: <RocketOutlined />,
     variant: 'gradient',
     gradient: {
@@ -33,13 +35,13 @@ const links: {
   },
   {
     title: 'Sign Up',
-    href: '#',
+    href: `${appUrl}/sign-up`,
     leftSection: <UserAddOutlined />,
     variant: 'filled',
   },
   {
     title: 'Login',
-    href: '#',
+    href: `${appUrl}/login`,
     leftSection: <LoginOutlined />,
     variant: 'filled',
   },

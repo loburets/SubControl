@@ -38,6 +38,8 @@ export const useThemeSwitcherStore = create<ThemeSwitcherState>((set) => ({
     });
   },
   resetCurrentThemeIfRequired: () => {
-    return { currentTheme: calculateCurrentTheme() };
+    const currentTheme = calculateCurrentTheme();
+    set(() => ({ currentTheme }));
+    return { currentTheme };
   },
 }));

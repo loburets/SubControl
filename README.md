@@ -41,7 +41,7 @@ Frontend, backend and landing for the project
 
 - TypeScript
 - React
-- Ant Design
+- Ant Design as components library
 - Styled Components
 - TanStack React Query
 
@@ -57,3 +57,19 @@ Frontend, backend and landing for the project
 - Memoization for complex calculations like sorting during rendering
 - No special Form manager as Ant Design Form is enough ([example](apps/frontend/src/components/UI/SubscriptionForm.tsx))
 - Form elements [are bigger](apps/frontend/src/components/UI/FormElementsAdjuster.tsx) on mobile for easier touch
+
+
+## Landing
+
+### Technologies
+
+- TypeScript
+- React
+- Next.js
+- Mantine as components library (Ant Design is not good with SSR)
+
+### Some good practices:
+
+- Light/dark theme state [is shared](apps/landing/src/components/ThemeSwitcher.tsx) with main app
+- Dynamic components are rendered ond client-side  [(example)](apps/landing/src/components/ThemeSwitcher.tsx), but static content is pre-rendered
+- The same [colors](apps/landing/src/app/layout.tsx) and fonts as in the main app
