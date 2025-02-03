@@ -1,3 +1,4 @@
+import './globals.css';
 // All Mantine packages except `@mantine/hooks` require styles imports
 import '@mantine/core/styles.css';
 import {
