@@ -16,6 +16,10 @@ export const getErrorMessages = (error: Error) => {
     return apiMessage.join(', ');
   }
 
+  if ((error as AxiosError).code === 'ERR_NETWORK') {
+    return 'Network error. Please check your internet connection';
+  }
+
   if (error.message) {
     return error.message;
   }
