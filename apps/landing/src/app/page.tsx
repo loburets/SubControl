@@ -11,10 +11,10 @@ export default function Home() {
       {/* Hero Section */}
       <section style={{ textAlign: 'center', marginBottom: '4rem' }}>
         <Title order={1}>Manage Your Subscriptions Easily</Title>
-        <Text size="lg" color="dimmed" mt="md">
+        <Text size="lg" mt="md">
           Keep track of all your subscriptions in one place.
         </Text>
-        <Button size="lg" mt="lg" color="blue">
+        <Button size="lg" mt="lg">
           Get Started
         </Button>
         <Image
@@ -48,7 +48,7 @@ export default function Home() {
       {/* Call to Action */}
       <section style={{ textAlign: 'center', marginTop: '4rem' }}>
         <Title order={2}>Start Managing Subscriptions Today</Title>
-        <Button size="lg" mt="lg" color="green">
+        <Button size="lg" mt="lg">
           Sign Up Free
         </Button>
       </section>
