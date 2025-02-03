@@ -1,6 +1,6 @@
 import { Button, Container, Group } from '@mantine/core';
-import Image from 'next/image';
 import classes from './Header.module.css';
+import { HeatMapOutlined } from '@ant-design/icons';
 
 const links = [
   { title: 'Demo', href: 'https://mantine.dev' },
@@ -13,7 +13,8 @@ export function Header() {
     <header className={classes.header}>
       <Container size="md">
         <div className={classes.inner}>
-          <Image src={Logo} alt="Logo" />;
+          <HeatMapOutlined />
+          SubControl
           <Group gap={16} visibleFrom="sm">
             {links.map((link) => (
               <Button key={link.title} component="a" href={link.href}>
