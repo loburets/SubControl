@@ -20,6 +20,8 @@ export const AntConfigProvider: React.FC<PropsWithChildren> = ({
           colorPrimary: '#007fff',
           colorInfo: '#007fff',
           colorTextBase: currentTheme === Theme.Dark ? '#E8EAEC' : '#425466',
+          fontFamily:
+            "-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji'",
         },
       }}
     >

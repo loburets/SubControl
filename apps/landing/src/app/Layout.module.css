@@ -1,0 +1,4 @@
+.body {
+  background-color: light-dark(var(--mantine-color-body), var(--mantine-color-dark-8));
+}
+

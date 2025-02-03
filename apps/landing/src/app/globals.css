@@ -1,5 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 body {
-  font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -8,4 +9,10 @@ body {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+}
+
+:root {
+  --accent-color: #642ab5;
+  --text-color-light-theme: rgba(66,84,102,0.88);
+  --text-color-dark-theme: rgba(232,234,236,0.85);
 }
