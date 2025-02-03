@@ -27,6 +27,8 @@ const brandColors: MantineColorsTuple = [
   '#0056b6',
 ];
 
+const defaultTextColor = '#425466';
+
 // TODO remove redundant styles
 const theme = createTheme({
   colors: {
@@ -70,6 +72,7 @@ const theme = createTheme({
       styles: {
         root: {
           letterSpacing: '-0.01em',
+          color: defaultTextColor,
         },
       },
     },
@@ -77,6 +80,7 @@ const theme = createTheme({
       styles: {
         root: {
           lineHeight: 1.6,
+          color: defaultTextColor,
         },
       },
     },
