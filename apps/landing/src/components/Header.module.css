@@ -1,14 +1,22 @@
 .header {
-  height: 56px;
+  height: 60px;
   margin-bottom: 120px;
   background-color: var(--mantine-color-body);
   border-bottom: 1px solid
-    light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+    light-dark(var(--mantine-color-gray-3), var(--mantine-color-body));
 }
 
 .inner {
-  height: 56px;
+  height: 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 16px;
 }
+
+.logo {
+  @media (max-width: 600px) {
+    display: none;
+  }
+}
+

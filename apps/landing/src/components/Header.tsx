@@ -1,19 +1,13 @@
-import {
-  Button,
-  Container,
-  Group,
-  ButtonVariant,
-  MantineGradient,
-} from '@mantine/core';
+import { Button, Group, ButtonVariant, MantineGradient } from '@mantine/core';
 import classes from './Header.module.css';
 import {
-  HeatMapOutlined,
   LoginOutlined,
   RocketOutlined,
   UserAddOutlined,
 } from '@ant-design/icons';
 import { ThemeSwitcher } from '@/components/ThemeSwitcher';
 import { GitHubLink } from '@/components/GitHubLink';
+import { Logo } from '@/components/Logo';
 
 const appUrl = process.env.NEXT_PUBLIC_APP_URL;
 
@@ -51,29 +45,28 @@ const links: {
 export function Header() {
   return (
     <header className={classes.header}>
-      <Container size="md">
-        <div className={classes.inner}>
-          <HeatMapOutlined />
-          SubControl
-          <Group gap={16} visibleFrom="sm">
-            {links.map((link) => (
-              <Button
-                variant={link.variant}
-                key={link.title}
-                component="a"
-                href={link.href}
-                leftSection={link.leftSection}
-                gradient={link.gradient}
-                size="compact-sm"
-              >
-                {link.title}
-              </Button>
-            ))}
-            <ThemeSwitcher />
-            <GitHubLink />
-          </Group>
+      <div className={classes.inner}>
+        <div className={classes.logo}>
+          <Logo />
         </div>
-      </Container>
+        <Group gap={10}>
+          {links.map((link) => (
+            <Button
+              variant={link.variant}
+              key={link.title}
+              component="a"
+              href={link.href}
+              leftSection={link.leftSection}
+              gradient={link.gradient}
+              size="sm"
+            >
+              {link.title}
+            </Button>
+          ))}
+          <ThemeSwitcher />
+          <GitHubLink />
+        </Group>
+      </div>
     </header>
   );
 }

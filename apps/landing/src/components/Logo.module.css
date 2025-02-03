@@ -1,0 +1,13 @@
+.container {
+    font-weight: bold;
+    font-size: 20px;
+    color: light-dark(var(--text-color-light-theme), var(--text-color-dark-theme));
+}
+
+.icon {
+    & svg {
+        width: 24px;
+        height: 24px;
+    }
+}
+
