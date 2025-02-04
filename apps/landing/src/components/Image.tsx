@@ -5,6 +5,7 @@ import {
   useMantineColorScheme,
   Image as MantineImage,
 } from '@mantine/core';
+import { useState, useEffect } from 'react';
 
 interface ThemeAwareImageProps extends Omit<ImageProps, 'src'> {
   src: string;
@@ -14,8 +15,13 @@ interface ThemeAwareImageProps extends Omit<ImageProps, 'src'> {
 
 export function Image({ src, darkSrc, ...props }: ThemeAwareImageProps) {
   const { colorScheme } = useMantineColorScheme();
-  console.log({ colorScheme });
-  const imageSrc = colorScheme === 'dark' && darkSrc ? darkSrc : src;
+  const [mounted, setMounted] = useState(false);
 
+  // During SSR and initial client render, use the light theme image to avoid hydration mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const imageSrc = mounted && colorScheme === 'dark' && darkSrc ? darkSrc : src;
   return <MantineImage src={imageSrc} {...props} />;
 }

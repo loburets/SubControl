@@ -1,9 +1,9 @@
-import { Container, Title, Text, Button, Group } from '@mantine/core';
+import { Title, Text, Button, Group } from '@mantine/core';
 import { Header } from '@/components/Header';
 import { Section } from '@/components/Section';
 import { RocketOutlined, UserAddOutlined } from '@ant-design/icons';
 import classes from './Page.module.css';
-import { Image } from '@/components/Image/Image';
+import { Image } from '@/components/Image';
 
 const appUrl = process.env.NEXT_PUBLIC_APP_URL;
 
