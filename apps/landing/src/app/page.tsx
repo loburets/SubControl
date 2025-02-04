@@ -1,12 +1,18 @@
 import { Container, Title, Text, Button, Image, Group } from '@mantine/core';
 import { Header } from '@/components/Header';
 import { LandingSection } from '@/components/LandingSection';
+import classes from './Page.module.css';
 
 export default function Home() {
   return (
     <>
       <Header />
-      <LandingSection>Test</LandingSection>
+      <LandingSection>
+        <Title className={classes.mainTitle}>
+          Track your subscriptions effortlessly with{' '}
+          <span className={classes.accentWord}>SubControl</span>
+        </Title>
+      </LandingSection>
       <LandingSection isAccent>Test</LandingSection>
       <LandingSection>Test</LandingSection>
       <Container size="lg">

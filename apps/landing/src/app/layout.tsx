@@ -27,7 +27,7 @@ const brandColors: MantineColorsTuple = [
   '#0056b6',
 ];
 
-export const defaultTextColor =
+const defaultTextColor =
   'light-dark(var(--text-color-light-theme), var(--text-color-dark-theme))';
 
 // TODO remove redundant styles

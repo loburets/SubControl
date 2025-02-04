@@ -1,0 +1,18 @@
+.mainTitle {
+    font-size: 7rem;
+    line-height: 7rem;
+    font-weight: bold;
+
+    @media (max-width: 768px) {
+        font-size: 14vw;
+        line-height: 14vw;
+    }
+}
+
+.accentWord {
+    background: linear-gradient(45deg, var(--mantine-color-brand-filled) 0%, var(--accent-color) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+}
