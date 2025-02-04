@@ -1,9 +1,9 @@
 import { PropsWithChildren } from 'react';
-import classes from './LandingSection.module.css';
+import classes from './Section.module.css';
 import { Container } from '@mantine/core';
 import cx from 'clsx';
 
-export const LandingSection = ({
+export const Section = ({
   children,
   isAccent = false,
 }: PropsWithChildren & { isAccent?: boolean }) => {

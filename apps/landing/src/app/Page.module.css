@@ -16,3 +16,7 @@
     color: transparent;
     display: inline-block;
 }
+
+.limitedText {
+    max-width: 800px;
+}
