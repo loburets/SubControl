@@ -16,7 +16,10 @@ export const Section = ({
           isAccent && classes.accentBackground
         )}
       >
-        <Container size="lg" className={classes.container}>
+        <Container
+          size="lg"
+          className={cx(classes.container, isAccent && classes.containerAccent)}
+        >
           {children as React.ReactNode}
         </Container>
       </div>

@@ -20,3 +20,21 @@
 .limitedText {
     max-width: 800px;
 }
+
+.sectionTitle {
+    font-size: 3.5rem;
+    line-height: 1.2;
+    font-weight: bold;
+
+    @media (max-width: 768px) {
+        font-size: 2rem;
+    }
+}
+
+.screenshot {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    display: block;
+    border: 1px solid var(--mantine-color-gray-3);
+}

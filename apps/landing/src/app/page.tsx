@@ -44,8 +44,23 @@ export default function Home() {
           </Button>
         </Group>
       </Section>
-      <Section isAccent>Test</Section>
-      <Section>Test</Section>
+      <Section isAccent>
+        <Title order={2} className={classes.sectionTitle}>
+          No more surprises – stay ahead of your payments!
+        </Title>
+        <Text size="xl" mt="md" className={classes.limitedText}>
+          Get a clear view of all upcoming charges. See what's due next and
+          track past expenses.
+        </Text>
+        <Image
+          src="/screenshots/upcoming-payments.png"
+          mt={40}
+          radius="md"
+          alt="Upcoming payments dashboard"
+          className={classes.screenshot}
+        />
+      </Section>
+
       <Container size="lg">
         <Group my="lg">
           <Title order={2}>Subscription Tracker</Title>

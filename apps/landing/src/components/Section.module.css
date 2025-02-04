@@ -11,6 +11,11 @@
   padding-bottom: 60px;
 }
 
+.containerAccent {
+  padding-top: 80px;
+  padding-bottom: 100px;
+}
+
 .containerWrapper {
   width: 100%;
 }
