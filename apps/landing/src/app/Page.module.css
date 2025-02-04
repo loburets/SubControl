@@ -1,41 +1,48 @@
 .mainTitle {
-    font-size: 7rem;
-    line-height: 7rem;
-    font-weight: bold;
+  font-size: 7rem;
+  line-height: 7rem;
+  font-weight: bold;
 
-    @media (max-width: 768px) {
-        font-size: 14vw;
-        line-height: 14vw;
-    }
+  @media (max-width: 768px) {
+    font-size: 14vw;
+    line-height: 14vw;
+  }
 }
 
 .accentWord {
-    background: linear-gradient(45deg, var(--mantine-color-brand-filled) 0%, var(--accent-color) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    display: inline-block;
+  background: linear-gradient(
+    45deg,
+    var(--mantine-color-brand-filled) 0%,
+    var(--accent-color) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
 }
 
 .limitedText {
-    max-width: 800px;
+  max-width: 800px;
 }
 
 .sectionTitle {
-    font-size: 3.5rem;
-    line-height: 1.2;
-    font-weight: bold;
+  font-size: 3.5rem;
+  line-height: 1.2;
+  font-weight: bold;
 
-    @media (max-width: 768px) {
-        font-size: 2rem;
-    }
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
 }
 
 .screenshot {
-    width: 100%;
-    max-width: 1000px;
-    margin: 0 auto;
-    display: block;
-    border: light-dark(1px solid var(--mantine-color-gray-3), 1px solid var(--mantine-color-dark-5));
-    box-shadow: var(--mantine-shadow-md);
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  display: block;
+  border: light-dark(
+    1px solid var(--mantine-color-gray-3),
+    1px solid var(--mantine-color-dark-5)
+  );
+  box-shadow: var(--mantine-shadow-md);
 }
