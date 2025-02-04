@@ -1,10 +1,14 @@
 import { Container, Title, Text, Button, Image, Group } from '@mantine/core';
 import { Header } from '@/components/Header';
+import { LandingSection } from '@/components/LandingSection';
 
 export default function Home() {
   return (
     <>
       <Header />
+      <LandingSection>Test</LandingSection>
+      <LandingSection isAccent>Test</LandingSection>
+      <LandingSection>Test</LandingSection>
       <Container size="lg">
         <Group my="lg">
           <Title order={2}>Subscription Tracker</Title>

@@ -27,7 +27,8 @@ function calculateCurrentTheme() {
   if (savedTheme) {
     return savedTheme;
   }
-  return window.matchMedia('(prefers-color-scheme: dark)').matches
+  return typeof window !== 'undefined' &&
+    window.matchMedia('(prefers-color-scheme: dark)').matches
     ? Theme.Dark
     : Theme.Light;
 }
@@ -39,7 +40,7 @@ export function ThemeSwitcher() {
   useEffect(() => {
     const timer = setInterval(() => {
       const currentTheme = calculateCurrentTheme();
-      if (currentTheme == computedColorScheme) {
+      if (currentTheme === computedColorScheme) {
         return;
       }
       setColorScheme(currentTheme);
