@@ -13,6 +13,6 @@ body {
 
 :root {
   --accent-color: #642ab5;
-  --text-color-light-theme: rgba(66,84,102,0.88);
-  --text-color-dark-theme: rgba(232,234,236,0.85);
+  --text-color-light-theme: rgba(66, 84, 102, 0.88);
+  --text-color-dark-theme: rgba(232, 234, 236, 0.85);
 }

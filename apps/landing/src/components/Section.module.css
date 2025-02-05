@@ -1,0 +1,48 @@
+.wrapper {
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.container {
+  min-height: 600px;
+  padding-top: 40px;
+  padding-bottom: 60px;
+  align-content: center;
+}
+
+.containerAccent {
+  padding-top: 80px;
+  padding-bottom: 140px;
+}
+
+.containerWrapper {
+  width: 100%;
+}
+
+.accentBackground {
+  background: light-dark(
+    var(--mantine-color-gray-0),
+    var(--mantine-color-dark-7)
+  );
+}
+
+.wave {
+  height: calc(100vw * 0.015);
+  width: 150%;
+  fill: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
+  width: 150%;
+  position: relative;
+  left: -25%;
+
+  @media (max-width: 500px) {
+    height: calc(100vw * 0.025);
+  }
+}
+
+.rotate {
+  transform: rotate(180deg);
+  /* To fix some strange artefact on some widths */
+  bottom: -1px;
+}
