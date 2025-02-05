@@ -3,7 +3,7 @@
   line-height: 7rem;
   font-weight: bold;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     font-size: 14vw;
     line-height: 14vw;
   }
@@ -30,7 +30,7 @@
   line-height: 1.2;
   font-weight: bold;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     font-size: 2rem;
   }
 }
@@ -47,6 +47,14 @@
   box-shadow: var(--mantine-shadow-md);
 }
 
+.desktopScreenshot {
+  @media (max-width: 1024px) {
+    object-fit: cover;
+    object-position: top;
+    height: calc(77vw - 20px);
+  }
+}
+
 .mobileScreenshot {
   width: 300px;
 }
@@ -55,9 +63,9 @@
   min-width: 250%;
   margin-left: -75%;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     transform: scale(0.8);
-    margin-top: -20px;
-    margin-bottom: -20px;
+    margin-top: -40px !important;
+    margin-bottom: -80px !important;
   }
 }

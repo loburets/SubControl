@@ -1,10 +1,15 @@
-import { Title, Text, Button, Group } from '@mantine/core';
+import { Title, Text, Button, Group, Space } from '@mantine/core';
 import { Header } from '@/components/Header';
 import { Section } from '@/components/Section';
-import { RocketOutlined, UserAddOutlined } from '@ant-design/icons';
+import {
+  GithubOutlined,
+  RocketOutlined,
+  UserAddOutlined,
+} from '@ant-design/icons';
 import classes from './Page.module.css';
 import { Image } from '@/components/Image';
 import { MobilePhone } from '@/components/MobilePhone';
+import cx from 'clsx';
 
 const appUrl = process.env.NEXT_PUBLIC_APP_URL;
 
@@ -42,7 +47,7 @@ export default function Home() {
             component="a"
             href={`${appUrl}/sign-up`}
           >
-            Sign up – it's quick & easy!
+            Sign up – it&apos;s quick & easy!
           </Button>
         </Group>
       </Section>
@@ -51,7 +56,7 @@ export default function Home() {
           No more surprises – stay ahead of your payments!
         </Title>
         <Text size="xl" mt="md" className={classes.limitedText}>
-          Get a clear view of all upcoming charges. See what's due next and
+          Get a clear view of all upcoming charges. See what&apos;s due next and
           track past expenses.
         </Text>
         <Image
@@ -60,7 +65,7 @@ export default function Home() {
           mt={40}
           radius="md"
           alt="Upcoming payments dashboard"
-          className={classes.screenshot}
+          className={cx(classes.screenshot, classes.desktopScreenshot)}
         />
       </Section>
       <Section>
@@ -84,7 +89,7 @@ export default function Home() {
               alt="Mobile Light mode"
             />
           </MobilePhone>
-          <MobilePhone>
+          <MobilePhone hideFromExtraSmall>
             <Image
               src={'/screenshots/stats-mobile-dark.png'}
               radius="md"
@@ -93,6 +98,44 @@ export default function Home() {
           </MobilePhone>
         </Group>
       </Section>
+      <Section isAccent>
+        <Title order={2} className={classes.sectionTitle}>
+          Understand your spending with detailed statistics
+        </Title>
+        <Text size="xl" mt="md" className={classes.limitedText}>
+          Get insights into your subscription costs with beautiful charts and
+          breakdowns. Track spending trends and identify opportunities to
+          optimize your expenses.
+        </Text>
+        <Image
+          src={'/screenshots/stats.png'}
+          darkSrc={'/screenshots/stats-dark.png'}
+          mt={40}
+          radius="md"
+          alt="Statistics dashboard"
+          className={cx(classes.screenshot, classes.desktopScreenshot)}
+        />
+      </Section>
+      <Section>
+        <Title order={2} className={classes.sectionTitle}>
+          Built for the community – open source & free
+        </Title>
+        <Text size="xl" mt="md" className={classes.limitedText}>
+          SubControl is free to use with no hidden fees. You can even contribute
+          or check the code yourself.
+        </Text>
+        <Button
+          size="lg"
+          variant="filled"
+          leftSection={<GithubOutlined />}
+          component="a"
+          href="https://github.com/loburets/SubControl"
+          mt={40}
+        >
+          Check it out on GitHub
+        </Button>
+      </Section>
+      <Space h={80} />
     </>
   );
 }

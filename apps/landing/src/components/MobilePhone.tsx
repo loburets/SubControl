@@ -1,10 +1,20 @@
-import { ReactNode } from 'react';
+'use client';
+import { useMediaQuery } from '@mantine/hooks';
 
 interface MobilePhoneProps {
-  children?: ReactNode;
+  children: React.ReactNode;
+  hideFromExtraSmall?: boolean;
 }
 
-export function MobilePhone({ children }: MobilePhoneProps) {
+export function MobilePhone({
+  children,
+  hideFromExtraSmall,
+}: MobilePhoneProps) {
+  const isExtraSmall = useMediaQuery('(max-width: 340px)');
+  if (hideFromExtraSmall && isExtraSmall) {
+    return;
+  }
+
   return (
     <div style={{ position: 'relative' }}>
       <svg role="img" viewBox="0 0 366 729" width="366" height="729">

@@ -71,5 +71,6 @@ Frontend, backend and landing for the project
 ### Some good practices:
 
 - Light/dark theme state [is shared](apps/landing/src/components/ThemeSwitcher.tsx) with main app
+- The theme on screenshots of the app [is changed](apps/landing/src/components/Image.tsx) together with the theme on the Landing
 - Dynamic components are rendered ond client-side  [(example)](apps/landing/src/components/ThemeSwitcher.tsx), but static content is pre-rendered
 - The same [colors](apps/landing/src/app/layout.tsx) and fonts as in the main app

@@ -6,14 +6,15 @@
 }
 
 .container {
-  min-height: 360px;
+  min-height: 600px;
   padding-top: 40px;
   padding-bottom: 60px;
+  align-content: center;
 }
 
 .containerAccent {
   padding-top: 80px;
-  padding-bottom: 100px;
+  padding-bottom: 140px;
 }
 
 .containerWrapper {
