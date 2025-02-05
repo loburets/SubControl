@@ -46,3 +46,18 @@
   );
   box-shadow: var(--mantine-shadow-md);
 }
+
+.mobileScreenshot {
+  width: 300px;
+}
+
+.mobileScreenshotsGroup {
+  min-width: 250%;
+  margin-left: -75%;
+
+  @media (max-width: 768px) {
+    transform: scale(0.8);
+    margin-top: -20px;
+    margin-bottom: -20px;
+  }
+}

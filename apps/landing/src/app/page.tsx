@@ -4,6 +4,7 @@ import { Section } from '@/components/Section';
 import { RocketOutlined, UserAddOutlined } from '@ant-design/icons';
 import classes from './Page.module.css';
 import { Image } from '@/components/Image';
+import { MobilePhone } from '@/components/MobilePhone';
 
 const appUrl = process.env.NEXT_PUBLIC_APP_URL;
 
@@ -61,6 +62,36 @@ export default function Home() {
           alt="Upcoming payments dashboard"
           className={classes.screenshot}
         />
+      </Section>
+      <Section>
+        <Title order={2} className={classes.sectionTitle}>
+          Access it anytime, anywhere
+        </Title>
+        <Text size="xl" mt="md" className={classes.limitedText}>
+          SubControl works smoothly on mobile. Just add it to your home screen
+          for an app-like experience. Dark mode included!
+        </Text>
+        <Group
+          justify="center"
+          gap={40}
+          mt={40}
+          className={classes.mobileScreenshotsGroup}
+        >
+          <MobilePhone>
+            <Image
+              src={'/screenshots/main-mobile.png'}
+              radius="md"
+              alt="Mobile Light mode"
+            />
+          </MobilePhone>
+          <MobilePhone>
+            <Image
+              src={'/screenshots/stats-mobile-dark.png'}
+              radius="md"
+              alt="Mobile Dark mode"
+            />
+          </MobilePhone>
+        </Group>
       </Section>
     </>
   );
