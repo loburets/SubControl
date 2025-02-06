@@ -30,7 +30,6 @@ const brandColors: MantineColorsTuple = [
 const defaultTextColor =
   'light-dark(var(--text-color-light-theme), var(--text-color-dark-theme))';
 
-// TODO remove redundant styles
 const theme = createTheme({
   colors: {
     brand: brandColors,

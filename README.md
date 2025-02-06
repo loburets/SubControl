@@ -4,9 +4,9 @@ This project showcases my expertise in modern frontend and backend technologies,
 
 ## 📌 Features
 
-- ✍️ **Track Subscriptions** – Add and manage services like Netflix, Apple Music, etc.
+- ✍️ **Track Subscriptions** – Easily add and manage recurring services (e.g., Netflix, Spotify, Apple Music).
 - 📅 **Payments Calendar** – Stay informed about your next charges.
-- 📊 **Spending Insights** – View detailed statistics on past and future expenses.
+- 📊 **Spending Charts** – Gain insights into your past and upcoming expenses.
 - 🎨 **Dark & Light Mode** – Automatically adapts to your system theme.
 - 📱 **Mobile-Friendly Design** – Fully responsive UI from 320px mobile to 4K screens.
 
@@ -18,7 +18,7 @@ This project showcases my expertise in modern frontend and backend technologies,
 - **NestJS** – Node.js framework.
 - **TypeScript** – Strictly typed JavaScript.
 - **PostgreSQL** – Relational database.
-- **Prisma ORM** – Type-safe queries and data scheme support.
+- **Prisma ORM** – Data scheme based: type-safe queries, migrations.
 - **Docker** – Local database containerization.
 - **BugSnag** – Error tracking.
 
@@ -28,11 +28,11 @@ This project showcases my expertise in modern frontend and backend technologies,
 - **Ant Design** – UI component library for a polished UI + form management.
 - **Styled Components** – A way to organize styling.
 - **TanStack React Query** – Efficient data fetching and caching.
-- **Zustand** – Lightweight state management.
+- **Zustand** – Minimalistic state management.
 
 ### **Landing Page**
-- **Next.js** – SSR for fast-loading seo-friendly pages based on React and with Typescript
-- **Mantine** – UI components optimized for server-side rendering.
+- **Next.js** – React framework with server-side rendering (SSR) and static site generation (SSG) for SEO-friendly, fast-loading pages, TypeScript included.
+- **Mantine** – UI components optimized for SSR.
 
 ---
 
@@ -55,7 +55,7 @@ This project showcases my expertise in modern frontend and backend technologies,
 - 📜 **Logging** – Winston logger with environment-specific [transports](apps/backend/src/config/winston-logger.config.ts).
 - 🔍 **Meaningful Logs** – No sensitive data in logs, only IDs.
 - 🛠️ **BugSnag Integration** – Sentry alternative for error tracking.
-- 🔄 **No Circular Dependencies** – Avoided using Nest Modules [(example)](apps/backend/src/modules/subscriptions/subscriptions.module.ts).
+- 🔄 **No Circular Dependencies** – Proper NestJS module structure prevents circular dependencies [(example)](apps/backend/src/modules/subscriptions/subscriptions.module.ts).
 
 ### **Frontend**
 - 🎛 **Custom Hooks** – Extracted reusable logic [(example)](apps/frontend/src/hooks/useDemo.ts).
@@ -112,3 +112,16 @@ This project showcases my expertise in modern frontend and backend technologies,
   <span>&nbsp;&nbsp;&nbsp;</span>
   <img src="apps/landing/public/screenshots/edit-subscription-mobile.png" width="35%" style="margin-right: 10%;"/>
 </p>
+
+---
+
+## 😿 Trade-offs
+
+As a small project, some features are planned for future improvements or skipped:
+
+- 🧪 **E2E Testing** – Playwright tests are planned.
+- 📜 **Improved Logging** – Sensitive fields (e.g., name, email, phone number) should be filtered in logs automatically.
+- 🔐 **Additional Features** – Social login, email notifications, password reset, and 2FA are potential enhancements.
+- 🧩 **More Unit Tests** – Some complex methods still require better test coverage.
+- 🛡 **Captcha Protection** – Each demo session creates records in the database, making it an easy target for spam and load creation. Captcha integration may be necessary with growth.
+- 📦 **More Shared Logic** – Some components remain app-specific for simplicity [(e.g., ThemeSwitcher)](apps/landing/src/components/ThemeSwitcher.tsx), but more logic could be moved to shared packages.  
