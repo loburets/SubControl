@@ -1,51 +1,85 @@
-# SubControl
+# SubControl – Subscription Tracking App
 
-Frontend, backend and landing for the project:
+This project showcases my expertise in modern frontend and backend technologies, with a focus on best practices.
 
-![](apps/landing/public/screenshots/landing.png)
+## 📌 Features
 
-## Some good practices of this project:
+- ✍️ **Track Subscriptions** – Add and manage services like Netflix, Apple Music, etc.
+- 📅 **Payments Calendar** – Stay informed about your next charges.
+- 📊 **Spending Insights** – View detailed statistics on past and future expenses.
+- 🎨 **Dark & Light Mode** – Automatically adapts to your system theme.
+- 📱 **Mobile-Friendly Design** – Fully responsive UI from 320px mobile to 4K screens.
 
-- Same DTOs [are shared](packages/shared-dtos) between frontend and backend to have proper types
-- [Eslint](.eslintrc.js) and [Prettier](.prettierrc)
-- [Npm workspaces](package.json)
-- [.nvmrc](.nvmrc) for Node version
-- Docker to run DB locally
-- More of the practices see below
+---
 
-## Backend
+## 🛠️ Tech Stack
 
-### Technologies
+### **Backend**
+- **NestJS** – Node.js framework.
+- **TypeScript** – Strictly typed JavaScript.
+- **PostgreSQL** – Relational database.
+- **Prisma ORM** – Type-safe queries and data scheme support.
+- **Docker** – Local database containerization.
+- **BugSnag** – Error tracking.
 
-- TypeScript
-- NestJS
-- PostgreSQL
-- Prisma ORM
+### **Frontend**
+- **React** – Modern frontend framework.
+- **TypeScript** – Static typing for better developer experience.
+- **Ant Design** – UI component library for a polished UI + form management.
+- **Styled Components** – A way to organize styling.
+- **TanStack React Query** – Efficient data fetching and caching.
+- **Zustand** – Lightweight state management.
 
-### Some good practices:
+### **Landing Page**
+- **Next.js** – SSR for fast-loading seo-friendly pages based on React and with Typescript
+- **Mantine** – UI components optimized for server-side rendering.
 
-- The Testing Trophy instead of the testing pyramid [(the tests are here)](apps/backend/tests)
-- Integration tests made for controllers and they are ready to be run in parallel on the same DB
-- [DB Migration](apps/backend/prisma/migrations)
-- DTOs for requests with [filtering redundant fields to prevent injections](apps/backend/src/main.ts)
-- DTOs for responses [to not expose sensitive fields](apps/backend/src/modules/transformers/transformers.service.ts)
-- Enums for DB/Prisma and in Request/Responses types ([example](packages/shared-dtos/src/subscriptions/requests.dto.ts))
-- Swagger documentation generated per [ts decorators](apps/backend/src/modules/subscriptions/subscriptions.controller.ts) and can [run requests on behalf of a test user](apps/backend/src/utils/swagger.ts)
-- Money are stored as cents (integer value)
-- Winston logger with [different transports](apps/backend/src/config/winston-logger.config.ts) for different environments
-- No sensitive data in logs, only ids
-- BugSnag integration (Sentry alternative for errors tracking)
-- No circular dependencies due to [Nest Modules](apps/backend/src/modules/subscriptions/subscriptions.module.ts)
+---
+
+## ✅ Best Practices & Highlights
+
+### **Common**
+
+- 📏 **Code Formatting & Linting** – Ensured with [ESLint](.eslintrc.js) and [Prettier](.prettierrc).
+- 📦 **Monorepo** – Structured using [npm workspaces](package.json).
+- 🔢 **Node.js Version** – Defined in [.nvmrc](.nvmrc) for consistency.
+
+
+### **Backend**
+- 🚀 **Shared DTOs** – Consistent [request/response structures](packages/shared-dtos) across frontend & backend.
+- 🧪 **Integration Tests** – Covers controllers and runs in parallel.
+- 🏆 **The Testing Trophy** – instead of the testing pyramid [(the tests are here)](apps/backend/tests)
+-  **Database Migrations** – [DB Migration](apps/backend/prisma/migrations) for consistency across envs and proper CD
+- 🔒 **Secure API** – [Filters](apps/backend/src/main.ts) redundant fields in requests to prevent injections. And DTOs for responses [to not expose sensitive fields](apps/backend/src/modules/transformers/transformers.service.ts)
+-  **Enums where applicable** – for DB/Prisma and in Request/Responses types ([example](packages/shared-dtos/src/subscriptions/requests.dto.ts))
+-  **Swagger API Docs** – Auto-generated with [ts decorators](apps/backend/src/modules/subscriptions/subscriptions.controller.ts). The documentation can [run requests on behalf of a test user](apps/backend/src/utils/swagger.ts)
+- 💾 **Money Storage** – Money stored as cents (integer format) for precision.
+- 📜 **Logging** – Winston logger with environment-specific  [transports](apps/backend/src/config/winston-logger.config.ts)
+- **Meaningful logs** - No sensitive data in logs, only ids
+- **BugSnag integration** – Sentry alternative for errors tracking
+- 🔄 **No circular dependencies** – due to [Nest Modules](apps/backend/src/modules/subscriptions/subscriptions.module.ts)
+
+### **Frontend**
+- 🎛 **Custom Hooks** – Extracted reusable logic for maintainability.
+- 🌙 **Dynamic Theming** – Switch between dark/light modes automatically.
+- 📱 **Fully Responsive** – Optimized for mobile, tablet, and desktop.
+- 🔍 **Memoization** – Optimized performance for complex UI calculations.
+- 🧩 **Component-Based Architecture** – Modular and scalable UI design.
+
+### **Landing Page**
+- 🎨 **Consistent Styling** – Matches the main app for a unified experience.
+- 🖼️ **Dynamic Screenshots** – Landing page adapts its theme to match the app.
+- ⚡ **Hybrid Rendering** – Static content pre-rendered, dynamic content client-rendered.
+
+---
+
+## 📸 Screenshots
+
+
+
 
 ## Frontend
 
-### Technologies
-
-- TypeScript
-- React
-- Ant Design as components library
-- Styled Components
-- TanStack React Query
 
 ### Some good practices:
 
