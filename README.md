@@ -1,6 +1,8 @@
-# SubControl - work in progress
+# SubControl
 
 Frontend, backend and landing for the project
+
+![Main application screenshot](apps/landing/public/screenshots/main.png)
 
 ## Some good practices:
 
