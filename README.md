@@ -98,6 +98,12 @@ I'm not sure for how long the app will be available, so I've made screenshots of
 ### Mobile versions are also included
 
 <p align="center">
+  <span style="display: inline-block; margin-right: 20px;">
+
   <img src="apps/landing/public/screenshots/landing-mobile.png" width="35%" style="margin-right: 10%;"/>
+  </span>
+  <span style="display: inline-block;">
   <img src="apps/landing/public/screenshots/landing-mobile-dark.png" width="35%" />
+  </span>
+
 </p>
