@@ -80,27 +80,26 @@ This project showcases my expertise in modern frontend and backend technologies,
 
 I'm not sure for how long the app will be available, so I've made screenshots of it
 
-### The landing page
+### **Landing Page**
+| Light Mode | Dark Mode |
+|------------|-----------|
+| ![](apps/landing/public/screenshots/landing.png) | ![](apps/landing/public/screenshots/landing-dark.png) |
+| ![](apps/landing/public/screenshots/landing-2.png) | ![](apps/landing/public/screenshots/landing-2-dark.png) |
 
-![](apps/landing/public/screenshots/landing.png)
-
-![](apps/landing/public/screenshots/landing-2.png)
-
-### Or the dark version
-
-![](apps/landing/public/screenshots/landing-dark.png)
-
-![](apps/landing/public/screenshots/landing-2-dark.png)
-
-### Mobile versions are also included
-
+### **Mobile Versions**
 <p align="center">
-  <img src="apps/landing/public/screenshots/landing-mobile.png" width="35%" style="margin-right: 10%;"/>
+  <img src="apps/landing/public/screenshots/landing-mobile.png" width="35%" />
   <span>&nbsp;&nbsp;&nbsp;</span>
   <img src="apps/landing/public/screenshots/landing-mobile-dark.png" width="35%" />
 </p>
 
-### The app
+### **App Interface**
+| Main Dashboard | Spending Stats |
+|------------|-----------|
+| ![main.png](apps/landing/public/screenshots/main.png) | ![stats.png](apps/landing/public/screenshots/stats.png) |
+| Upcoming Payments | Edit Subscription |
+| ![upcoming-payments-dark.png](apps/landing/public/screenshots/upcoming-payments-dark.png) | <p align="center"><img src="apps/landing/public/screenshots/edit-subscription-mobile.png" width="35%" /></p> |
+
 
 ![main.png](apps/landing/public/screenshots/main.png)
 
