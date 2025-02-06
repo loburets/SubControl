@@ -2,12 +2,14 @@
 
 Frontend, backend and landing for the project
 
+The main page example:
+
 ![Main application screenshot](apps/landing/public/screenshots/main.png)
 
-## Some good practices:
+## Some good practices of this project:
 
 - Same DTOs [are shared](packages/shared-dtos) between frontend and backend to have proper types
-- [Eslint](.eslintrc.js) and [Prettier](.prettierrc) are used to enforce code style
+- [Eslint](.eslintrc.js) and [Prettier](.prettierrc)
 - [Npm workspaces](package.json)
 - [.nvmrc](.nvmrc) for Node version
 - Docker to run DB locally
@@ -76,3 +78,23 @@ Frontend, backend and landing for the project
 - The theme on screenshots of the app [is changed](apps/landing/src/components/Image.tsx) together with the theme on the Landing
 - Dynamic components are rendered ond client-side  [(example)](apps/landing/src/components/ThemeSwitcher.tsx), but static content is pre-rendered
 - The same [colors](apps/landing/src/app/layout.tsx) and fonts as in the main app
+
+## How it looks
+
+I'm not sure for how long the app will be available, so I've made screenshots of it
+
+### The landing page
+
+![](apps/landing/public/screenshots/landing.png)
+
+![](apps/landing/public/screenshots/landing-2.png)
+
+### Or the dark version
+
+![](apps/landing/public/screenshots/landing-dark.png)
+
+![](apps/landing/public/screenshots/landing-2-dark.png)
+
+### Or on mobile
+
+![landing-mobile.png](apps/landing/public/screenshots/landing-mobile.png)
