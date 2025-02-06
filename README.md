@@ -97,4 +97,7 @@ I'm not sure for how long the app will be available, so I've made screenshots of
 
 ### Mobile versions are also included
 
-![landing-mobile.png](apps/landing/public/screenshots/landing-mobile.png) ![main-mobile.png](apps/landing/public/screenshots/main-mobile.png)
+<p align="center">
+  <img src="apps/landing/public/screenshots/landing-mobile.png" width="35%" style="margin-right: 16px;"/>
+  <img src="apps/landing/public/screenshots/landing-mobile-dark.png" width="35%" />
+</p>
