@@ -99,6 +99,22 @@ I'm not sure for how long the app will be available, so I've made screenshots of
 
 <p align="center">
   <img src="apps/landing/public/screenshots/landing-mobile.png" width="35%" style="margin-right: 10%;"/>
-   <span>&nbsp;&nbsp;&nbsp;</span>
+  <span>&nbsp;&nbsp;&nbsp;</span>
   <img src="apps/landing/public/screenshots/landing-mobile-dark.png" width="35%" />
+</p>
+
+### The app
+
+![main.png](apps/landing/public/screenshots/main.png)
+
+![stats.png](apps/landing/public/screenshots/stats.png)
+
+![upcoming-payments-dark.png](apps/landing/public/screenshots/upcoming-payments-dark.png)
+
+### Mobile width
+
+<p align="center">
+  <img src="apps/landing/public/screenshots/subscription-mobile.png" width="35%" style="margin-right: 10%;"/>
+  <span>&nbsp;&nbsp;&nbsp;</span>
+  <img src="apps/landing/public/screenshots/edit-subscription-mobile.png" width="35%" style="margin-right: 10%;"/>
 </p>
