@@ -125,3 +125,4 @@ As a small project, some features are planned for future improvements or skipped
 - 🧩 **More Unit Tests** – Some complex methods still require better test coverage.
 - 🛡 **Captcha Protection** – Each demo session creates records in the database, making it an easy target for spam and load creation. Captcha integration may be necessary with growth.
 - 📦 **More Shared Logic** – Some components remain app-specific for simplicity [(e.g., ThemeSwitcher)](apps/landing/src/components/ThemeSwitcher.tsx), but more logic could be moved to shared packages.  
+- **CI/CD** - To be done
