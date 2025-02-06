@@ -80,7 +80,8 @@ This project showcases my expertise in modern frontend and backend technologies,
 
 I'm not sure for how long the app will be available, so I've made screenshots of it
 
-### **Landing Page**
+### Landing Page
+
 | Light Mode | Dark Mode |
 |------------|-----------|
 | ![](apps/landing/public/screenshots/landing.png) | ![](apps/landing/public/screenshots/landing-dark.png) |
@@ -94,20 +95,20 @@ I'm not sure for how long the app will be available, so I've made screenshots of
 </p>
 
 ### **App Interface**
-| Main Dashboard | Spending Stats |
-|------------|-----------|
-| ![main.png](apps/landing/public/screenshots/main.png) | ![stats.png](apps/landing/public/screenshots/stats.png) |
-| Upcoming Payments | Edit Subscription |
-| ![upcoming-payments-dark.png](apps/landing/public/screenshots/upcoming-payments-dark.png) | <p align="center"><img src="apps/landing/public/screenshots/edit-subscription-mobile.png" width="35%" /></p> |
 
+#### Main page
 
 ![main.png](apps/landing/public/screenshots/main.png)
 
+#### Stats
+
 ![stats.png](apps/landing/public/screenshots/stats.png)
+
+#### Payments
 
 ![upcoming-payments-dark.png](apps/landing/public/screenshots/upcoming-payments-dark.png)
 
-### Mobile width
+#### Mobile version
 
 <p align="center">
   <img src="apps/landing/public/screenshots/subscription-mobile.png" width="35%" style="margin-right: 10%;"/>
