@@ -1,10 +1,8 @@
 # SubControl
 
-Frontend, backend and landing for the project
+Frontend, backend and landing for the project:
 
-The main page example:
-
-![Main application screenshot](apps/landing/public/screenshots/main.png)
+![](apps/landing/public/screenshots/landing.png)
 
 ## Some good practices of this project:
 
