@@ -41,77 +41,42 @@ This project showcases my expertise in modern frontend and backend technologies,
 ### **Common**
 
 - 📏 **Code Formatting & Linting** – Ensured with [ESLint](.eslintrc.js) and [Prettier](.prettierrc).
-- 📦 **Monorepo** – Structured using [npm workspaces](package.json).
+- 📦 **Monorepo** – Great for small projects, structured using [npm workspaces](package.json).
 - 🔢 **Node.js Version** – Defined in [.nvmrc](.nvmrc) for consistency.
-
 
 ### **Backend**
 - 🚀 **Shared DTOs** – Consistent [request/response structures](packages/shared-dtos) across frontend & backend.
 - 🧪 **Integration Tests** – Covers controllers and runs in parallel.
-- 🏆 **The Testing Trophy** – instead of the testing pyramid [(the tests are here)](apps/backend/tests)
--  **Database Migrations** – [DB Migration](apps/backend/prisma/migrations) for consistency across envs and proper CD
-- 🔒 **Secure API** – [Filters](apps/backend/src/main.ts) redundant fields in requests to prevent injections. And DTOs for responses [to not expose sensitive fields](apps/backend/src/modules/transformers/transformers.service.ts)
--  **Enums where applicable** – for DB/Prisma and in Request/Responses types ([example](packages/shared-dtos/src/subscriptions/requests.dto.ts))
--  **Swagger API Docs** – Auto-generated with [ts decorators](apps/backend/src/modules/subscriptions/subscriptions.controller.ts). The documentation can [run requests on behalf of a test user](apps/backend/src/utils/swagger.ts)
-- 💾 **Money Storage** – Money stored as cents (integer format) for precision.
-- 📜 **Logging** – Winston logger with environment-specific  [transports](apps/backend/src/config/winston-logger.config.ts)
-- **Meaningful logs** - No sensitive data in logs, only ids
-- **BugSnag integration** – Sentry alternative for errors tracking
-- 🔄 **No circular dependencies** – due to [Nest Modules](apps/backend/src/modules/subscriptions/subscriptions.module.ts)
+- 🏆 **The Testing Trophy** – instead of the testing pyramid [(the tests are here)](apps/backend/tests).
+-  **Database Migrations** – [DB Migration](apps/backend/prisma/migrations) for consistency across ENVs and proper CD.
+- 🔒 **Secure API** – [Filters](apps/backend/src/main.ts) redundant fields in requests to prevent injections. [Filters](apps/backend/src/modules/transformers/transformers.service.ts) responses per DTOs to not expose sensitive fields.
+-  **Enum when applicable** – for DB/Prisma data structures and in Request/Responses types ([example](packages/shared-dtos/src/subscriptions/requests.dto.ts)).
+-  **Swagger API Docs** – Auto-generated with [ts decorators](apps/backend/src/modules/subscriptions/subscriptions.controller.ts). The documentation can [run requests on behalf of a test user](apps/backend/src/utils/swagger.ts).
+-  **Money Storage** – Money stored as cents (integer format).
+- 📜 **Logging** – Winston logger with environment-specific  [transports](apps/backend/src/config/winston-logger.config.ts).
+- 💾 **Meaningful logs** - No sensitive data in logs, only ids
+- **BugSnag integration** – Sentry alternative for errors tracking.
+- 🔄 **No circular dependencies** – due to Nest Modules [(example)](apps/backend/src/modules/subscriptions/subscriptions.module.ts).
 
 ### **Frontend**
-- 🎛 **Custom Hooks** – Extracted reusable logic for maintainability.
-- 🌙 **Dynamic Theming** – Switch between dark/light modes automatically.
-- 📱 **Fully Responsive** – Optimized for mobile, tablet, and desktop.
+- 🎛 **Hooks** – Extracted reusable logic [(example)](apps/frontend/src/hooks/useDemo.ts).
+- 🌙 **Dynamic Theming** – Switch between dark/light modes [automatically or manually](apps/frontend/src/store/themeSwitcher.store.ts).
+-  **Tokens in styles** – For consistency [(example)](apps/frontend/src/components/Layout/Layout.styled.ts).
+- 📱 **Fully Responsive** – Optimized for small mobile, tablet, desktop. Form elements [are bigger](apps/frontend/src/components/UI/FormElementsAdjuster.tsx) on mobile for easier touches.
+- 📱 **React testing library** – for integration tests [(example)](apps/frontend/src/pages/Login.test.tsx).
 - 🔍 **Memoization** – Optimized performance for complex UI calculations.
-- 🧩 **Component-Based Architecture** – Modular and scalable UI design.
+-  **Skeletons** – For loading states.
+- 🧩 **No special Form manager** – Ant Design Form is enough [(example)](apps/frontend/src/components/UI/SubscriptionForm.tsx).
 
 ### **Landing Page**
-- 🎨 **Consistent Styling** – Matches the main app for a unified experience.
-- 🖼️ **Dynamic Screenshots** – Landing page adapts its theme to match the app.
+- 🎨 **Consistent Styling** – [Matches](apps/landing/src/app/layout.tsx) the main app for a unified experience.
+- 🌙 **Shared Night Mode** – Theme state [is shared](apps/landing/src/components/ThemeSwitcher.tsx) with the main app
+- 🖼️ **Dynamic Screenshots** – Landing page [adapts screenshots theme](apps/landing/src/components/Image.tsx) to match the app.
 - ⚡ **Hybrid Rendering** – Static content pre-rendered, dynamic content client-rendered.
 
 ---
 
 ## 📸 Screenshots
-
-
-
-
-## Frontend
-
-
-### Some good practices:
-
-- React Hooks for reusable parts [(example)][apps/frontend/src/hooks/useDemo.ts]
-- [Light/Dark theme with dynamic changing](apps/frontend/src/store/themeSwitcher.store.ts) and default value from the device
-- [Tokens in styles](apps/frontend/src/components/Layout/Layout.styled.ts)
-- Responsive design from 320px to 4k
-- [Zustand](apps/frontend/src/store) for global states instead of context
-- React testing library for integration tests ([example](apps/frontend/src/pages/Login.test.tsx))
-- Skeletons for loading states
-- Memoization for complex calculations like sorting during rendering
-- No special Form manager as Ant Design Form is enough ([example](apps/frontend/src/components/UI/SubscriptionForm.tsx))
-- Form elements [are bigger](apps/frontend/src/components/UI/FormElementsAdjuster.tsx) on mobile for easier touch
-
-
-## Landing
-
-### Technologies
-
-- TypeScript
-- React
-- Next.js
-- Mantine as components library (Ant Design is not good with SSR)
-
-### Some good practices:
-
-- Light/dark theme state [is shared](apps/landing/src/components/ThemeSwitcher.tsx) with main app
-- The theme on screenshots of the app [is changed](apps/landing/src/components/Image.tsx) together with the theme on the Landing
-- Dynamic components are rendered ond client-side  [(example)](apps/landing/src/components/ThemeSwitcher.tsx), but static content is pre-rendered
-- The same [colors](apps/landing/src/app/layout.tsx) and fonts as in the main app
-
-## How it looks
 
 I'm not sure for how long the app will be available, so I've made screenshots of it
 

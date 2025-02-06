@@ -23,6 +23,7 @@ export async function setupSwagger(app: INestApplication) {
 
   const authService = app.get(AuthService);
   const { accessToken } = await authService.register({
+    // to simplify no test flag for the user, can be filtered by emails if required
     email: `swagger-test-user+${Math.random()}@test.com`,
     password: '123456',
   });
