@@ -95,6 +95,6 @@ I'm not sure for how long the app will be available, so I've made screenshots of
 
 ![](apps/landing/public/screenshots/landing-2-dark.png)
 
-### Or on mobile
+### Mobile versions are also included
 
-![landing-mobile.png](apps/landing/public/screenshots/landing-mobile.png)
+![landing-mobile.png](apps/landing/public/screenshots/landing-mobile.png) ![main-mobile.png](apps/landing/public/screenshots/main-mobile.png)
