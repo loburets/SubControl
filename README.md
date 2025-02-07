@@ -58,6 +58,7 @@ This project showcases my expertise in modern frontend and backend technologies 
 - 🔍 **Meaningful Logs** – No sensitive data in logs, only IDs.
 - 🛠️ **BugSnag Integration** – Sentry alternative for error tracking.
 - 🔄 **No Circular Dependencies** – Proper NestJS module structure prevents circular dependencies [(example)](apps/backend/src/modules/subscriptions/subscriptions.module.ts).
+- 🧪 **Test Coverage** – [90%](apps/backend/jest.config.js) coverage with Jest.
 
 ### **Frontend**
 - 🎛 **Custom Hooks** – Extracted reusable logic [(example)](apps/frontend/src/hooks/useDemo.ts).
