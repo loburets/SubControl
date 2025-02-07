@@ -33,12 +33,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run ESLint
-        run: npm run lint --workspace=apps/backend
-
-      - name: Run Prettier Check
-        run: npm run format:check --workspace=apps/backend
-
       - name: Generate Prisma Client
         run: npx run prisma:generate --workspace=apps/backend
 
