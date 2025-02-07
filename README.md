@@ -1,6 +1,6 @@
 # SubControl – Subscription Tracking App
 
-This project showcases my expertise in modern frontend and backend technologies, with a focus on best practices.
+This project showcases my expertise in modern frontend and backend technologies together with some self-discipline to implement best practices.
 
 ## 📌 Features
 
@@ -42,6 +42,8 @@ This project showcases my expertise in modern frontend and backend technologies,
 - 📏 **Code Formatting & Linting** – Ensured with [ESLint](.eslintrc.js) and [Prettier](.prettierrc).
 - 📦 **Monorepo** – Great for small projects, structured using [npm workspaces](package.json).
 - 🔢 **Node.js Version** – Defined in [.nvmrc](.nvmrc) for consistency.
+- 📝 **TypeScript Strict Mode** – Enabled for better code quality.
+- 📚 **CI/CD** – GitHub [workflows](.github/workflows) for linting, testing, and deployment.
 
 ### **Backend**
 - 🚀 **Shared DTOs** – Consistent [request/response structures](packages/shared-dtos) across frontend & backend.
@@ -56,6 +58,7 @@ This project showcases my expertise in modern frontend and backend technologies,
 - 🔍 **Meaningful Logs** – No sensitive data in logs, only IDs.
 - 🛠️ **BugSnag Integration** – Sentry alternative for error tracking.
 - 🔄 **No Circular Dependencies** – Proper NestJS module structure prevents circular dependencies [(example)](apps/backend/src/modules/subscriptions/subscriptions.module.ts).
+- 🧪 **Test Coverage** – [90%](apps/backend/jest.config.js) coverage with Jest.
 
 ### **Frontend**
 - 🎛 **Custom Hooks** – Extracted reusable logic [(example)](apps/frontend/src/hooks/useDemo.ts).
@@ -124,5 +127,4 @@ As a small project, some features are planned for future improvements or skipped
 - 🔐 **Additional Features** – Social login, email notifications, password reset, and 2FA are potential enhancements.
 - 🧩 **More Unit Tests** – Some complex methods still require better test coverage.
 - 🛡 **Captcha Protection** – Each demo session creates records in the database, making it an easy target for spam and load creation. Captcha integration may be necessary with growth.
-- 📦 **More Shared Logic** – Some components remain app-specific for simplicity [(e.g., ThemeSwitcher)](apps/landing/src/components/ThemeSwitcher.tsx), but more logic could be moved to shared packages.  
-- **CI/CD** - To be done
+- 📦 **More Shared Logic** – Some components remain app-specific for simplicity [(e.g., ThemeSwitcher)](apps/landing/src/components/ThemeSwitcher.tsx), but more logic could be moved to shared packages.
