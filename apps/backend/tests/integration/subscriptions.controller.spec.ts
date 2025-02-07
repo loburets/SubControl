@@ -467,15 +467,15 @@ describe('SubscriptionsController', () => {
       });
     });
 
-    it('should calculate stats for a simple cancelled subscription of the user', async () => {
+    it('should calculate stats for a simple cancelled long ago subscription of the user', async () => {
       const user = await seedUser();
       const subscription = await seedSubscription({
         user: { connect: { id: user.id } },
         period: Period.MONTHLY,
-        startedAt: subDays(subMonths(new Date(), 30), 1),
+        startedAt: subDays(subMonths(new Date(), 50), 1),
         centsPerPeriod: 200,
         currency: Currency.USD,
-        cancelledAt: subDays(subMonths(new Date(), 12), 15),
+        cancelledAt: subDays(subMonths(new Date(), 32), 15),
       });
 
       const result = await controller.stats({
@@ -520,6 +520,7 @@ describe('SubscriptionsController', () => {
       expect(result).toHaveProperty('pastPayments');
       expect(result.pastPayments).toBeInstanceOf(Array);
       expect(result.pastPayments.length).toBe(18);
+
       result.pastPayments.forEach((payment) => {
         expect(payment).toHaveProperty('subscriptionId');
         expect(payment).toHaveProperty('currency');

@@ -67,7 +67,6 @@ export const sortPaymentsByDate =
         : -1;
   };
 
-// @ts-ignore
 export const getSubscriptionUiData = (
   subscription: SubscriptionResponseDto
 ) => {
