@@ -1,0 +1,51 @@
+name: Backend CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: test_user
+          POSTGRES_PASSWORD: test_password
+          POSTGRES_DB: test_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U test_user"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run ESLint
+        run: npm run lint --workspace=apps/backend
+
+      - name: Run Prettier Check
+        run: npm run format:check --workspace=apps/backend
+
+      - name: Generate Prisma Client
+        run: npx run prisma:generate --workspace=apps/backend
+
+      - name: Run Migrations
+        run: npx run prisma:migrate:deploy --workspace=apps/backend
+
+      - name: Run Tests
+        env:
+          DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
+        run: npm run test:all --workspace=apps/backend

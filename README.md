@@ -1,6 +1,6 @@
 # SubControl – Subscription Tracking App
 
-This project showcases my expertise in modern frontend and backend technologies, with a focus on best practices.
+This project showcases my expertise in modern frontend and backend technologies together with some self-discipline to implement best practices.
 
 ## 📌 Features
 
