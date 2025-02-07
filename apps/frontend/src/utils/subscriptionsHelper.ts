@@ -41,8 +41,7 @@ export const sortSubscriptionsByNextPayment = (
   ) {
     return 0;
   }
-  return dayjs(a.nextPaymentDate || new Date()).isBefore
-  (
+  return dayjs(a.nextPaymentDate || new Date()).isBefore(
     dayjs(b.nextPaymentDate || new Date())
   )
     ? -1
