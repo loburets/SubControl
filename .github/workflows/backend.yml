@@ -33,11 +33,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Generate Prisma Client
-        run: npx run prisma:generate --workspace=apps/backend
+      - name: Build DTOs
+        run: npm run build:dtos
 
       - name: Run Migrations
-        run: npx run prisma:migrate:deploy --workspace=apps/backend
+        run: cd apps/backend && npx prisma migrate deploy
 
       - name: Run Tests
         env:
