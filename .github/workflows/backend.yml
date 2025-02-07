@@ -37,6 +37,8 @@ jobs:
         run: npm run build:dtos
 
       - name: Run Migrations
+        env:
+          DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
         run: cd apps/backend && npx prisma migrate deploy
 
       - name: Run Tests
