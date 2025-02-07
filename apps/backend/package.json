@@ -89,19 +89,23 @@
     ],
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
+      "^.+\\.ts$": "ts-jest"
     },
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "src/**/*.ts"
+      "src/**/*.ts",
+      "!src/app.module.ts",
+      "!src/main.ts",
+      "!src/config/**/**.**",
+      "!src/utils/swagger.ts"
     ],
     "coverageDirectory": "coverage",
     "coverageThreshold": {
       "global": {
         "branches": 80,
         "functions": 80,
-        "lines": 80,
-        "statements": 80
+        "lines": 90,
+        "statements": 90
       }
     },
     "testEnvironment": "node"

@@ -42,5 +42,8 @@ jobs:
       - name: Run Migrations
         run: cd apps/backend && npx prisma generate && npx prisma migrate deploy
 
-      - name: Run Tests
-        run: npm run test:all --workspace=apps/backend
+      - name: Run Backend E2E test
+        run: npm run test:e2e --workspace=apps/backend
+
+      - name: Run Jest tests and check coverage
+        run: npm run test:cov --workspace=apps/backend
