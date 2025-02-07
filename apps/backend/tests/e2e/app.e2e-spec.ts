@@ -52,7 +52,7 @@ describe('AppController (e2e)', () => {
 
     expect(createSubscriptionResponse.body).toMatchObject({
       id: expect.any(Number),
-      name: 'Test Subscription ERROR',
+      name: 'Test Subscription',
       createdAt: expect.any(String),
       startedAt: expect.any(String),
       period: 'MONTHLY',
