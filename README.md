@@ -75,6 +75,7 @@ This project showcases my expertise in modern frontend and backend technologies 
 - 🌙 **Shared Night Mode** – Theme state [is shared](apps/landing/src/components/ThemeSwitcher.tsx) with the main app.
 - 🖼️ **Dynamic Screenshots** – Landing page [adapts screenshot themes](apps/landing/src/components/Image.tsx) to match the app.
 - ⚡ **Hybrid Rendering** – Static content pre-rendered, dynamic content client-rendered.
+- 📸 **Image Optimization** – Images are optimized for web.
 
 ---
 
@@ -90,7 +91,7 @@ This project showcases my expertise in modern frontend and backend technologies 
 ### **Mobile Versions**
 <p align="center">
   <img src="apps/landing/public/screenshots/landing-mobile.png" width="35%" />
-  <span>&nbsp;&nbsp;&nbsp;</span>
+  <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
   <img src="apps/landing/public/screenshots/landing-mobile-dark.png" width="35%" />
 </p>
 
@@ -111,9 +112,11 @@ This project showcases my expertise in modern frontend and backend technologies 
 #### Mobile version
 
 <p align="center">
-  <img src="apps/landing/public/screenshots/subscription-mobile.png" width="35%" style="margin-right: 10%;"/>
+  <img src="apps/landing/public/login-mobile-dark.png" width="25%" />
   <span>&nbsp;&nbsp;&nbsp;</span>
-  <img src="apps/landing/public/screenshots/edit-subscription-mobile.png" width="35%" style="margin-right: 10%;"/>
+  <img src="apps/landing/public/screenshots/subscription-mobile.png" width="25%" />
+  <span>&nbsp;&nbsp;&nbsp;</span>
+  <img src="apps/landing/public/screenshots/edit-subscription-mobile.png" width="25%" />
 </p>
 
 ---
@@ -128,3 +131,6 @@ As a small project, some features are planned for future improvements or skipped
 - 🧩 **More Unit Tests** – Some complex methods still require better test coverage.
 - 🛡 **Captcha Protection** – Each demo session creates records in the database, making it an easy target for spam and load creation. Captcha integration may be necessary with growth.
 - 📦 **More Shared Logic** – Some components remain app-specific for simplicity [(e.g., ThemeSwitcher)](apps/landing/src/components/ThemeSwitcher.tsx), but more logic could be moved to shared packages.
+- 📱 **PWA** – Progressive Web App features are not implemented yet.
+- 📈 **Analytics** – No analytics tools are integrated yet.
+- 🌐 **Accessibility and Internalisation** – No a11y or i18n features are implemented yet.
