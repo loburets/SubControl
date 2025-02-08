@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router';
-import { useLoginMutation } from '../queries/auth.query';
+import { useLoginMutation, useDemoMutation } from '../queries/auth.query';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Login from './Login';
 
@@ -33,6 +33,11 @@ describe('Login Component', () => {
       isPending: false,
       isError: false,
     });
+    (useDemoMutation as jest.Mock).mockReturnValue({
+      mutate: jest.fn(),
+      isPending: false,
+      isError: false,
+    });
 
     renderWithProviders(<Login />);
     expect(screen.getByRole('button', { name: /Login/i })).toBeInTheDocument();
@@ -42,6 +47,11 @@ describe('Login Component', () => {
     const mutateMock = jest.fn();
     (useLoginMutation as jest.Mock).mockReturnValue({
       mutate: mutateMock,
+      isPending: false,
+      isError: false,
+    });
+    (useDemoMutation as jest.Mock).mockReturnValue({
+      mutate: jest.fn(),
       isPending: false,
       isError: false,
     });
@@ -71,6 +81,11 @@ describe('Login Component', () => {
       isPending: false,
       isError: false,
     });
+    (useDemoMutation as jest.Mock).mockReturnValue({
+      mutate: jest.fn(),
+      isPending: false,
+      isError: false,
+    });
 
     renderWithProviders(<Login />);
 
@@ -97,6 +112,11 @@ describe('Login Component', () => {
       isPending: false,
       isError: false,
     });
+    (useDemoMutation as jest.Mock).mockReturnValue({
+      mutate: jest.fn(),
+      isPending: false,
+      isError: false,
+    });
 
     renderWithProviders(<Login />);
 
@@ -116,11 +136,40 @@ describe('Login Component', () => {
     });
   });
 
+  it('calls mutate on demo start', async () => {
+    const mutateMock = jest.fn();
+    const demoMutateMock = jest.fn();
+    (useLoginMutation as jest.Mock).mockReturnValue({
+      mutate: mutateMock,
+      isPending: false,
+      isError: false,
+    });
+    (useDemoMutation as jest.Mock).mockReturnValue({
+      mutate: demoMutateMock,
+      isPending: false,
+      isError: false,
+    });
+
+    renderWithProviders(<Login />);
+
+    fireEvent.click(screen.getByRole('button', { name: /Try Demo Mode/i }));
+
+    await waitFor(() => {
+      expect(demoMutateMock).toHaveBeenCalledTimes(1);
+    });
+    expect(mutateMock).not.toHaveBeenCalled();
+  });
+
   it('shows loading state when mutation is pending', async () => {
     const mutateMock = jest.fn();
     (useLoginMutation as jest.Mock).mockReturnValue({
       mutate: mutateMock,
       isPending: true,
+      isError: false,
+    });
+    (useDemoMutation as jest.Mock).mockReturnValue({
+      mutate: jest.fn(),
+      isPending: false,
       isError: false,
     });
 
@@ -137,6 +186,11 @@ describe('Login Component', () => {
       isPending: false,
       isError: true,
       error: { message: 'Invalid credentials' },
+    });
+    (useDemoMutation as jest.Mock).mockReturnValue({
+      mutate: jest.fn(),
+      isPending: false,
+      isError: false,
     });
 
     renderWithProviders(<Login />);

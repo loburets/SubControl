@@ -1,4 +1,4 @@
-name: Common CI
+name: Landing Page CI
 
 on: [pull_request]
 
@@ -13,14 +13,14 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 18
           cache: 'npm'
 
       - name: Install dependencies
         run: npm install
 
-      - name: Run ESLint
-        run: npm run lint
+      - name: Set env variables
+        run: cd apps/landing && cp .env.example .env
 
-      - name: Run Prettier Check
-        run: npm run format:check
+      - name: Build Project
+        run: npm run build --workspace=apps/landing

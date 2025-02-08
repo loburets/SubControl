@@ -1,4 +1,4 @@
-name: Common CI
+name: Frontend CI
 
 on: [pull_request]
 
@@ -19,8 +19,15 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run ESLint
-        run: npm run lint
+      - name: Build DTOs
+        run: npm run build:dtos
 
-      - name: Run Prettier Check
-        run: npm run format:check
+      - name: Set env variables
+        run: cd apps/frontend && cp .env.example .env
+
+      - name: Run Tests
+        run: npm run test --workspace=apps/frontend
+
+      - name: Build Project
+        run: npm run build --workspace=apps/frontend
+

@@ -2,7 +2,7 @@ import React from 'react';
 import { MainContentWrapper } from '../components/Layout/MainContentWrapper';
 import { Title } from '../components/UI/Title';
 import { SubscriptionForm } from '../components/UI/SubscriptionForm';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { ROUTES } from '../router/routes';
 import { Modal } from 'antd';
 import { getErrorMessages } from '../utils/errorConvertor';
