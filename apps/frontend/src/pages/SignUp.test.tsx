@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router';
-import { useRegisterMutation } from '../queries/auth.query';
+import { useRegisterMutation, useDemoMutation } from '../queries/auth.query';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import SignUp from './SignUp';
 
@@ -33,6 +33,11 @@ describe('SignUp Component', () => {
       isPending: false,
       isError: false,
     });
+    (useDemoMutation as jest.Mock).mockReturnValue({
+      mutate: jest.fn(),
+      isPending: false,
+      isError: false,
+    });
 
     renderWithProviders(<SignUp />);
     expect(
@@ -44,6 +49,11 @@ describe('SignUp Component', () => {
     const mutateMock = jest.fn();
     (useRegisterMutation as jest.Mock).mockReturnValue({
       mutate: mutateMock,
+      isPending: false,
+      isError: false,
+    });
+    (useDemoMutation as jest.Mock).mockReturnValue({
+      mutate: jest.fn(),
       isPending: false,
       isError: false,
     });
@@ -73,6 +83,11 @@ describe('SignUp Component', () => {
       isPending: false,
       isError: false,
     });
+    (useDemoMutation as jest.Mock).mockReturnValue({
+      mutate: jest.fn(),
+      isPending: false,
+      isError: false,
+    });
 
     renderWithProviders(<SignUp />);
 
@@ -96,6 +111,11 @@ describe('SignUp Component', () => {
     const mutateMock = jest.fn();
     (useRegisterMutation as jest.Mock).mockReturnValue({
       mutate: mutateMock,
+      isPending: false,
+      isError: false,
+    });
+    (useDemoMutation as jest.Mock).mockReturnValue({
+      mutate: jest.fn(),
       isPending: false,
       isError: false,
     });
@@ -125,6 +145,11 @@ describe('SignUp Component', () => {
       isPending: true,
       isError: false,
     });
+    (useDemoMutation as jest.Mock).mockReturnValue({
+      mutate: jest.fn(),
+      isPending: false,
+      isError: false,
+    });
 
     renderWithProviders(<SignUp />);
 
@@ -139,6 +164,11 @@ describe('SignUp Component', () => {
       isPending: false,
       isError: true,
       error: { message: 'Invalid credentials' },
+    });
+    (useDemoMutation as jest.Mock).mockReturnValue({
+      mutate: jest.fn(),
+      isPending: false,
+      isError: false,
     });
 
     renderWithProviders(<SignUp />);
