@@ -112,7 +112,7 @@ This project showcases my expertise in modern frontend and backend technologies 
 #### Mobile version
 
 <p align="center">
-  <img src="apps/landing/public/login-mobile-dark.png" width="25%" />
+  <img src="apps/landing/public/screenshots/login-mobile-dark.png" width="25%" />
   <span>&nbsp;&nbsp;&nbsp;</span>
   <img src="apps/landing/public/screenshots/subscription-mobile.png" width="25%" />
   <span>&nbsp;&nbsp;&nbsp;</span>
