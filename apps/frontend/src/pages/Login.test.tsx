@@ -136,6 +136,30 @@ describe('Login Component', () => {
     });
   });
 
+  it('calls mutate on demo start', async () => {
+    const mutateMock = jest.fn();
+    const demoMutateMock = jest.fn();
+    (useLoginMutation as jest.Mock).mockReturnValue({
+      mutate: mutateMock,
+      isPending: false,
+      isError: false,
+    });
+    (useDemoMutation as jest.Mock).mockReturnValue({
+      mutate: demoMutateMock,
+      isPending: false,
+      isError: false,
+    });
+
+    renderWithProviders(<Login />);
+
+    fireEvent.click(screen.getByRole('button', { name: /Try Demo Mode/i }));
+
+    await waitFor(() => {
+      expect(demoMutateMock).toHaveBeenCalledTimes(1);
+    });
+    expect(mutateMock).not.toHaveBeenCalled();
+  });
+
   it('shows loading state when mutation is pending', async () => {
     const mutateMock = jest.fn();
     (useLoginMutation as jest.Mock).mockReturnValue({
