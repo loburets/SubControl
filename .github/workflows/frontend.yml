@@ -19,6 +19,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Build DTOs
+        run: npm run build:dtos
+
       - name: Set env variables
         run: cd apps/frontend && cp .env.example .env
 
