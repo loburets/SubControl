@@ -112,11 +112,11 @@ This project showcases my expertise in modern frontend and backend technologies 
 #### Mobile version
 
 <p align="center">
-  <img src="apps/landing/public/screenshots/login-mobile-dark.png" width="25%" />
+  <img src="apps/landing/public/screenshots/login-mobile-dark.png" width="30%" />
   <span>&nbsp;&nbsp;&nbsp;</span>
-  <img src="apps/landing/public/screenshots/subscription-mobile.png" width="25%" />
+  <img src="apps/landing/public/screenshots/subscription-mobile.png" width="30%" />
   <span>&nbsp;&nbsp;&nbsp;</span>
-  <img src="apps/landing/public/screenshots/edit-subscription-mobile.png" width="25%" />
+  <img src="apps/landing/public/screenshots/edit-subscription-mobile.png" width="30%" />
 </p>
 
 ---
@@ -134,3 +134,4 @@ As a small project, some features are planned for future improvements or skipped
 - 📱 **PWA** – Progressive Web App features are not implemented yet.
 - 📈 **Analytics** – No analytics tools are integrated yet.
 - 🌐 **Accessibility and Internalisation** – No a11y or i18n features are implemented yet.
+- 🔄 **Refresh Tokens** – Currently, the app uses a short-lived JWT token.
