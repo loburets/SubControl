@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router';
 import { Alert, Space, Modal } from 'antd';
 import { CalendarOutlined, CaretLeftOutlined } from '@ant-design/icons';
 import { MainContentWrapper } from '../components/Layout/MainContentWrapper';

@@ -10,7 +10,7 @@ import {
   Grid,
   theme,
 } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { ROUTES } from '../../router/routes';
 import { Currency, Period } from '../../utils/subscriptionsHelper';
 import dayjs from 'dayjs';
