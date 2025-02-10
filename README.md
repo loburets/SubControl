@@ -44,6 +44,7 @@ This project showcases my expertise in modern frontend and backend technologies 
 - 🔢 **Node.js Version** – Defined in [.nvmrc](.nvmrc) for consistency.
 - 📝 **TypeScript Strict Mode** – Enabled for better code quality.
 - 📚 **CI/CD** – GitHub [workflows](.github/workflows) for linting, testing, and deployment.
+- ⚙️ **Infrastructure as Code** – Simple example [by Redner configuration](render.yaml).
 
 ### **Backend**
 - 🚀 **Shared DTOs** – Consistent [request/response structures](packages/shared-dtos) across frontend & backend.
@@ -135,3 +136,4 @@ As a small project, some features are planned for future improvements or skipped
 - 📈 **Analytics** – No analytics tools are integrated yet.
 - 🌐 **Accessibility and Internalisation** – No a11y or i18n features are implemented yet.
 - 🔄 **Refresh Tokens** – Currently, the app uses a short-lived JWT token.
+- 🔧 **Staging Environment** – Currently, the app is deployed directly to production for main branch

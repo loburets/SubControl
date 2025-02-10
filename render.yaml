@@ -1,0 +1,56 @@
+# This file defines the services that will be deployed to Render (https://render.com/)
+# Note: all secrets are defined on the Render dashboard to avoid storing them in the repository.
+
+services:
+  - name: backend
+    type: web
+    runtime: node
+    plan: free
+    buildCommand: |
+      npm install
+      npm run build:dtos
+      cd apps/backend
+      npx prisma generate
+      npx prisma migrate deploy
+      npm run build
+    startCommand: cd apps/backend && npm run start:prod
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: database
+          property: connectionString
+      - key: JWT_SECRET
+        sync: false  # Set manually in Render Dashboard
+      - key: BUGSNAG_API_KEY
+        sync: false  # Set manually in Render Dashboard
+
+  - name: frontend
+    type: web
+    runtime: static
+    buildCommand: |
+      npm install
+      npm run build:dtos
+      cd apps/frontend
+      npm run build
+    staticPublishPath: apps/frontend/build
+    envVars:
+      - key: REACT_APP_API_URL
+        sync: false  # Set manually in Render Dashboard
+
+  - name: landing
+    type: web
+    runtime: static
+    buildCommand: |
+      npm install
+      cd apps/landing
+      npm run build
+    staticPublishPath: apps/landing/out
+    envVars:
+      - key: NEXT_PUBLIC_APP_URL
+        sync: false  # Set manually in Render Dashboard
+
+databases:
+  - name: database
+    plan: free
+    ipAllowList: [ ] # No entries in the IP allow list so far, so only private connections are allowed
+

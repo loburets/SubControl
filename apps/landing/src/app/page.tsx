@@ -118,7 +118,7 @@ export default function Home() {
       </Section>
       <Section>
         <Title order={2} className={classes.sectionTitle}>
-          Built for the community – open source & free
+          Built for the community – open source &&nbsp;free
         </Title>
         <Text size="xl" mt="md" className={classes.limitedText}>
           SubControl is free to use with no hidden fees. You can even contribute
