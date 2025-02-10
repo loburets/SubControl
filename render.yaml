@@ -1,12 +1,7 @@
 # This file defines the services that will be deployed to Render (https://render.com/)
+# Note: all secrets are defined on the Render dashboard to avoid storing them in the repository.
 
 services:
-  # User and password not specified, so Render will generate them and they are not exposed in this repository
-  - name: database
-    type: pserv
-    plan: free
-    startCommand: ""  # Required but left empty
-
   - name: backend
     type: web
     runtime: node
@@ -20,7 +15,9 @@ services:
     startCommand: cd apps/backend && npm run start:prod
     envVars:
       - key: DATABASE_URL
-        sync: false  # Set manually in Render Dashboard
+        fromDatabase:
+          name: database
+          property: connectionString
       - key: JWT_SECRET
         sync: false  # Set manually in Render Dashboard
       - key: BUGSNAG_API_KEY
@@ -53,4 +50,8 @@ services:
       - key: NEXT_PUBLIC_APP_URL
         sync: false  # Set manually in Render Dashboard
 
-# Note: all secrets are defined on the Render dashboard to avoid storing them in the repository.
+databases:
+  - name: database
+    plan: free
+    ipAllowList: [ ] # No entries in the IP allow list so far, so only private connections are allowed
+
