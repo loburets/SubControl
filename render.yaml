@@ -6,6 +6,7 @@ services:
     type: web
     runtime: node
     plan: free
+    healthCheckPath: /api/v1/health
     buildCommand: |
       npm install
       npm run build:dtos
