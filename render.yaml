@@ -13,7 +13,7 @@ services:
       cd apps/backend
       npx prisma generate
       npx prisma migrate deploy
-      npx nest build
+      npm run build
     startCommand: cd apps/backend && npm run start:prod
     envVars:
       - key: DATABASE_URL
