@@ -2,6 +2,8 @@ import { Controller, Get, Logger } from '@nestjs/common';
 import { ApiResponse } from '@nestjs/swagger';
 import { PrismaService } from '../../prisma/prisma.service';
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 @Controller('health')
 export class HealthController {
   private readonly logger = new Logger(HealthController.name);
@@ -18,7 +20,7 @@ export class HealthController {
       .$queryRaw`SELECT 1+1 as health`;
 
     if (!health || health[0].health !== 2) {
-      this.logger.error('Health check failed', { health });
+      isProduction && this.logger.error('Health check failed', { health });
       throw new Error('Health check failed');
     }
 
