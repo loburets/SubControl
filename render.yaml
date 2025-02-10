@@ -17,8 +17,11 @@ services:
       npx prisma migrate deploy
       npm run build
     startCommand: cd apps/backend && npm run start:prod
+    # Manually set this in Render's Dashboard
     envVars:
-      - key: DATABASE_URL  # Manually set this in Render's Dashboard
+      - key: DATABASE_URL
+      - key: JWT_SECRET
+      - key: BUGSNAG_API_KEY
 
   - name: frontend
     type: web
@@ -30,10 +33,9 @@ services:
       cd apps/frontend
       npm run build
     staticPublishPath: apps/frontend/build
+    # Manually set this in Render's Dashboard
     envVars:
       - key: REACT_APP_API_URL
-        fromService: backend
-        property: hostport  # This will set REACT_APP_API_URL to the backend's URL
 
   - name: landing
     type: web
@@ -44,9 +46,8 @@ services:
       cd apps/landing
       npm run build
     staticPublishPath: apps/landing/out
+    # Manually set this in Render's Dashboard
     envVars:
       - key: NEXT_PUBLIC_APP_URL
-        fromService: frontend
-        property: hostport  # This will set NEXT_PUBLIC_APP_URL to the frontend's URL
 
 # Note: all secrets are defined on the Render dashboard to avoid storing them in the repository.
