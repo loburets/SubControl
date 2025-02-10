@@ -26,7 +26,6 @@ services:
   - name: frontend
     type: web
     runtime: static
-    plan: free
     buildCommand: |
       npm install
       npm run build:dtos
@@ -40,7 +39,6 @@ services:
   - name: landing
     type: web
     runtime: static
-    plan: free
     buildCommand: |
       npm install
       cd apps/landing
