@@ -36,6 +36,14 @@ services:
       cd apps/frontend
       npm run build
     staticPublishPath: apps/frontend/build
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: no-cache
+    redirects:
+      - source: /*
+        destination: /index.html
+        type: rewrite
     envVars:
       - key: REACT_APP_API_URL
         sync: false  # Set manually in Render Dashboard
