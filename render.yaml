@@ -1,0 +1,52 @@
+services:
+  # User and password not specified, so Render will generate them and they are not exposed in this repository
+  - name: database
+    type: postgresql
+    plan: free
+
+  - name: backend
+    type: web
+    env: node
+    plan: free
+    buildCommand: |
+      npm install
+      npm run build:dtos
+      cd apps/backend
+      npx prisma migrate deploy
+      npm run build
+    startCommand: cd apps/backend && npm run start:prod
+    envVars:
+      - key: DATABASE_URL
+        fromService: database
+        property: connectionString
+
+  - name: frontend
+    type: web
+    env: node
+    plan: free
+    buildCommand: |
+      npm install
+      npm run build:dtos
+      cd apps/frontend
+      npm run build
+    staticPublishPath: apps/frontend/build
+    envVars:
+      - key: REACT_APP_API_URL
+        fromService: backend
+        property: hostport  # This will set REACT_APP_API_URL to the backend's URL
+
+  - name: landing
+    type: web
+    env: node
+    plan: free
+    buildCommand: |
+      npm install
+      cd apps/landing
+      npm run build
+    staticPublishPath: apps/landing/out
+    envVars:
+      - key: NEXT_PUBLIC_APP_URL
+        fromService: frontend
+        property: hostport  # This will set NEXT_PUBLIC_APP_URL to the frontend's URL
+
+# Note: all secrets are defined on the Render dashboard to avoid storing them in the repository.
