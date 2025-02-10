@@ -136,4 +136,4 @@ As a small project, some features are planned for future improvements or skipped
 - 📈 **Analytics** – No analytics tools are integrated yet.
 - 🌐 **Accessibility and Internalisation** – No a11y or i18n features are implemented yet.
 - 🔄 **Refresh Tokens** – Currently, the app uses a short-lived JWT token.
-- 🔧 **Staging Environment** – Currently, the app is deployed directly to production, would be not good for a real-world project.
+- 🔧 **Staging Environment** – Currently, the app is deployed directly to production for main branch
