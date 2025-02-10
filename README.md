@@ -124,7 +124,7 @@ This project showcases my expertise in modern frontend and backend technologies 
 
 ## 😿 Trade-offs
 
-As a small project, some features are planned for future improvements or skipped:
+As a small project, some features currently are not optimal for a real-world scenario and skipped:
 
 - 🧪 **E2E Testing** – Playwright tests are planned.
 - 📜 **Improved Logging** – Sensitive fields (e.g., name, email, phone number) should be filtered in logs automatically.
@@ -137,3 +137,4 @@ As a small project, some features are planned for future improvements or skipped
 - 🌐 **Accessibility and Internalisation** – No a11y or i18n features are implemented yet.
 - 🔄 **Refresh Tokens** – Currently, the app uses a short-lived JWT token.
 - 🔧 **Staging Environment** – Currently, the app is deployed directly to production for main branch
+- 📦 **Deployment Optimisation** – Deployment is triggered for all 3 services (backend, frontend, landing) on each push to the main branch to make Render setup easier. 
