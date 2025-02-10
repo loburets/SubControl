@@ -14,6 +14,9 @@ interface ThemeSwitcherState {
 
 const THEME_COOKIE_KEY = 'SubControl_lighting_theme';
 const COOKIE_EXPIRATION_HOURS = 12;
+const domain = window.location.href.includes('localhost')
+  ? undefined
+  : '.' + window.location.host.split('.').slice(-2).join('.');
 
 function calculateCurrentTheme() {
   const savedTheme = Cookies.get(THEME_COOKIE_KEY) as Theme | undefined;
@@ -33,6 +36,7 @@ export const useThemeSwitcherStore = create<ThemeSwitcherState>((set) => ({
         state.currentTheme === Theme.Light ? Theme.Dark : Theme.Light;
       Cookies.set(THEME_COOKIE_KEY, newTheme, {
         expires: COOKIE_EXPIRATION_HOURS / 24,
+        domain,
       });
       return { currentTheme: newTheme };
     });

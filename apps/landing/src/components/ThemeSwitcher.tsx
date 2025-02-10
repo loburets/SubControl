@@ -21,6 +21,10 @@ enum Theme {
 // but for the sake of simplicity it's kept here as not often updated and simple
 const THEME_COOKIE_KEY = 'SubControl_lighting_theme';
 const COOKIE_EXPIRATION_HOURS = 12;
+const domain =
+  typeof window !== 'undefined' && !window.location.href.includes('localhost')
+    ? '.' + window.location.host.split('.').slice(-2).join('.')
+    : undefined;
 
 function calculateCurrentTheme() {
   const savedTheme = Cookies.get(THEME_COOKIE_KEY) as Theme | undefined;
@@ -49,15 +53,18 @@ export function ThemeSwitcher() {
     return () => clearInterval(timer);
   }, [setColorScheme]);
 
+  const onThemeChange = () => {
+    const newTheme = computedColorScheme === 'light' ? 'dark' : 'light';
+    setColorScheme(newTheme);
+    Cookies.set(THEME_COOKIE_KEY, newTheme, {
+      expires: COOKIE_EXPIRATION_HOURS / 24,
+      domain,
+    });
+  };
+
   return (
     <ActionIcon
-      onClick={() => {
-        const newTheme = computedColorScheme === 'light' ? 'dark' : 'light';
-        setColorScheme(newTheme);
-        Cookies.set(THEME_COOKIE_KEY, newTheme, {
-          expires: COOKIE_EXPIRATION_HOURS / 24,
-        });
-      }}
+      onClick={onThemeChange}
       variant="default"
       size="compact-sm"
       aria-label="Toggle color scheme"
