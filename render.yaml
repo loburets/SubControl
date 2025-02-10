@@ -10,6 +10,7 @@ services:
       npm install
       npm run build:dtos
       cd apps/backend
+      npx prisma generate
       npx prisma migrate deploy
       npm run build
     startCommand: cd apps/backend && npm run start:prod
