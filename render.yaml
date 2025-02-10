@@ -1,3 +1,5 @@
+# This file defines the services that will be deployed to Render (https://render.com/)
+
 services:
   # User and password not specified, so Render will generate them and they are not exposed in this repository
   - name: database
@@ -16,9 +18,7 @@ services:
       npm run build
     startCommand: cd apps/backend && npm run start:prod
     envVars:
-      - key: DATABASE_URL
-        fromService: database
-        property: connectionString
+      - key: DATABASE_URL  # Manually set this in Render's Dashboard
 
   - name: frontend
     type: web
