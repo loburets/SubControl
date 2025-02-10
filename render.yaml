@@ -1,7 +1,7 @@
 services:
   # User and password not specified, so Render will generate them and they are not exposed in this repository
   - name: database
-    type: postgresql
+    type: pserv
     plan: free
 
   - name: backend
