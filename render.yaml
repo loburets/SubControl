@@ -40,10 +40,10 @@ services:
       - path: /*
         name: Cache-Control
         value: no-cache
-    redirects:
-      - source: /*
+    routes:
+      - type: rewrite
+        source: /*
         destination: /index.html
-        type: rewrite
     envVars:
       - key: REACT_APP_API_URL
         sync: false  # Set manually in Render Dashboard
