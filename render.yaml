@@ -24,8 +24,6 @@ services:
         sync: false  # Set manually in Render Dashboard
       - key: BUGSNAG_API_KEY
         sync: false  # Set manually in Render Dashboard
-      - key: NODE_ENV
-        value: production
 
   - name: frontend
     type: web
