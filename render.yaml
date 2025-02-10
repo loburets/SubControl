@@ -5,10 +5,11 @@ services:
   - name: database
     type: pserv
     plan: free
+    startCommand: ""  # Required but left empty
 
   - name: backend
     type: web
-    env: node
+    runtime: node
     plan: free
     buildCommand: |
       npm install
@@ -17,15 +18,17 @@ services:
       npx prisma migrate deploy
       npm run build
     startCommand: cd apps/backend && npm run start:prod
-    # Manually set this in Render's Dashboard
     envVars:
       - key: DATABASE_URL
+        sync: false  # Set manually in Render Dashboard
       - key: JWT_SECRET
+        sync: false  # Set manually in Render Dashboard
       - key: BUGSNAG_API_KEY
+        sync: false  # Set manually in Render Dashboard
 
   - name: frontend
     type: web
-    env: node
+    runtime: static
     plan: free
     buildCommand: |
       npm install
@@ -33,21 +36,21 @@ services:
       cd apps/frontend
       npm run build
     staticPublishPath: apps/frontend/build
-    # Manually set this in Render's Dashboard
     envVars:
       - key: REACT_APP_API_URL
+        sync: false  # Set manually in Render Dashboard
 
   - name: landing
     type: web
-    env: node
+    runtime: static
     plan: free
     buildCommand: |
       npm install
       cd apps/landing
       npm run build
     staticPublishPath: apps/landing/out
-    # Manually set this in Render's Dashboard
     envVars:
       - key: NEXT_PUBLIC_APP_URL
+        sync: false  # Set manually in Render Dashboard
 
 # Note: all secrets are defined on the Render dashboard to avoid storing them in the repository.
