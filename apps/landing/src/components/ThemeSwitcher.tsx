@@ -22,9 +22,9 @@ enum Theme {
 const THEME_COOKIE_KEY = 'SubControl_lighting_theme';
 const COOKIE_EXPIRATION_HOURS = 12;
 const domain =
-  typeof window !== 'undefined' && window.location.href.includes('localhost')
-    ? undefined
-    : '.' + window.location.host.split('.').slice(-2).join('.');
+  typeof window !== 'undefined' && !window.location.href.includes('localhost')
+    ? '.' + window.location.host.split('.').slice(-2).join('.')
+    : undefined;
 
 function calculateCurrentTheme() {
   const savedTheme = Cookies.get(THEME_COOKIE_KEY) as Theme | undefined;
