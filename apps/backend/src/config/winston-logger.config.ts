@@ -4,7 +4,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 export const winstonLoggerConfig = {
   transports: [
     new winston.transports.Console({
-      level: isProduction ? 'warning' : 'debug',
+      level: isProduction ? 'warn' : 'debug',
       format: winston.format.combine(
         winston.format.timestamp(),
         winston.format.colorize(),
