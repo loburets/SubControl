@@ -33,6 +33,10 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
   const { token } = useToken();
   const location = useLocation();
   const navigate = useNavigate();
+  const goTo = (path: string) => {
+    navigate(path);
+    window.scrollTo(0, 0);
+  };
   const hideNavigation = hideNavigationRoutes.includes(location.pathname);
 
   return (
@@ -48,25 +52,25 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
                 key: ROUTES.HOME,
                 label: 'Subscriptions',
                 icon: <UnorderedListOutlined />,
-                onClick: () => navigate(ROUTES.HOME),
+                onClick: () => goTo(ROUTES.HOME),
               },
               {
                 key: ROUTES.PAST_PAYMENTS,
                 label: 'Past Payments',
                 icon: <DollarOutlined />,
-                onClick: () => navigate(ROUTES.PAST_PAYMENTS),
+                onClick: () => goTo(ROUTES.PAST_PAYMENTS),
               },
               {
                 key: ROUTES.NEXT_PAYMENTS,
                 label: 'Next Payments',
                 icon: <CalendarOutlined />,
-                onClick: () => navigate(ROUTES.NEXT_PAYMENTS),
+                onClick: () => goTo(ROUTES.NEXT_PAYMENTS),
               },
               {
                 key: ROUTES.STATISTICS,
                 label: 'Statistic',
                 icon: <PieChartOutlined />,
-                onClick: () => navigate(ROUTES.STATISTICS),
+                onClick: () => goTo(ROUTES.STATISTICS),
               },
             ]}
             theme={currentTheme === Theme.Dark ? 'dark' : 'light'}
@@ -96,7 +100,7 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
           <StyledMobileFooterButton
             $token={token}
             $active={location.pathname === ROUTES.HOME}
-            onClick={() => navigate(ROUTES.HOME)}
+            onClick={() => goTo(ROUTES.HOME)}
             type="text"
             icon={<UnorderedListOutlined />}
           >
@@ -105,7 +109,7 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
           <StyledMobileFooterButton
             $token={token}
             $active={location.pathname === ROUTES.PAST_PAYMENTS}
-            onClick={() => navigate(ROUTES.PAST_PAYMENTS)}
+            onClick={() => goTo(ROUTES.PAST_PAYMENTS)}
             type="text"
             icon={<DollarOutlined />}
           >
@@ -115,13 +119,13 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
             type="primary"
             shape="circle"
             icon={<PlusOutlined />}
-            onClick={() => navigate(ROUTES.SUBSCRIPTION_CREATE)}
+            onClick={() => goTo(ROUTES.SUBSCRIPTION_CREATE)}
             size="large"
           />
           <StyledMobileFooterButton
             $token={token}
             $active={location.pathname === ROUTES.NEXT_PAYMENTS}
-            onClick={() => navigate(ROUTES.NEXT_PAYMENTS)}
+            onClick={() => goTo(ROUTES.NEXT_PAYMENTS)}
             type="text"
             icon={<CalendarOutlined />}
           >
@@ -130,7 +134,7 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
           <StyledMobileFooterButton
             $token={token}
             $active={location.pathname === ROUTES.STATISTICS}
-            onClick={() => navigate(ROUTES.STATISTICS)}
+            onClick={() => goTo(ROUTES.STATISTICS)}
             type="text"
             icon={<PieChartOutlined />}
           >
