@@ -13,8 +13,8 @@ services:
       cd apps/backend
       npx prisma generate
       npx prisma migrate deploy
-      npx nest build
-    startCommand: cd apps/backend && npm run start:prod
+      npm run build
+    startCommand: cd apps/backend && NODE_ENV=production npm run start:prod
     envVars:
       - key: DATABASE_URL
         fromDatabase:
@@ -24,8 +24,6 @@ services:
         sync: false  # Set manually in Render Dashboard
       - key: BUGSNAG_API_KEY
         sync: false  # Set manually in Render Dashboard
-      - key: NODE_ENV
-        value: production
 
   - name: frontend
     type: web

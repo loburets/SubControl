@@ -24,6 +24,10 @@
     "packages/*"
   ],
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.5.0",
+    "@typescript-eslint/parser": "^5.5.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
     "prettier": "3.4.2",
     "eslint-config-prettier": "^9.1.0"
   }
