@@ -28,6 +28,18 @@ function calculateCurrentTheme() {
     : Theme.Light;
 }
 
+function setMetaTagTheme(theme: Theme) {
+  const metaTag = document.querySelector('meta[name="theme-color"]');
+  if (metaTag) {
+    metaTag.setAttribute(
+      'content',
+      theme === Theme.Light ? '#ffffff' : '#000000'
+    );
+  }
+}
+
+setMetaTagTheme(calculateCurrentTheme());
+
 export const useThemeSwitcherStore = create<ThemeSwitcherState>((set) => ({
   currentTheme: calculateCurrentTheme(),
   toggleTheme: () => {
@@ -38,13 +50,18 @@ export const useThemeSwitcherStore = create<ThemeSwitcherState>((set) => ({
         expires: COOKIE_EXPIRATION_HOURS / 24,
         domain,
       });
+      setMetaTagTheme(newTheme);
       return { currentTheme: newTheme };
     });
   },
   resetCurrentThemeIfRequired: () => {
     const newCurrentTheme = calculateCurrentTheme();
-    set(({ currentTheme }) =>
-      newCurrentTheme === currentTheme ? {} : { currentTheme: newCurrentTheme }
-    );
+    set(({ currentTheme }) => {
+      if (newCurrentTheme === currentTheme) {
+        return {};
+      }
+      setMetaTagTheme(newCurrentTheme);
+      return { currentTheme: newCurrentTheme };
+    });
   },
 }));
