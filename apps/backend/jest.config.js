@@ -8,6 +8,9 @@ module.exports = {
     },
   },
   moduleFileExtensions: ['js', 'json', 'ts'],
+  moduleNameMapper: {
+    '^@prisma/client$': '<rootDir>/../../node_modules/@prisma/client',
+  },
   roots: ['<rootDir>/src', '<rootDir>/tests'],
   testRegex: '.*\\.spec\\.ts$',
   transform: {
