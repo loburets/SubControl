@@ -105,7 +105,7 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
           <StyledMobileFooterButton
             $token={token}
             $active={location.pathname === ROUTES.PAST_PAYMENTS}
-            onClick={() => navigate(ROUTES.PAST_PAYMENTS)}
+            onClick={() => goTo(ROUTES.PAST_PAYMENTS)}
             type="text"
             icon={<DollarOutlined />}
           >
