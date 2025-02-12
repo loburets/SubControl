@@ -54,21 +54,26 @@ export class SubscriptionsCalculatorService {
     const endDate = cancelledAt || now;
 
     // starts from the first payment
-    let totalSpent = centsPerPeriod;
+    let totalSpent = 0;
 
-    if (period === Period.MONTHLY) {
-      const months = differenceInMonths(endDate, startedAt);
-      totalSpent += months * centsPerPeriod;
-    } else if (period === Period.YEARLY) {
-      const years = differenceInYears(endDate, startedAt);
-      totalSpent += years * centsPerPeriod;
-    } else if (period === Period.WEEKLY) {
-      const weeks = differenceInWeeks(endDate, startedAt);
-      totalSpent += weeks * centsPerPeriod;
+    if (startedAt <= now) {
+      totalSpent += centsPerPeriod;
+      if (period === Period.MONTHLY) {
+        const months = differenceInMonths(endDate, startedAt);
+        totalSpent += months * centsPerPeriod;
+      } else if (period === Period.YEARLY) {
+        const years = differenceInYears(endDate, startedAt);
+        totalSpent += years * centsPerPeriod;
+      } else if (period === Period.WEEKLY) {
+        const weeks = differenceInWeeks(endDate, startedAt);
+        totalSpent += weeks * centsPerPeriod;
+      }
     }
 
     let nextPaymentDate: Date | null = null;
-    if (!cancelledAt || cancelledAt > now) {
+    if (startedAt >= now) {
+      nextPaymentDate = startedAt;
+    } else if (!cancelledAt || cancelledAt > now) {
       if (period === Period.MONTHLY) {
         nextPaymentDate = addMonths(
           startedAt,
