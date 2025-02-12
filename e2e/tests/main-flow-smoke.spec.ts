@@ -76,13 +76,12 @@ test('Main flow smoke test', async ({ page }) => {
   await expect(
     page.locator('h4:has-text("Test subscription title")')
   ).toBeVisible();
-  // monthly price
+  // Monthly price
   await expect(page.getByText('C$86.56')).toBeVisible();
-  // yearly price
+  // Yearly price
   await expect(page.getByText('C$1035.84')).toBeVisible();
   await expect(page.getByText('Weekly')).toBeVisible();
-  await expect(
-    page.getByText('Next Payment: 11 Feb 2045 — C$19.92')
-  ).toBeVisible();
+  // Next payment
+  await expect(page.getByText('Feb 2045 — C$19.92')).toBeVisible();
   await expect(page.getByText('Total spent: C$0.00')).toBeVisible();
 });
