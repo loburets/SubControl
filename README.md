@@ -94,6 +94,9 @@ Just sharing some of my satisfactory feelings when all checks passed.
 ### 🤤 End-to-End Test
 ![End-to-End (E2E) Test](apps/landing/public/other-screenshots/e2e.png)
 
+### 🤤 Lighthouse scores (Landing)
+![Lighthouse scores (Landing)](apps/landing/public/other-screenshots/lighthouse.png)
+
 ---
 
 ## 📸 Screenshots
