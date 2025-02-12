@@ -81,6 +81,21 @@ This project showcases my expertise in modern frontend and backend technologies 
 
 ---
 
+## 🙌 Tests & Checks
+
+Just sharing some of my satisfactory feelings when all checks passed.
+
+### 🤤 All Checks Passed
+![All Checks Passed](apps/landing/public/other-screenshots/checks.png)
+
+### 🤤 Controller Test
+![Controller Test](apps/landing/public/other-screenshots/controller-test.png)
+
+### 🤤 End-to-End Test
+![End-to-End (E2E) Test](apps/landing/public/other-screenshots/e2e.png)
+
+---
+
 ## 📸 Screenshots
 
 ### Landing Page
