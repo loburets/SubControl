@@ -1,14 +1,10 @@
 # SubControl – Subscription Tracking App
 
-This project showcases my expertise in modern frontend and backend technologies together with some self-discipline to implement best practices.
+**Live Demo:** [https://subcontrol.online/](https://subcontrol.online/)
 
-## 📌 Features
+This project showcases my experience in modern frontend and backend technologies.
 
-- ✍️ **Track Subscriptions** – Easily add and manage recurring services (e.g., Netflix, Spotify, Apple Music).
-- 📅 **Payments Calendar** – Stay informed about your next charges.
-- 📊 **Spending Charts** – Gain insights into your past and upcoming expenses.
-- 🎨 **Dark & Light Mode** – Automatically adapts to your system theme.
-- 📱 **Mobile-Friendly Design** – Fully responsive UI from 320px mobile to 4K screens.
+I hope it also shows some self-discipline to implement the best practices.
 
 ---
 
@@ -138,6 +134,16 @@ Just sharing some of my satisfactory feelings when all checks passed.
   <span>&nbsp;&nbsp;&nbsp;</span>
   <img src="apps/landing/public/screenshots/edit-subscription-mobile.png" width="30%" />
 </p>
+
+---
+
+## 📌 Features
+
+- ✍️ **Track Subscriptions** – Easily add and manage recurring services (e.g., Netflix, Spotify, Apple Music).
+- 📅 **Payments Calendar** – Stay informed about your next charges.
+- 📊 **Spending Charts** – Gain insights into your past and upcoming expenses.
+- 🎨 **Dark & Light Mode** – Automatically adapts to your system theme.
+- 📱 **Mobile-Friendly Design** – Fully responsive UI from 320px mobile to 4K screens.
 
 ---
 
