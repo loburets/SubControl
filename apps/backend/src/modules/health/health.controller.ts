@@ -24,7 +24,7 @@ export class HealthController {
       throw new Error('Health check failed');
     }
 
-    this.logger.warn('Health check success');
+    // this.logger.warn('Health check success');
     return;
   }
 }
