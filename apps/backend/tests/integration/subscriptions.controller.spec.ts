@@ -8,6 +8,7 @@ import { SubscriptionRequestDto } from '@subcontrol/shared-dtos/subscriptions';
 import { Period, Currency } from '@subcontrol/shared-dtos/subscriptions';
 import { PrismaClient } from '@prisma/client';
 import {
+  addDays,
   addMonths,
   addWeeks,
   startOfDay,
@@ -241,6 +242,35 @@ describe('SubscriptionsController', () => {
       expect(result).toHaveProperty('totalSpent', 200 * 3);
       expect(result).toHaveProperty('nextPaymentDate', null);
     });
+
+    it('should return a future subscription with correct stats fields', async () => {
+      const user = await seedUser();
+      const subscription = await seedSubscription({
+        user: { connect: { id: user.id } },
+        period: Period.MONTHLY,
+        startedAt: addMonths(new Date(), 15),
+        centsPerPeriod: 200,
+        currency: Currency.USD,
+        cancelledAt: null,
+      });
+
+      const result = await controller.findOne(
+        {
+          user: { id: user.id },
+        } as Parameters<typeof controller.findOne>[0],
+        subscription.id.toString()
+      );
+
+      expect(result).toHaveProperty('id', subscription.id);
+      expect(result).toHaveProperty('name', subscription.name);
+      expect(result).toHaveProperty('costPerMonth', 200);
+      expect(result).toHaveProperty('costPerYear', 200 * 12);
+      expect(result).toHaveProperty('totalSpent', 0);
+      expect(result).toHaveProperty(
+        'nextPaymentDate',
+        fromZonedTime(startOfDay(addMonths(new Date(), 15)), 'UTC')
+      );
+    });
   });
 
   describe('stats', () => {
@@ -333,7 +363,139 @@ describe('SubscriptionsController', () => {
       });
     });
 
-    it('should calculate stats for a few simple non-cancelled subscriptions of the user in different currencies', async () => {
+    it('should calculate stats for a simple nearest future subscription of the user', async () => {
+      const user = await seedUser();
+      const subscription = await seedSubscription({
+        user: { connect: { id: user.id } },
+        period: Period.MONTHLY,
+        startedAt: addDays(new Date(), 1),
+        centsPerPeriod: 200,
+        currency: Currency.USD,
+        cancelledAt: null,
+      });
+
+      const result = await controller.stats({
+        user: { id: user.id },
+      } as Parameters<typeof controller.stats>[0]);
+
+      // Total spent validation
+      expect(result).toHaveProperty('totalSpent', []);
+
+      // Validate next 30 days amount
+      expect(result).toHaveProperty('next30DaysAmount');
+      expect(result.next30DaysAmount).toEqual(
+        expect.arrayContaining([{ amount: 400, currency: Currency.USD }])
+      );
+
+      // Validate next 365 days amount
+      expect(result).toHaveProperty('next365DaysAmount');
+      expect(result.next365DaysAmount).toEqual(
+        expect.arrayContaining([{ amount: 200 * 12, currency: Currency.USD }])
+      );
+
+      // Validate spent last year
+      expect(result).toHaveProperty('spentLastYear');
+      expect(result.spentLastYear).toEqual([]);
+
+      // Validate spent past 30 days
+      expect(result).toHaveProperty('spentPast30Days');
+      expect(result.spentPast30Days).toEqual([]);
+
+      // Validate spent past 365 days
+      expect(result).toHaveProperty('spentPast365Days');
+      expect(result.spentPast365Days).toEqual([]);
+
+      // Validate expected spent this year
+      expect(result).toHaveProperty('expectedSpentThisYear');
+      expect(result.expectedSpentThisYear).toEqual(
+        expect.arrayContaining([{ amount: 200 * 11, currency: Currency.USD }])
+      );
+
+      // Validate nextPayments
+      expect(result).toHaveProperty('nextPayments');
+      expect(result.nextPayments).toBeInstanceOf(Array);
+      expect(result.nextPayments.length).toBe(60); // depends on the limit, update if extended
+      result.nextPayments.forEach((payment) => {
+        expect(payment).toHaveProperty('subscriptionId');
+        expect(payment).toHaveProperty('currency');
+        expect(payment).toHaveProperty('subscriptionName');
+        expect(payment).toHaveProperty('amount');
+        expect(payment).toHaveProperty('date');
+        expect(payment.subscriptionName).toBe(subscription.name);
+        expect(payment.amount).toBe(200);
+        expect(payment.currency).toBe(Currency.USD);
+      });
+
+      // Validate pastPayments
+      expect(result).toHaveProperty('pastPayments');
+      expect(result.pastPayments).toBeInstanceOf(Array);
+      expect(result.pastPayments.length).toBe(0);
+    });
+
+    it('should calculate stats for a long away future subscription of the user', async () => {
+      const user = await seedUser();
+      const subscription = await seedSubscription({
+        user: { connect: { id: user.id } },
+        period: Period.MONTHLY,
+        startedAt: addMonths(new Date(), 15),
+        centsPerPeriod: 200,
+        currency: Currency.USD,
+        cancelledAt: null,
+      });
+
+      const result = await controller.stats({
+        user: { id: user.id },
+      } as Parameters<typeof controller.stats>[0]);
+
+      // Total spent validation
+      expect(result).toHaveProperty('totalSpent', []);
+
+      // Validate next 30 days amount
+      expect(result).toHaveProperty('next30DaysAmount');
+      expect(result.next30DaysAmount).toEqual([]);
+
+      // Validate next 365 days amount
+      expect(result).toHaveProperty('next365DaysAmount');
+      expect(result.next365DaysAmount).toEqual([]);
+
+      // Validate spent last year
+      expect(result).toHaveProperty('spentLastYear');
+      expect(result.spentLastYear).toEqual([]);
+
+      // Validate spent past 30 days
+      expect(result).toHaveProperty('spentPast30Days');
+      expect(result.spentPast30Days).toEqual([]);
+
+      // Validate spent past 365 days
+      expect(result).toHaveProperty('spentPast365Days');
+      expect(result.spentPast365Days).toEqual([]);
+
+      // Validate expected spent this year
+      expect(result).toHaveProperty('expectedSpentThisYear');
+      expect(result.expectedSpentThisYear).toEqual([]);
+
+      // Validate nextPayments
+      expect(result).toHaveProperty('nextPayments');
+      expect(result.nextPayments).toBeInstanceOf(Array);
+      expect(result.nextPayments.length).toBe(60 - 15); // depends on the limit, update if extended
+      result.nextPayments.forEach((payment) => {
+        expect(payment).toHaveProperty('subscriptionId');
+        expect(payment).toHaveProperty('currency');
+        expect(payment).toHaveProperty('subscriptionName');
+        expect(payment).toHaveProperty('amount');
+        expect(payment).toHaveProperty('date');
+        expect(payment.subscriptionName).toBe(subscription.name);
+        expect(payment.amount).toBe(200);
+        expect(payment.currency).toBe(Currency.USD);
+      });
+
+      // Validate pastPayments
+      expect(result).toHaveProperty('pastPayments');
+      expect(result.pastPayments).toBeInstanceOf(Array);
+      expect(result.pastPayments.length).toBe(0);
+    });
+
+    it('should calculate stats for non-cancelled subscriptions of the user in different currencies', async () => {
       const user = await seedUser();
       await seedSubscription({
         user: { connect: { id: user.id } },
