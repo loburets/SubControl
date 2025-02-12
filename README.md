@@ -1,14 +1,10 @@
 # SubControl – Subscription Tracking App
 
-This project showcases my expertise in modern frontend and backend technologies together with some self-discipline to implement best practices.
+**🔗 Live Demo:** [https://subcontrol.online/](https://subcontrol.online/)
 
-## 📌 Features
+This project showcases my experience in modern frontend and backend technologies.
 
-- ✍️ **Track Subscriptions** – Easily add and manage recurring services (e.g., Netflix, Spotify, Apple Music).
-- 📅 **Payments Calendar** – Stay informed about your next charges.
-- 📊 **Spending Charts** – Gain insights into your past and upcoming expenses.
-- 🎨 **Dark & Light Mode** – Automatically adapts to your system theme.
-- 📱 **Mobile-Friendly Design** – Fully responsive UI from 320px mobile to 4K screens.
+I hope it also shows some self-discipline to implement the best practices.
 
 ---
 
@@ -44,7 +40,7 @@ This project showcases my expertise in modern frontend and backend technologies 
 - 🔢 **Node.js Version** – Defined in [.nvmrc](.nvmrc) for consistency.
 - 📝 **TypeScript Strict Mode** – Enabled for better code quality.
 - 📚 **CI/CD** – GitHub [workflows](.github/workflows) for linting, testing, and deployment.
-- ⚙️ **Infrastructure as Code** – Simple example [by Redner configuration](render.yaml).
+- ⚙️ **Infrastructure as Code** – Simple example [by Render configuration](render.yaml).
 
 ### **Backend**
 - 🚀 **Shared DTOs** – Consistent [request/response structures](packages/shared-dtos) across frontend & backend.
@@ -141,6 +137,16 @@ Just sharing some of my satisfactory feelings when all checks passed.
 
 ---
 
+## 📌 Features
+
+- ✍️ **Track Subscriptions** – Easily add and manage recurring services (e.g., Netflix, Spotify, Apple Music).
+- 📅 **Payments Calendar** – Stay informed about your next charges.
+- 📊 **Spending Charts** – Gain insights into your past and upcoming expenses.
+- 🎨 **Dark & Light Mode** – Automatically adapts to your system theme.
+- 📱 **Mobile-Friendly Design** – Fully responsive UI from 320px mobile to 4K screens.
+
+---
+
 ## 😿 Trade-offs
 
 As a small project, some features currently are not optimal for a real-world scenario and skipped:
@@ -154,5 +160,5 @@ As a small project, some features currently are not optimal for a real-world sce
 - 📈 **Analytics** – No analytics tools are integrated yet.
 - 🌐 **Accessibility and Internalisation** – No a11y or i18n features are implemented yet.
 - 🔄 **Refresh Tokens** – Currently, the app uses a short-lived JWT token.
-- 🔧 **Staging Environment** – Currently, the app is deployed directly to production for main branch
-- 📦 **Deployment Optimisation** – Deployment is triggered for all 3 services (backend, frontend, landing) on each push to the main branch to make Render setup easier. 
+- 🔧 **Staging Environment** – Currently, the app is deployed directly to production for the main branch.
+- 📦 **Deployment Optimisation** – Deployment is triggered for all 3 services (backend, frontend, landing) on each push to the main branch to make Render setup easier.
