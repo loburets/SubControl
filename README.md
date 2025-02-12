@@ -48,8 +48,9 @@ This project showcases my expertise in modern frontend and backend technologies 
 
 ### **Backend**
 - 🚀 **Shared DTOs** – Consistent [request/response structures](packages/shared-dtos) across frontend & backend.
-- 🧪 **Integration Tests** – Covers controllers and runs in parallel.
-- 🏆 **The Testing Trophy** – Instead of the testing pyramid [(the tests are here)](apps/backend/tests).
+- 🏆 **The Testing Trophy** – Instead of the testing pyramid
+- 🧪 **Integration Tests** – Covers controllers and can be run in parallel [(example)](apps/backend/tests/integration/subscriptions.controller.spec.ts).
+- ⚡ **E2E Tests** – Written on Playwright [(example)](e2e/tests/main-flow-smoke.spec.ts).
 - 🔄 **Database Migrations** – [DB Migration](apps/backend/prisma/migrations) for consistency across environments and proper CD.
 - 🔒 **Secure API** – [Filters](apps/backend/src/main.ts) redundant fields in requests to prevent injections. [Filters](apps/backend/src/modules/transformers/transformers.service.ts) responses per DTOs to avoid exposing sensitive fields.
 - 📌 **Enums Where Applicable** – Used for DB/Prisma data structures and in Request/Response types ([example](packages/shared-dtos/src/subscriptions/requests.dto.ts)).
@@ -126,7 +127,6 @@ This project showcases my expertise in modern frontend and backend technologies 
 
 As a small project, some features currently are not optimal for a real-world scenario and skipped:
 
-- 🧪 **E2E Testing** – Playwright tests are planned.
 - 📜 **Improved Logging** – Sensitive fields (e.g., name, email, phone number) should be filtered in logs automatically.
 - 🔐 **Additional Features** – Social login, email notifications, password reset, and 2FA are potential enhancements.
 - 🧩 **More Unit Tests** – Some complex methods still require better test coverage.

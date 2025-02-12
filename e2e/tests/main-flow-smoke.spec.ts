@@ -58,6 +58,7 @@ test('Main flow smoke test', async ({ page }) => {
     'Test subscription title'
   );
   await page.fill('input[placeholder="9.99"]', '19.92');
+  await page.fill('input[id="startedAt"]', '2045-02-12');
   // Click the dropdown trigger to open the currency selection menu
   await page.click('.ant-select-selector');
   // Wait for the dropdown menu to appear
@@ -80,5 +81,8 @@ test('Main flow smoke test', async ({ page }) => {
   // yearly price
   await expect(page.getByText('C$1035.84')).toBeVisible();
   await expect(page.getByText('Weekly')).toBeVisible();
-  await expect(page.getByText('Total spent: C$19.92')).toBeVisible();
+  await expect(
+    page.getByText('Next Payment: 11 Feb 2045 — C$19.92')
+  ).toBeVisible();
+  await expect(page.getByText('Total spent: C$0.00')).toBeVisible();
 });
