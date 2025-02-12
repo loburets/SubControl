@@ -162,3 +162,4 @@ As a small project, some features currently are not optimal for a real-world sce
 - 🔄 **Refresh Tokens** – Currently, the app uses a short-lived JWT token.
 - 🔧 **Staging Environment** – Currently, the app is deployed directly to production for the main branch.
 - 📦 **Deployment Optimisation** – Deployment is triggered for all 3 services (backend, frontend, landing) on each push to the main branch to make Render setup easier.
+- 📈 **Lighthouse Scores** – Landing is fine, but the React app's Lighthouse scores can be improved further.
