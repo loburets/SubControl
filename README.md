@@ -50,7 +50,7 @@ I hope it also shows some self-discipline to implement the best practices.
 - 🔄 **Database Migrations** – [DB Migration](apps/backend/prisma/migrations) for consistency across environments and proper CD.
 - 🔒 **Secure API** – [Filters](apps/backend/src/main.ts) redundant fields in requests to prevent injections. [Filters](apps/backend/src/modules/transformers/transformers.service.ts) responses per DTOs to avoid exposing sensitive fields.
 - 📌 **Enums Where Applicable** – Used for DB/Prisma data structures and in Request/Response types ([example](packages/shared-dtos/src/subscriptions/requests.dto.ts)).
-- 📖 **Swagger API Docs** – Auto-generated with [TS decorators](apps/backend/src/modules/subscriptions/subscriptions.controller.ts). The documentation can [run requests on behalf of a test user](apps/backend/src/utils/swagger.ts).
+- 📖 **Swagger API Docs** – Auto-generated with [TS decorators](apps/backend/src/modules/subscriptions/subscriptions.controller.ts). The documentation can [run requests on behalf of a test user](apps/backend/src/utils/swagger.ts). Available [here](https://backend-u7jt.onrender.com/api/).
 - 💰 **Money Storage** – Stored as cents (integer format) for precision.
 - 📜 **Logging** – Winston logger with environment-specific [transports](apps/backend/src/config/winston-logger.config.ts).
 - 🔍 **Meaningful Logs** – No sensitive data in logs, only IDs.
