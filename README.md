@@ -1,6 +1,6 @@
 # SubControl – Subscription Tracking App
 
-**Live Demo:** [https://subcontrol.online/](https://subcontrol.online/)
+**🔗 Live Demo:** [https://subcontrol.online/](https://subcontrol.online/)
 
 This project showcases my experience in modern frontend and backend technologies.
 
@@ -40,7 +40,7 @@ I hope it also shows some self-discipline to implement the best practices.
 - 🔢 **Node.js Version** – Defined in [.nvmrc](.nvmrc) for consistency.
 - 📝 **TypeScript Strict Mode** – Enabled for better code quality.
 - 📚 **CI/CD** – GitHub [workflows](.github/workflows) for linting, testing, and deployment.
-- ⚙️ **Infrastructure as Code** – Simple example [by Redner configuration](render.yaml).
+- ⚙️ **Infrastructure as Code** – Simple example [by Render configuration](render.yaml).
 
 ### **Backend**
 - 🚀 **Shared DTOs** – Consistent [request/response structures](packages/shared-dtos) across frontend & backend.
@@ -160,5 +160,5 @@ As a small project, some features currently are not optimal for a real-world sce
 - 📈 **Analytics** – No analytics tools are integrated yet.
 - 🌐 **Accessibility and Internalisation** – No a11y or i18n features are implemented yet.
 - 🔄 **Refresh Tokens** – Currently, the app uses a short-lived JWT token.
-- 🔧 **Staging Environment** – Currently, the app is deployed directly to production for main branch
-- 📦 **Deployment Optimisation** – Deployment is triggered for all 3 services (backend, frontend, landing) on each push to the main branch to make Render setup easier. 
+- 🔧 **Staging Environment** – Currently, the app is deployed directly to production for the main branch.
+- 📦 **Deployment Optimisation** – Deployment is triggered for all 3 services (backend, frontend, landing) on each push to the main branch to make Render setup easier.
