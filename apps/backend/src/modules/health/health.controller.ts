@@ -20,11 +20,12 @@ export class HealthController {
       .$queryRaw`SELECT 1+1 as health`;
 
     if (!health || health[0].health !== 2) {
-      isProduction && this.logger.error('Health check failed', { health });
+      isProduction &&
+        this.logger.error('Health check failed on DB level', { health });
       throw new Error('Health check failed');
     }
 
-    this.logger.warn('Health check success');
+    this.logger.debug('Health check success');
     return;
   }
 }
