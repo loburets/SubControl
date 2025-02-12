@@ -1,0 +1,16 @@
+{
+  "name": "subcontrol-e2e",
+  "author": "Dmitry Loburets <dmitry.loburets@gmail.com> (https://github.com/loburets)",
+  "license": "MIT",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test:e2e": "playwright test",
+    "test:e2e:debug": "playwright test --ui"
+  },
+  "keywords": [],
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.50.1"
+  }
+}
