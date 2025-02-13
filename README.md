@@ -19,7 +19,7 @@ I hope it also shows some self-discipline to implement the best practices.
 - **BugSnag** – Error tracking.
 
 ### **Frontend**
-- **React** – Modern frontend framework.
+- **React** – Frontend framework.
 - **TypeScript** – Static typing for better developer experience.
 - **Ant Design** – UI component library for a polished UI + form management.
 - **Styled Components** – A way to organize styling.
