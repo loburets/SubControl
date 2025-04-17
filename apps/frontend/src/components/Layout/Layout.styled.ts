@@ -116,3 +116,9 @@ export const StyledGithubLink = styled.a`
     right: 16px;
   }
 `;
+
+export const WarningContainer = styled.div<{
+  $token: GlobalToken;
+}>`
+  max-width: 420px;
+`;

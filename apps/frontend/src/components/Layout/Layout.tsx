@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { theme } from 'antd';
+import { Alert, GlobalToken, theme } from 'antd';
 import {
   PlusOutlined,
   CalendarOutlined,
@@ -18,15 +18,18 @@ import {
   StyledMenu,
   StyledGithubLink,
   StyledContent,
+  WarningContainer,
 } from './Layout.styled';
 import { Logo } from './Logo';
 import { useLocation, useNavigate } from 'react-router';
 import { ROUTES } from '../../router/routes';
 import { Theme, useThemeSwitcherStore } from '../../store/themeSwitcher.store';
+import { ContainerForCentered } from './ContainerForCentered';
 
 const { useToken } = theme;
 
 const hideNavigationRoutes = [ROUTES.LOGIN, ROUTES.SIGNUP];
+const showDisabledWarning = true;
 
 const Layout: React.FC<PropsWithChildren> = ({ children }) => {
   const currentTheme = useThemeSwitcherStore((state) => state.currentTheme);
@@ -91,7 +94,7 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
       {/* Main Content */}
       <StyledContent>
         <ThemeSwitcher />
-        {children}
+        {showDisabledWarning ? renderDisabledWarning(token) : children}
       </StyledContent>
 
       {/* Footer for Mobile Navigation */}
@@ -147,3 +150,43 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
 };
 
 export default Layout;
+
+function renderDisabledWarning(token: GlobalToken) {
+  return (
+    <ContainerForCentered>
+      <WarningContainer $token={token}>
+        <Alert
+          message="⚠️ Project Temporarily Disabled"
+          description={
+            <div>
+              This project’s database is currently turned off to save hosting
+              costs while I’m not showcasing it. <br />
+              <br />
+              If you'd like to see it working, just drop me a message at{' '}
+              <a
+                href="mailto:dmitry.loburets@gmail.com'"
+                target="_blank"
+                rel="noreferrer"
+              >
+                dmitry.loburets@gmail.com
+              </a>
+              .
+              <br />
+              <br />
+              You can also check out the code and screenshots on{' '}
+              <a
+                href="https://github.com/loburets/SubControl"
+                target="_blank"
+                rel="noreferrer"
+              >
+                GitHub
+              </a>
+              .
+            </div>
+          }
+          type="error"
+        />
+      </WarningContainer>
+    </ContainerForCentered>
+  );
+}
