@@ -36,17 +36,17 @@ I hope it also shows some self-discipline to implement the best practices.
 
 ### **Common**
 - 📏 **Code Formatting & Linting** – Ensured with [ESLint](.eslintrc.js) and [Prettier](.prettierrc).
-- 📦 **Monorepo** – Great for small projects, structured using [npm workspaces](package.json).
+- 📦 **Monorepo** – Good for small projects, structured using [npm workspaces](package.json).
 - 🔢 **Node.js Version** – Defined in [.nvmrc](.nvmrc) for consistency.
 - 📝 **TypeScript Strict Mode** – Enabled for better code quality.
 - 📚 **CI/CD** – GitHub [workflows](.github/workflows) for linting, testing, and deployment.
 - ⚙️ **Infrastructure as Code** – Simple example [by Render configuration](render.yaml).
+- ⚡ **E2E Tests** – Written on Playwright [(example)](e2e/tests/main-flow-smoke.spec.ts).
 
 ### **Backend**
 - 🚀 **Shared DTOs** – Consistent [request/response structures](packages/shared-dtos) across frontend & backend.
 - 🏆 **The Testing Trophy** – Instead of the testing pyramid
 - 🧪 **Integration Tests** – Covers controllers and can be run in parallel [(example)](apps/backend/tests/integration/subscriptions.controller.spec.ts).
-- ⚡ **E2E Tests** – Written on Playwright [(example)](e2e/tests/main-flow-smoke.spec.ts).
 - 🔄 **Database Migrations** – [DB Migration](apps/backend/prisma/migrations) for consistency across environments and proper CD.
 - 🔒 **Secure API** – [Filters](apps/backend/src/main.ts) redundant fields in requests to prevent injections. [Filters](apps/backend/src/modules/transformers/transformers.service.ts) responses per DTOs to avoid exposing sensitive fields.
 - 📌 **Enums Where Applicable** – Used for DB/Prisma data structures and in Request/Response types ([example](packages/shared-dtos/src/subscriptions/requests.dto.ts)).
