@@ -42,6 +42,7 @@ I hope it also shows some self-discipline to implement the best practices.
 - 📚 **CI/CD** – GitHub [workflows](.github/workflows) for linting, testing, and deployment.
 - ⚙️ **Infrastructure as Code** – Simple example [by Render configuration](render.yaml).
 - ⚡ **E2E Tests** – Written on Playwright [(example)](e2e/tests/main-flow-smoke.spec.ts).
+- 🤖 **AI Documentation** – Comprehensive [AGENTS.md](AGENTS.md) file for AI agents.
 
 ### **Backend**
 - 🚀 **Shared DTOs** – Consistent [request/response structures](packages/shared-dtos) across frontend & backend.
